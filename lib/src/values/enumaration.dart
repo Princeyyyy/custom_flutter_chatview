@@ -30,13 +30,13 @@ enum MessageType {
   custom
 }
 
-/// Events, Wheter the user is still typing a message or has
+/// Events, Whether the user is still typing a message or has
 /// typed the message
 enum TypeWriterStatus { typing, typed }
 
 /// [MessageStatus] defines the current state of the message
 /// if you are sender sending a message then, the
-enum MessageStatus { read, delivered, undelivered, pending }
+enum MessageStatus { read, delivered }
 
 /// Types of states
 enum ChatViewState { hasMessages, noData, loading, error }

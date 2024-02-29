@@ -1,28 +1,5 @@
-/*
- * Copyright (c) 2022 Simform Solutions
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 import 'package:chatview/chatview.dart';
 import 'package:chatview/src/extensions/extensions.dart';
-import 'package:chatview/src/widgets/chat_view_inherited_widget.dart';
-import 'package:chatview/src/widgets/type_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 
@@ -43,7 +20,6 @@ class ChatGroupedListWidget extends StatefulWidget {
     required this.isEnableSwipeToSeeTime,
     this.messageConfig,
     this.chatBubbleConfig,
-    this.profileCircleConfig,
     this.swipeToReplyConfig,
     this.repliedMessageConfig,
     this.typeIndicatorConfig,
@@ -65,9 +41,6 @@ class ChatGroupedListWidget extends StatefulWidget {
 
   /// Allow user to giving customisation to chat bubble
   final ChatBubbleConfiguration? chatBubbleConfig;
-
-  /// Allow user to giving customisation to profile circle
-  final ProfileCircleConfiguration? profileCircleConfig;
 
   /// Allow user to giving customisation to swipe to reply
   final SwipeToReplyConfiguration? swipeToReplyConfig;
@@ -109,9 +82,6 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
   final ValueNotifier<String?> _replyId = ValueNotifier(null);
 
   ChatBubbleConfiguration? get chatBubbleConfig => widget.chatBubbleConfig;
-
-  ProfileCircleConfiguration? get profileCircleConfig =>
-      widget.profileCircleConfig;
   AnimationController? _animationController;
   Animation<Offset>? _slideAnimation;
 
@@ -188,24 +158,6 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
                   )
                 : _chatStreamBuilder,
           ),
-          widget.showTypingIndicator
-              ? TypingIndicator(
-                  typeIndicatorConfig: widget.typeIndicatorConfig,
-                  chatBubbleConfig: chatBubbleConfig?.inComingChatBubbleConfig,
-                  showIndicator: widget.showTypingIndicator,
-                  profilePic: profileCircleConfig?.profileImageUrl,
-                )
-              : ValueListenableBuilder(
-                  valueListenable: ChatViewInheritedWidget.of(context)!
-                      .chatController
-                      .typingIndicatorNotifier,
-                  builder: (context, value, child) => TypingIndicator(
-                        typeIndicatorConfig: widget.typeIndicatorConfig,
-                        chatBubbleConfig:
-                            chatBubbleConfig?.inComingChatBubbleConfig,
-                        showIndicator: value,
-                        profilePic: profileCircleConfig?.profileImageUrl,
-                      )),
           SizedBox(
             height: MediaQuery.of(context).size.width *
                 (widget.replyMessage.message.isNotEmpty ? 0.3 : 0.14),
@@ -310,7 +262,6 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
                         message: message,
                         messageConfig: widget.messageConfig,
                         chatBubbleConfig: chatBubbleConfig,
-                        profileCircleConfig: profileCircleConfig,
                         swipeToReplyConfig: widget.swipeToReplyConfig,
                         repliedMessageConfig: widget.repliedMessageConfig,
                         slideAnimation: _slideAnimation,

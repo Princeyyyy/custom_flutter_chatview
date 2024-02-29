@@ -1,24 +1,3 @@
-/*
- * Copyright (c) 2022 Simform Solutions
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 import 'package:chatview/src/extensions/extensions.dart';
 import 'package:chatview/src/utils/constants/constants.dart';
 import 'package:chatview/src/widgets/chat_view_inherited_widget.dart';
@@ -38,7 +17,6 @@ class ChatBubbleWidget extends StatefulWidget {
     required this.onLongPress,
     required this.slideAnimation,
     required this.onSwipe,
-    this.profileCircleConfig,
     this.chatBubbleConfig,
     this.repliedMessageConfig,
     this.swipeToReplyConfig,
@@ -54,9 +32,6 @@ class ChatBubbleWidget extends StatefulWidget {
 
   /// Give callback once user long press on chat bubble.
   final DoubleCallBack onLongPress;
-
-  /// Provides configuration related to user profile circle avatar.
-  final ProfileCircleConfiguration? profileCircleConfig;
 
   /// Provides configurations related to chat bubble such as padding, margin, max
   /// width etc.
@@ -103,9 +78,6 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
 
   bool get isLastMessage =>
       chatController?.initialMessageList.last.id == widget.message.id;
-
-  ProfileCircleConfiguration? get profileCircleConfig =>
-      widget.profileCircleConfig;
   FeatureActiveConfig? featureActiveConfig;
   ChatController? chatController;
   ChatUser? currentUser;
@@ -164,18 +136,6 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
             isMessageBySender ? MainAxisAlignment.end : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          if (!isMessageBySender &&
-              (featureActiveConfig?.enableOtherUserProfileAvatar ?? true))
-            ProfileCircle(
-              bottomPadding: widget.message.reaction.reactions.isNotEmpty
-                  ? profileCircleConfig?.bottomPadding ?? 15
-                  : profileCircleConfig?.bottomPadding ?? 2,
-              profileCirclePadding: profileCircleConfig?.padding,
-              imageUrl: messagedUser?.profilePhoto,
-              circleRadius: profileCircleConfig?.circleRadius,
-              onTap: () => _onAvatarTap(messagedUser),
-              onLongPress: () => _onAvatarLongPress(messagedUser),
-            ),
           Expanded(
             child: isMessageBySender
                 ? SwipeToReply(
@@ -222,74 +182,9 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                     child: _messagesWidgetColumn(messagedUser),
                   ),
           ),
-          if (isMessageBySender) ...[getReciept()],
-          if (isMessageBySender &&
-              (featureActiveConfig?.enableCurrentUserProfileAvatar ?? true))
-            ProfileCircle(
-              bottomPadding: widget.message.reaction.reactions.isNotEmpty
-                  ? profileCircleConfig?.bottomPadding ?? 15
-                  : profileCircleConfig?.bottomPadding ?? 2,
-              profileCirclePadding: profileCircleConfig?.padding,
-              imageUrl: currentUser?.profilePhoto,
-              circleRadius: profileCircleConfig?.circleRadius,
-              onTap: () => _onAvatarTap(messagedUser),
-              onLongPress: () => _onAvatarLongPress(messagedUser),
-            ),
         ],
       ),
     );
-  }
-
-  void _onAvatarTap(ChatUser? user) {
-    if (profileCircleConfig?.onAvatarTap != null && user != null) {
-      profileCircleConfig?.onAvatarTap!(user);
-    }
-  }
-
-  Widget getReciept() {
-    final showReceipts = widget.chatBubbleConfig?.outgoingChatBubbleConfig
-            ?.receiptsWidgetConfig?.showReceiptsIn ??
-        ShowReceiptsIn.lastMessage;
-    if (showReceipts == ShowReceiptsIn.all) {
-      return ValueListenableBuilder(
-        valueListenable: widget.message.statusNotifier,
-        builder: (context, value, child) {
-          if (ChatViewInheritedWidget.of(context)
-                  ?.featureActiveConfig
-                  .receiptsBuilderVisibility ??
-              true) {
-            return widget.chatBubbleConfig?.outgoingChatBubbleConfig
-                    ?.receiptsWidgetConfig?.receiptsBuilder
-                    ?.call(value) ??
-                sendMessageAnimationBuilder(value);
-          }
-          return const SizedBox();
-        },
-      );
-    } else if (showReceipts == ShowReceiptsIn.lastMessage && isLastMessage) {
-      return ValueListenableBuilder(
-          valueListenable:
-              chatController!.initialMessageList.last.statusNotifier,
-          builder: (context, value, child) {
-            if (ChatViewInheritedWidget.of(context)
-                    ?.featureActiveConfig
-                    .receiptsBuilderVisibility ??
-                true) {
-              return widget.chatBubbleConfig?.outgoingChatBubbleConfig
-                      ?.receiptsWidgetConfig?.receiptsBuilder
-                      ?.call(value) ??
-                  sendMessageAnimationBuilder(value);
-            }
-            return sendMessageAnimationBuilder(value);
-          });
-    }
-    return const SizedBox();
-  }
-
-  void _onAvatarLongPress(ChatUser? user) {
-    if (profileCircleConfig?.onAvatarLongPress != null && user != null) {
-      profileCircleConfig?.onAvatarLongPress!(user);
-    }
   }
 
   Widget _messagesWidgetColumn(ChatUser? messagedUser) {
@@ -297,17 +192,6 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
       crossAxisAlignment:
           isMessageBySender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        if ((chatController?.chatUsers.length ?? 0) > 1 && !isMessageBySender)
-          Padding(
-            padding:
-                widget.chatBubbleConfig?.inComingChatBubbleConfig?.padding ??
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: Text(
-              messagedUser?.name ?? '',
-              style: widget.chatBubbleConfig?.inComingChatBubbleConfig
-                  ?.senderNameTextStyle,
-            ),
-          ),
         if (replyMessage.isNotEmpty)
           widget.repliedMessageConfig?.repliedMessageWidgetBuilder != null
               ? widget.repliedMessageConfig!

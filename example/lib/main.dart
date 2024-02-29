@@ -40,6 +40,7 @@ class _ChatScreenState extends State<ChatScreen> {
     name: 'Flutter',
     profilePhoto: Data.profileImage,
   );
+
   final _chatController = ChatController(
     initialMessageList: Data.messageList,
     scrollController: ScrollController(),
@@ -67,10 +68,6 @@ class _ChatScreenState extends State<ChatScreen> {
     ],
   );
 
-  void _showHideTypingIndicator() {
-    _chatController.setTypingIndicator = !_chatController.showTypingIndicator;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,8 +78,8 @@ class _ChatScreenState extends State<ChatScreen> {
         featureActiveConfig: const FeatureActiveConfig(
           lastSeenAgoBuilderVisibility: true,
           receiptsBuilderVisibility: true,
+          enableSwipeToSeeTime: true,
         ),
-        chatViewState: ChatViewState.hasMessages,
         chatViewStateConfig: ChatViewStateConfiguration(
           loadingWidgetConfig: ChatViewStateWidgetConfiguration(
             loadingIndicatorColor: theme.outgoingChatBubbleColor,
@@ -92,40 +89,6 @@ class _ChatScreenState extends State<ChatScreen> {
         typeIndicatorConfig: TypeIndicatorConfiguration(
           flashingCircleBrightColor: theme.flashingCircleBrightColor,
           flashingCircleDarkColor: theme.flashingCircleDarkColor,
-        ),
-        appBar: ChatViewAppBar(
-          elevation: theme.elevation,
-          backGroundColor: theme.appBarColor,
-          profilePicture: Data.profileImage,
-          backArrowColor: theme.backArrowColor,
-          chatTitle: "Chat view",
-          chatTitleTextStyle: TextStyle(
-            color: theme.appBarTitleTextStyle,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-            letterSpacing: 0.25,
-          ),
-          userStatus: "online",
-          userStatusTextStyle: const TextStyle(color: Colors.grey),
-          actions: [
-            IconButton(
-              onPressed: _onThemeIconTap,
-              icon: Icon(
-                isDarkTheme
-                    ? Icons.brightness_4_outlined
-                    : Icons.dark_mode_outlined,
-                color: theme.themeIconColor,
-              ),
-            ),
-            IconButton(
-              tooltip: 'Toggle TypingIndicator',
-              onPressed: _showHideTypingIndicator,
-              icon: Icon(
-                Icons.keyboard,
-                color: theme.themeIconColor,
-              ),
-            ),
-          ],
         ),
         chatBackgroundConfig: ChatBackgroundConfiguration(
           messageTimeIconColor: theme.messageTimeIconColor,
@@ -245,9 +208,6 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
         ),
-        profileCircleConfig: const ProfileCircleConfiguration(
-          profileImageUrl: Data.profileImage,
-        ),
         repliedMessageConfig: RepliedMessageConfiguration(
           backgroundColor: theme.repliedMessageColor,
           verticalBarColor: theme.verticalBarColor,
@@ -288,22 +248,10 @@ class _ChatScreenState extends State<ChatScreen> {
     );
     Future.delayed(const Duration(milliseconds: 300), () {
       _chatController.initialMessageList.last.setStatus =
-          MessageStatus.undelivered;
+          MessageStatus.delivered;
     });
     Future.delayed(const Duration(seconds: 1), () {
       _chatController.initialMessageList.last.setStatus = MessageStatus.read;
-    });
-  }
-
-  void _onThemeIconTap() {
-    setState(() {
-      if (isDarkTheme) {
-        theme = LightTheme();
-        isDarkTheme = false;
-      } else {
-        theme = DarkTheme();
-        isDarkTheme = true;
-      }
     });
   }
 }

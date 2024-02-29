@@ -24,7 +24,6 @@ import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../chatview.dart';
-import '../../widgets/chat_message_sending_to_sent_animation.dart';
 
 const String enUS = "en_US";
 const String emojiRegExpression =
@@ -65,14 +64,6 @@ applicationDateFormatter(DateTime inputTime) {
   } else {
     return DateFormat('dd MMM yyyy').format(inputTime);
   }
-}
-
-/// Default widget that appears on receipts at [MessageStatus.pending] when a message
-/// is not sent or at the pending state. A custom implementation can have different
-/// widgets for different states.
-/// Right now it is implemented to appear right next to the outgoing bubble.
-Widget sendMessageAnimationBuilder(MessageStatus status) {
-  return SendingMessageAnimatingWidget(status);
 }
 
 /// Default builder when the message has got seen as of now

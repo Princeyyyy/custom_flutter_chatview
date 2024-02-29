@@ -1,24 +1,3 @@
-/*
- * Copyright (c) 2022 Simform Solutions
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -60,12 +39,16 @@ class EmojiPickerWidget extends StatelessWidget {
               onEmojiSelected: (Category? category, Emoji emoji) =>
                   onSelected(emoji.emoji),
               config: Config(
-                columns: 7,
-                emojiSizeMax: 32 * ((!kIsWeb && Platform.isIOS) ? 1.30 : 1.0),
-                initCategory: Category.RECENT,
-                bgColor: Colors.white,
-                recentTabBehavior: RecentTabBehavior.NONE,
-                recentsLimit: 28,
+                height: 256,
+                checkPlatformCompatibility: true,
+                emojiViewConfig: EmojiViewConfig(
+                  emojiSizeMax: 28 * ((!kIsWeb && Platform.isIOS) ? 1.2 : 1.0),
+                ),
+                swapCategoryAndBottomBar: false,
+                skinToneConfig: const SkinToneConfig(),
+                categoryViewConfig: const CategoryViewConfig(),
+                bottomActionBarConfig: const BottomActionBarConfig(),
+                searchViewConfig: const SearchViewConfig(),
               ),
             ),
           ),
