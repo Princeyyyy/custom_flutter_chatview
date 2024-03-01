@@ -74,7 +74,7 @@ class ChatBubbleWidget extends StatefulWidget {
 class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
   String get replyMessage => widget.message.replyMessage.message;
 
-  bool get isMessageBySender => widget.message.sendBy == currentUser?.id;
+  bool get isMessageBySender => widget.message.messageSenderId == currentUser?.id;
 
   bool get isLastMessage =>
       chatController?.initialMessageList.last.id == widget.message.id;
@@ -96,7 +96,7 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
   @override
   Widget build(BuildContext context) {
     // Get user from id.
-    final messagedUser = chatController?.getUserFromId(widget.message.sendBy);
+    final messagedUser = chatController?.getUserFromId(widget.message.messageSenderId);
     return Stack(
       children: [
         if (featureActiveConfig?.enableSwipeToSeeTime ?? true) ...[
@@ -149,7 +149,7 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                                 null) {
                               widget.swipeToReplyConfig?.onLeftSwipe!(
                                   widget.message.message,
-                                  widget.message.sendBy);
+                                  widget.message.messageSenderId);
                             }
                             widget.onSwipe(widget.message);
                           }
@@ -171,7 +171,7 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                                     null) {
                                   widget.swipeToReplyConfig?.onRightSwipe!(
                                       widget.message.message,
-                                      widget.message.sendBy);
+                                      widget.message.messageSenderId);
                                 }
                                 widget.onSwipe(widget.message);
                               }
@@ -200,7 +200,7 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                   message: widget.message,
                   repliedMessageConfig: widget.repliedMessageConfig,
                   onTap: () => widget.onReplyTap
-                      ?.call(widget.message.replyMessage.messageId),
+                      ?.call(widget.message.replyMessage.repliedMessageId),
                 ),
         MessageView(
           outgoingChatBubbleConfig:

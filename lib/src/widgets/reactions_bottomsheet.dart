@@ -29,10 +29,10 @@ class ReactionsBottomSheet {
                   left: 12,
                   top: 18,
                 ),
-            itemCount: reaction.reactedUserIds.length,
+            itemCount: reaction.reactedUserNames.length,
             itemBuilder: (_, index) {
               final reactedUser =
-                  chatController.getUserFromId(reaction.reactedUserIds[index]);
+                  chatController.getUserFromId(reaction.reactedUserNames[index]);
               return Container(
                 margin: reactionsBottomSheetConfig?.reactionWidgetMargin ??
                     const EdgeInsets.only(bottom: 8),

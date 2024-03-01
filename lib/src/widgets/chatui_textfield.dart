@@ -1,24 +1,3 @@
-/*
- * Copyright (c) 2022 Simform Solutions
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 import 'dart:async';
 import 'dart:io' show Platform;
 
@@ -91,14 +70,10 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
             BorderRadius.circular(textFieldBorderRadius),
       );
 
-  ValueNotifier<TypeWriterStatus> composingStatus =
-      ValueNotifier(TypeWriterStatus.typed);
-
   late Debouncer debouncer;
 
   @override
   void initState() {
-    attachListeners();
     debouncer = Debouncer(
         sendMessageConfig?.textFieldConfig?.compositionThresholdTime ??
             const Duration(seconds: 1));
@@ -113,17 +88,9 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
   @override
   void dispose() {
     debouncer.dispose();
-    composingStatus.dispose();
     isRecording.dispose();
     _inputText.dispose();
     super.dispose();
-  }
-
-  void attachListeners() {
-    composingStatus.addListener(() {
-      widget.sendMessageConfig?.textFieldConfig?.onMessageTyping
-          ?.call(composingStatus.value);
-    });
   }
 
   @override
@@ -320,11 +287,6 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
   }
 
   void _onChanged(String inputText) {
-    debouncer.run(() {
-      composingStatus.value = TypeWriterStatus.typed;
-    }, () {
-      composingStatus.value = TypeWriterStatus.typing;
-    });
     _inputText.value = inputText;
   }
 }

@@ -109,12 +109,12 @@ class _ReactionWidgetState extends State<ReactionWidget> {
                   ),
                 ),
                 if ((chatController?.chatUsers.length ?? 0) > 1) ...[
-                  if (!(widget.reaction.reactedUserIds.length > 3) &&
+                  if (!(widget.reaction.reactedUserNames.length > 3) &&
                       !(reactionsSet.length > 1))
                     ...List.generate(
-                      widget.reaction.reactedUserIds.length,
+                      widget.reaction.reactedUserNames.length,
                       (reactedUserIndex) => widget
-                          .reaction.reactedUserIds[reactedUserIndex]
+                          .reaction.reactedUserNames[reactedUserIndex]
                           .getUserProfilePicture(
                         getChatUser: (userId) =>
                             chatController?.getUserFromId(userId),
@@ -124,12 +124,12 @@ class _ReactionWidgetState extends State<ReactionWidget> {
                             messageReactionConfig?.profileCircleRadius,
                       ),
                     ),
-                  if (widget.reaction.reactedUserIds.length > 3 &&
+                  if (widget.reaction.reactedUserNames.length > 3 &&
                       !(reactionsSet.length > 1))
                     Padding(
                       padding: const EdgeInsets.only(left: 2),
                       child: Text(
-                        '+${widget.reaction.reactedUserIds.length}',
+                        '+${widget.reaction.reactedUserNames.length}',
                         style:
                             messageReactionConfig?.reactedUserCountTextStyle ??
                                 _reactionTextStyle,
@@ -139,7 +139,7 @@ class _ReactionWidgetState extends State<ReactionWidget> {
                     Padding(
                       padding: const EdgeInsets.only(left: 2),
                       child: Text(
-                        widget.reaction.reactedUserIds.length.toString(),
+                        widget.reaction.reactedUserNames.length.toString(),
                         style: messageReactionConfig?.reactionCountTextStyle ??
                             _reactionTextStyle,
                       ),

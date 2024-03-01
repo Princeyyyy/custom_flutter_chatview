@@ -1,117 +1,90 @@
 import 'package:chatview/chatview.dart';
+import 'dart:math';
+
+import 'package:faker/faker.dart';
 
 class Data {
   static const profileImage =
       "https://raw.githubusercontent.com/SimformSolutionsPvtLtd/flutter_showcaseview/master/example/assets/simform.png";
+
   static final messageList = [
     Message(
       id: '1',
       message: "Hi!",
-      createdAt: DateTime.now(),
-      sendBy: '1', // userId of who sends the message
-      status: MessageStatus.read,
+      createdAt: DateTime.now().subtract(const Duration(minutes: 5)),
+      messageSenderId: '1',
+      // userId of who sends the message
+      replyMessage: const ReplyMessage(),
+      reaction: Reaction(reactions: [], reactedUserNames: []),
+      messageType: MessageType.text,
+      status: MessageStatus.delivered,
     ),
     Message(
       id: '2',
-      message: "Hi!",
-      createdAt: DateTime.now(),
-      sendBy: '2',
-      status: MessageStatus.read,
+      message: "Hello!",
+      createdAt: DateTime.now().subtract(const Duration(minutes: 4)),
+      messageSenderId: '2',
+      replyMessage: const ReplyMessage(),
+      reaction: Reaction(reactions: [], reactedUserNames: []),
+      messageType: MessageType.text,
+      status: MessageStatus.delivered,
     ),
     Message(
       id: '3',
-      message: "We can meet?I am free",
-      createdAt: DateTime.now(),
-      sendBy: '1',
-      status: MessageStatus.read,
+      message: "How are you?",
+      createdAt: DateTime.now().subtract(const Duration(minutes: 3)),
+      messageSenderId: '1',
+      replyMessage: const ReplyMessage(),
+      reaction: Reaction(reactions: [], reactedUserNames: []),
+      messageType: MessageType.text,
+      status: MessageStatus.delivered,
     ),
-    Message(
-      id: '4',
-      message: "Can you write the time and place of the meeting?",
-      createdAt: DateTime.now(),
-      sendBy: '1',
-      status: MessageStatus.read,
-    ),
-    Message(
-      id: '5',
-      message: "That's fine",
-      createdAt: DateTime.now(),
-      sendBy: '2',
-      reaction: Reaction(reactions: ['\u{2764}'], reactedUserIds: ['1']),
-      status: MessageStatus.read,
-    ),
-    Message(
-      id: '6',
-      message: "When to go ?",
-      createdAt: DateTime.now(),
-      sendBy: '3',
-      status: MessageStatus.read,
-    ),
-    Message(
-      id: '7',
-      message: "I guess Simform will reply",
-      createdAt: DateTime.now(),
-      sendBy: '4',
-      status: MessageStatus.read,
-    ),
-    Message(
-      id: '8',
-      message: "https://bit.ly/3JHS2Wl",
-      createdAt: DateTime.now(),
-      sendBy: '2',
-      reaction: Reaction(
-        reactions: ['\u{2764}', '\u{1F44D}', '\u{1F44D}'],
-        reactedUserIds: ['2', '3', '4'],
-      ),
-      status: MessageStatus.read,
-      replyMessage: const ReplyMessage(
-        message: "Can you write the time and place of the meeting?",
-        replyTo: '1',
-        replyBy: '2',
-        messageId: '4',
-      ),
-    ),
-    Message(
-      id: '9',
-      message: "Done",
-      createdAt: DateTime.now(),
-      sendBy: '1',
-      status: MessageStatus.read,
-      reaction: Reaction(
-        reactions: [
-          '\u{2764}',
-          '\u{2764}',
-          '\u{2764}',
-        ],
-        reactedUserIds: ['2', '3', '4'],
-      ),
-    ),
-    Message(
-      id: '10',
-      message: "Thank you!!",
-      status: MessageStatus.read,
-      createdAt: DateTime.now(),
-      sendBy: '1',
-      reaction: Reaction(
-        reactions: ['\u{2764}', '\u{2764}', '\u{2764}', '\u{2764}'],
-        reactedUserIds: ['2', '4', '3', '1'],
-      ),
-    ),
-    Message(
-      id: '11',
-      message: "https://miro.medium.com/max/1000/0*s7of7kWnf9fDg4XM.jpeg",
-      createdAt: DateTime.now(),
-      messageType: MessageType.image,
-      sendBy: '1',
-      reaction: Reaction(reactions: ['\u{2764}'], reactedUserIds: ['2']),
-      status: MessageStatus.read,
-    ),
-    Message(
-      id: '12',
-      message: "🤩🤩",
-      createdAt: DateTime.now(),
-      sendBy: '2',
-      status: MessageStatus.read,
-    ),
+    // Add more messages as needed
   ];
+
+  // Generate dummy data for testing
+  static List<Message> generateDummyData(int count) {
+    final List<Message> messages = [];
+    final faker = Faker();
+    Random random = Random();
+
+    final DateTime today = DateTime.now();
+
+    for (int i = 0; i < count; i++) {
+      final String id = i.toString();
+      String message;
+      MessageType messageType;
+      if ((i + 1) % 3 == 0) {
+        message = "https://miro.medium.com/max/1000/0*s7of7kWnf9fDg4XM.jpeg";
+        messageType = MessageType.image;
+      } else if (random.nextInt(10) < 3) { // 30% chance of having "🤩🤩"
+        message = "🤩🤩";
+        messageType = MessageType.text;
+      } else {
+        message = faker.lorem.sentence();
+        messageType = MessageType.text;
+      }
+      final DateTime createdAt = today.subtract(Duration(days: count - i));
+      String messageSenderId = (random.nextInt(2) + 1).toString();
+
+      const ReplyMessage replyMessage = ReplyMessage();
+
+      final Reaction reaction = Reaction(reactions: [], reactedUserNames: []);
+
+      const MessageStatus status = MessageStatus.delivered;
+
+      messages.add(Message(
+        id: id,
+        message: message,
+        createdAt: createdAt,
+        messageSenderId: messageSenderId,
+        replyMessage: replyMessage,
+        reaction: reaction,
+        messageType: messageType,
+        status: status,
+      ));
+    }
+
+    return messages;
+  }
 }

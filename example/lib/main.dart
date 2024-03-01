@@ -42,7 +42,7 @@ class _ChatScreenState extends State<ChatScreen> {
   );
 
   final _chatController = ChatController(
-    initialMessageList: Data.messageList,
+    initialMessageList: Data.generateDummyData(20),
     scrollController: ScrollController(),
     chatUsers: [
       ChatUser(
@@ -113,10 +113,6 @@ class _ChatScreenState extends State<ChatScreen> {
           textFieldBackgroundColor: theme.textFieldBackgroundColor,
           closeIconColor: theme.closeIconColor,
           textFieldConfig: TextFieldConfiguration(
-            onMessageTyping: (status) {
-              /// Do with status
-              debugPrint(status.toString());
-            },
             compositionThresholdTime: const Duration(seconds: 1),
             textStyle: TextStyle(color: theme.textFieldTextColor),
           ),
@@ -241,7 +237,7 @@ class _ChatScreenState extends State<ChatScreen> {
         id: id.toString(),
         createdAt: DateTime.now(),
         message: message,
-        sendBy: currentUser.id,
+        messageSenderId: currentUser.id,
         replyMessage: replyMessage,
         messageType: messageType,
       ),

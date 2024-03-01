@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 class Message {
-  /// Provides id
+  /// Provides id for message
   final String id;
 
   /// Used for accessing widget's render box.
@@ -16,7 +16,7 @@ class Message {
   final DateTime createdAt;
 
   /// Provides id of sender of message.
-  final String sendBy;
+  final String messageSenderId;
 
   /// Provides reply message if user triggers any reply on any message.
   final ReplyMessage replyMessage;
@@ -37,13 +37,13 @@ class Message {
     this.id = '',
     required this.message,
     required this.createdAt,
-    required this.sendBy,
+    required this.messageSenderId,
     this.replyMessage = const ReplyMessage(),
     Reaction? reaction,
     this.messageType = MessageType.text,
     this.voiceMessageDuration,
     MessageStatus status = MessageStatus.delivered,
-  })  : reaction = reaction ?? Reaction(reactions: [], reactedUserIds: []),
+  })  : reaction = reaction ?? Reaction(reactions: [], reactedUserNames: []),
         key = GlobalKey(),
         _status = ValueNotifier(status),
         assert(
@@ -57,9 +57,9 @@ class Message {
   /// current messageStatus
   MessageStatus get status => _status.value;
 
-  /// For [MessageStatus] ValueNotfier which is used to for rebuilds
+  /// For [MessageStatus] ValueNotifier which is used to for rebuilds
   /// when state changes.
-  /// Using ValueNotfier to avoid usage of setState((){}) in order
+  /// Using ValueNotifier to avoid usage of setState((){}) in order
   /// re-render messages with new receipts.
   ValueNotifier<MessageStatus> get statusNotifier => _status;
 
@@ -73,7 +73,7 @@ class Message {
       id: json["id"],
       message: json["message"],
       createdAt: json["createdAt"],
-      sendBy: json["sendBy"],
+      messageSenderId: json["sendBy"],
       replyMessage: ReplyMessage.fromJson(json["reply_message"]),
       reaction: Reaction.fromJson(json["reaction"]),
       messageType: json["message_type"],
@@ -84,7 +84,7 @@ class Message {
         'id': id,
         'message': message,
         'createdAt': createdAt,
-        'sendBy': sendBy,
+        'sendBy': messageSenderId,
         'reply_message': replyMessage.toJson(),
         'reaction': reaction.toJson(),
         'message_type': messageType,

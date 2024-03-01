@@ -76,11 +76,11 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
   ReplyMessage get replyMessage => _replyMessage.value;
   final _focusNode = FocusNode();
 
-  ChatUser? get repliedUser => replyMessage.replyTo.isNotEmpty
-      ? widget.chatController.getUserFromId(replyMessage.replyTo)
+  ChatUser? get repliedUser => replyMessage.replyUserId.isNotEmpty
+      ? widget.chatController.getUserFromId(replyMessage.replyUserId)
       : null;
 
-  String get _replyTo => replyMessage.replyTo == currentUser?.id
+  String get _replyTo => replyMessage.replyUserId == currentUser?.id
       ? PackageStrings.you
       : repliedUser?.name ?? '';
 
@@ -320,9 +320,9 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
       _replyMessage.value = ReplyMessage(
         message: message.message,
         replyBy: currentUser!.id,
-        replyTo: message.sendBy,
+        replyUserId: message.messageSenderId,
         messageType: message.messageType,
-        messageId: message.id,
+        repliedMessageId: message.id,
         voiceMessageDuration: message.voiceMessageDuration,
       );
     }
