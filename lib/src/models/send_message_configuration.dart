@@ -1,7 +1,5 @@
-import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 
 class SendMessageConfiguration {
   /// Used to give background color to text field.
@@ -25,67 +23,18 @@ class SendMessageConfiguration {
   /// Used to give color to close icon in reply pop-up.
   final Color? closeIconColor;
 
-  /// Provides configuration of image picker functionality.
-  final ImagePickerIconsConfiguration? imagePickerIconsConfig;
-
-  /// Provides configuration of image picker plugin.
-  final ImagePickerConfiguration? imagePickerConfiguration;
-
   /// Provides configuration of text field.
   final TextFieldConfiguration? textFieldConfig;
-
-  /// Enable/disable voice recording. Enabled by default.
-  final bool allowRecordingVoice;
-
-  /// Enable/disable image picker from gallery. Enabled by default.
-  final bool enableGalleryImagePicker;
-
-  /// Enable/disable send image from camera. Enabled by default.
-  final bool enableCameraImagePicker;
-
-  /// Color of mic icon when replying to some voice message.
-  final Color? micIconColor;
-
-  /// Styling configuration for recorder widget.
-  final VoiceRecordingConfiguration? voiceRecordingConfiguration;
 
   const SendMessageConfiguration({
     this.textFieldConfig,
     this.textFieldBackgroundColor,
-    this.imagePickerIconsConfig,
-    this.imagePickerConfiguration,
     this.defaultSendButtonColor,
     this.sendButtonIcon,
     this.replyDialogColor,
     this.replyTitleColor,
     this.replyMessageColor,
     this.closeIconColor,
-    this.allowRecordingVoice = true,
-    this.enableCameraImagePicker = true,
-    this.enableGalleryImagePicker = true,
-    this.voiceRecordingConfiguration,
-    this.micIconColor,
-  });
-}
-
-class ImagePickerIconsConfiguration {
-  /// Provides ability to pass custom gallery image picker icon.
-  final Widget? galleryImagePickerIcon;
-
-  /// Provides ability to pass custom camera image picker icon.
-  final Widget? cameraImagePickerIcon;
-
-  /// Used to give color to camera icon.
-  final Color? cameraIconColor;
-
-  /// Used to give color to gallery icon.
-  final Color? galleryIconColor;
-
-  const ImagePickerIconsConfiguration({
-    this.cameraIconColor,
-    this.galleryIconColor,
-    this.galleryImagePickerIcon,
-    this.cameraImagePickerIcon,
   });
 }
 
@@ -146,69 +95,4 @@ class TextFieldConfiguration {
     this.inputFormatters,
     this.textCapitalization,
   });
-}
-
-class ImagePickerConfiguration {
-  /// Used to give max width of image.
-  final double? maxWidth;
-
-  /// Used to give max height of image.
-  final double? maxHeight;
-
-  /// Used to give image quality.
-  final int? imageQuality;
-
-  /// Preferred camera device to pick image from.
-  final CameraDevice? preferredCameraDevice;
-
-  /// Callback when image is picked from camera or gallery,
-  ///  we can perform our task on image like adding crop options and return new image path
-  final Future<String?> Function(String? path)? onImagePicked;
-
-  const ImagePickerConfiguration({
-    this.maxWidth,
-    this.maxHeight,
-    this.imageQuality,
-    this.preferredCameraDevice,
-    this.onImagePicked,
-  });
-}
-
-/// Styling configuration for recorder widget.
-class VoiceRecordingConfiguration {
-  const VoiceRecordingConfiguration({
-    this.waveStyle,
-    this.padding,
-    this.margin,
-    this.decoration,
-    this.backgroundColor,
-    this.micIcon,
-    this.recorderIconColor,
-    this.stopIcon,
-  });
-
-  /// Applies styles to waveform.
-  final WaveStyle? waveStyle;
-
-  /// Applies padding around waveform widget.
-  final EdgeInsets? padding;
-
-  /// Applies margin around waveform widget.
-  final EdgeInsets? margin;
-
-  /// Box decoration containing waveforms
-  final BoxDecoration? decoration;
-
-  /// If only background color needs to be changed then use this instead of
-  /// decoration.
-  final Color? backgroundColor;
-
-  /// An icon for recording voice.
-  final Widget? micIcon;
-
-  /// An icon for stopping voice recording.
-  final Widget? stopIcon;
-
-  /// Applies color to mic and stop icon.
-  final Color? recorderIconColor;
 }

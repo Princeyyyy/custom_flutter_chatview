@@ -15,18 +15,14 @@ class ChatListWidget extends StatefulWidget {
     super.key,
     required this.chatController,
     required this.chatBackgroundConfig,
-    required this.showTypingIndicator,
     required this.assignReplyMessage,
     required this.replyMessage,
-    this.loadingWidget,
     this.reactionPopupConfig,
     this.messageConfig,
     this.chatBubbleConfig,
     this.swipeToReplyConfig,
     this.repliedMessageConfig,
     this.replyPopupConfig,
-    this.loadMoreData,
-    this.isLastPage,
     this.onChatListTap,
   });
 
@@ -35,12 +31,6 @@ class ChatListWidget extends StatefulWidget {
 
   /// Provides configuration for background of chat.
   final ChatBackgroundConfiguration chatBackgroundConfig;
-
-  /// Provides widget for loading view while pagination is enabled.
-  final Widget? loadingWidget;
-
-  /// Provides flag for turn on/off typing indicator.
-  final bool showTypingIndicator;
 
   /// Provides configuration for reaction pop up appearance.
   final ReactionPopupConfiguration? reactionPopupConfig;
@@ -65,13 +55,6 @@ class ChatListWidget extends StatefulWidget {
   /// Provides configuration for reply snack bar's appearance and options.
   final ReplyPopupConfiguration? replyPopupConfig;
 
-  /// Provides callback when user actions reaches to top and needs to load more
-  /// chat
-  final VoidCallBackWithFuture? loadMoreData;
-
-  /// Provides flag if there is no more next data left in list.
-  final bool? isLastPage;
-
   /// Provides callback for assigning reply message when user swipe to chat
   /// bubble.
   final MessageCallBack assignReplyMessage;
@@ -95,8 +78,6 @@ class _ChatListWidgetState extends State<ChatListWidget>
 
   ScrollController get scrollController => chatController.scrollController;
 
-  bool get showTypingIndicator => widget.showTypingIndicator;
-
   ChatBackgroundConfiguration get chatBackgroundConfig =>
       widget.chatBackgroundConfig;
 
@@ -116,11 +97,6 @@ class _ChatListWidgetState extends State<ChatListWidget>
       featureActiveConfig = provide!.featureActiveConfig;
       currentUser = provide!.currentUser;
     }
-    if (featureActiveConfig?.enablePagination ?? false) {
-      // When flag is on then it will include pagination logic to scroll
-      // controller.
-      scrollController.addListener(_pagination);
-    }
   }
 
   void _initialize() {
@@ -135,23 +111,6 @@ class _ChatListWidgetState extends State<ChatListWidget>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ValueListenableBuilder<bool>(
-          valueListenable: _isNextPageLoading,
-          builder: (_, isNextPageLoading, child) {
-            if (isNextPageLoading &&
-                (featureActiveConfig?.enablePagination ?? false)) {
-              return SizedBox(
-                height: Scaffold.of(context).appBarMaxHeight,
-                child: Center(
-                  child:
-                      widget.loadingWidget ?? const CircularProgressIndicator(),
-                ),
-              );
-            } else {
-              return const SizedBox.shrink();
-            }
-          },
-        ),
         Expanded(
           child: ValueListenableBuilder<bool>(
             valueListenable: showPopUp,
@@ -160,7 +119,6 @@ class _ChatListWidgetState extends State<ChatListWidget>
                 children: [
                   ChatGroupedListWidget(
                     showPopUp: showPopupValue,
-                    showTypingIndicator: showTypingIndicator,
                     scrollController: scrollController,
                     isEnableSwipeToSeeTime:
                         featureActiveConfig?.enableSwipeToSeeTime ?? true,
@@ -205,17 +163,6 @@ class _ChatListWidgetState extends State<ChatListWidget>
         ),
       ],
     );
-  }
-
-  void _pagination() {
-    if (widget.loadMoreData == null || widget.isLastPage == true) return;
-    if ((scrollController.position.pixels ==
-            scrollController.position.maxScrollExtent) &&
-        !_isNextPageLoading.value) {
-      _isNextPageLoading.value = true;
-      widget.loadMoreData!()
-          .whenComplete(() => _isNextPageLoading.value = false);
-    }
   }
 
   void _showReplyPopup({

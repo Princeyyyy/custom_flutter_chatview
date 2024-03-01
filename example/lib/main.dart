@@ -8,7 +8,7 @@ void main() {
 }
 
 class Example extends StatelessWidget {
-  const Example({Key? key}) : super(key: key);
+  const Example({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class Example extends StatelessWidget {
 }
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+  const ChatScreen({super.key});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -80,12 +80,6 @@ class _ChatScreenState extends State<ChatScreen> {
           receiptsBuilderVisibility: true,
           enableSwipeToSeeTime: true,
         ),
-        chatViewStateConfig: ChatViewStateConfiguration(
-          loadingWidgetConfig: ChatViewStateWidgetConfiguration(
-            loadingIndicatorColor: theme.outgoingChatBubbleColor,
-          ),
-          onReloadButtonTap: () {},
-        ),
         chatBackgroundConfig: ChatBackgroundConfiguration(
           messageTimeIconColor: theme.messageTimeIconColor,
           messageTimeTextStyle: TextStyle(color: theme.messageTimeTextColor),
@@ -98,10 +92,6 @@ class _ChatScreenState extends State<ChatScreen> {
           backgroundColor: theme.backgroundColor,
         ),
         sendMessageConfig: SendMessageConfiguration(
-          imagePickerIconsConfig: ImagePickerIconsConfiguration(
-            cameraIconColor: theme.cameraIconColor,
-            galleryIconColor: theme.galleryIconColor,
-          ),
           replyMessageColor: theme.replyMessageColor,
           defaultSendButtonColor: theme.sendButtonColor,
           replyDialogColor: theme.replyDialogColor,
@@ -111,16 +101,6 @@ class _ChatScreenState extends State<ChatScreen> {
           textFieldConfig: TextFieldConfiguration(
             compositionThresholdTime: const Duration(seconds: 1),
             textStyle: TextStyle(color: theme.textFieldTextColor),
-          ),
-          micIconColor: theme.replyMicIconColor,
-          voiceRecordingConfiguration: VoiceRecordingConfiguration(
-            backgroundColor: theme.waveformBackgroundColor,
-            recorderIconColor: theme.recordIconColor,
-            waveStyle: WaveStyle(
-              showMiddleLine: false,
-              waveColor: theme.waveColor ?? Colors.white,
-              extendWaveform: true,
-            ),
           ),
         ),
         chatBubbleConfig: ChatBubbleConfiguration(

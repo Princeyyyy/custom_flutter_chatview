@@ -17,21 +17,14 @@ class ChatView extends StatefulWidget {
     this.swipeToReplyConfig,
     this.replyPopupConfig,
     this.reactionPopupConfig,
-    this.loadMoreData,
-    this.loadingWidget,
     this.messageConfig,
-    this.isLastPage,
     ChatBackgroundConfiguration? chatBackgroundConfig,
     this.sendMessageBuilder,
-    this.showTypingIndicator = false,
     this.sendMessageConfig,
     this.onChatListTap,
-    ChatViewStateConfiguration? chatViewStateConfig,
     this.featureActiveConfig = const FeatureActiveConfig(),
   })  : chatBackgroundConfig =
-            chatBackgroundConfig ?? const ChatBackgroundConfiguration(),
-        chatViewStateConfig =
-            chatViewStateConfig ?? const ChatViewStateConfiguration();
+            chatBackgroundConfig ?? const ChatBackgroundConfiguration();
 
   /// Provides configurations related to chat bubble such as padding, margin, max
   /// width etc.
@@ -58,16 +51,6 @@ class ChatView extends StatefulWidget {
   /// Allow user to give customisation to background of chat
   final ChatBackgroundConfiguration chatBackgroundConfig;
 
-  /// Provides callback when user actions reaches to top and needs to load more
-  /// chat
-  final VoidCallBackWithFuture? loadMoreData;
-
-  /// Provides widget for loading view while pagination is enabled.
-  final Widget? loadingWidget;
-
-  /// Provides flag if there is no more next data left in list.
-  final bool? isLastPage;
-
   /// Provides call back when user tap on send button in text field. It returns
   /// message, reply message and message type.
   final StringMessageCallBack? onSendTap;
@@ -75,19 +58,12 @@ class ChatView extends StatefulWidget {
   /// Provides builder which helps you to make custom text field and functionality.
   final ReplyMessageWithReturnWidget? sendMessageBuilder;
 
-  @Deprecated('Use [ChatController.setTypingIndicator]  instead')
-
-  /// Allow user to show typing indicator.
-  final bool showTypingIndicator;
 
   /// Provides controller for accessing few function for running chat.
   final ChatController chatController;
 
   /// Provides configuration of default text field in chat.
   final SendMessageConfiguration? sendMessageConfig;
-
-  /// Provides configuration for chat view state appearance and functionality.
-  final ChatViewStateConfiguration? chatViewStateConfig;
 
   /// Provides current user which is sending messages.
   final ChatUser currentUser;
@@ -114,9 +90,6 @@ class _ChatViewState extends State<ChatView>
 
   ChatBackgroundConfiguration get chatBackgroundConfig =>
       widget.chatBackgroundConfig;
-
-  ChatViewStateConfiguration? get chatViewStateConfig =>
-      widget.chatViewStateConfig;
 
   FeatureActiveConfig get featureActiveConfig => widget.featureActiveConfig;
 
@@ -163,18 +136,12 @@ class _ChatViewState extends State<ChatView>
                     valueListenable: replyMessage,
                     builder: (_, state, child) {
                       return ChatListWidget(
-                        /// TODO: Remove this in future releases.
-                        // ignore: deprecated_member_use_from_same_package
-                        showTypingIndicator: widget.showTypingIndicator,
                         replyMessage: state,
                         chatController: widget.chatController,
                         chatBackgroundConfig: widget.chatBackgroundConfig,
                         reactionPopupConfig: widget.reactionPopupConfig,
                         chatBubbleConfig: widget.chatBubbleConfig,
-                        loadMoreData: widget.loadMoreData,
-                        isLastPage: widget.isLastPage,
                         replyPopupConfig: widget.replyPopupConfig,
-                        loadingWidget: widget.loadingWidget,
                         messageConfig: widget.messageConfig,
                         repliedMessageConfig: widget.repliedMessageConfig,
                         swipeToReplyConfig: widget.swipeToReplyConfig,
