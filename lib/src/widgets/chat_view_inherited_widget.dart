@@ -5,12 +5,13 @@ import 'package:chatview/chatview.dart';
 /// over widgets.
 class ChatViewInheritedWidget extends InheritedWidget {
   const ChatViewInheritedWidget({
-    Key? key,
-    required Widget child,
+    super.key,
+    required super.child,
     required this.featureActiveConfig,
     required this.chatController,
     required this.currentUser,
-  }) : super(key: key, child: child);
+  });
+
   final FeatureActiveConfig featureActiveConfig;
   final ChatController chatController;
   final ChatUser currentUser;

@@ -86,10 +86,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           onReloadButtonTap: () {},
         ),
-        typeIndicatorConfig: TypeIndicatorConfiguration(
-          flashingCircleBrightColor: theme.flashingCircleBrightColor,
-          flashingCircleDarkColor: theme.flashingCircleDarkColor,
-        ),
         chatBackgroundConfig: ChatBackgroundConfiguration(
           messageTimeIconColor: theme.messageTimeIconColor,
           messageTimeTextStyle: TextStyle(color: theme.messageTimeTextColor),
@@ -196,12 +192,8 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ),
-          imageMessageConfig: ImageMessageConfiguration(
-            margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
-            shareIconConfig: ShareIconConfiguration(
-              defaultIconBackgroundColor: theme.shareIconBackgroundColor,
-              defaultIconColor: theme.shareIconColor,
-            ),
+          imageMessageConfig: const ImageMessageConfiguration(
+            margin: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
           ),
         ),
         repliedMessageConfig: RepliedMessageConfiguration(

@@ -8,7 +8,7 @@ import 'chat_group_header.dart';
 
 class ChatGroupedListWidget extends StatefulWidget {
   const ChatGroupedListWidget({
-    Key? key,
+    super.key,
     required this.showPopUp,
     required this.showTypingIndicator,
     required this.scrollController,
@@ -22,8 +22,7 @@ class ChatGroupedListWidget extends StatefulWidget {
     this.chatBubbleConfig,
     this.swipeToReplyConfig,
     this.repliedMessageConfig,
-    this.typeIndicatorConfig,
-  }) : super(key: key);
+  });
 
   /// Allow user to swipe to see time while reaction pop is not open.
   final bool showPopUp;
@@ -45,9 +44,6 @@ class ChatGroupedListWidget extends StatefulWidget {
   /// Allow user to giving customisation to swipe to reply
   final SwipeToReplyConfiguration? swipeToReplyConfig;
   final RepliedMessageConfiguration? repliedMessageConfig;
-
-  /// Allow user to giving customisation typing indicator
-  final TypeIndicatorConfiguration? typeIndicatorConfig;
 
   /// Provides reply message if actual message is sent by replying any message.
   final ReplyMessage replyMessage;
@@ -296,11 +292,10 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
 
 class _GroupSeparatorBuilder extends StatelessWidget {
   const _GroupSeparatorBuilder({
-    Key? key,
     required this.separator,
     this.groupSeparatorBuilder,
     this.defaultGroupSeparatorConfig,
-  }) : super(key: key);
+  });
   final String separator;
   final StringWithReturnWidget? groupSeparatorBuilder;
   final DefaultGroupSeparatorConfiguration? defaultGroupSeparatorConfig;

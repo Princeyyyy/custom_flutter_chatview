@@ -11,7 +11,7 @@ import 'voice_message_view.dart';
 
 class MessageView extends StatefulWidget {
   const MessageView({
-    Key? key,
+    super.key,
     required this.message,
     required this.isMessageBySender,
     required this.onLongPress,
@@ -27,7 +27,7 @@ class MessageView extends StatefulWidget {
     this.messageConfig,
     this.onMaxDuration,
     this.controller,
-  }) : super(key: key);
+  });
 
   /// Provides message instance of chat.
   final Message message;

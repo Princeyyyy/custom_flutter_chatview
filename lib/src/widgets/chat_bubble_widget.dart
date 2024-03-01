@@ -1,12 +1,10 @@
 import 'package:chatview/src/extensions/extensions.dart';
 import 'package:chatview/src/utils/constants/constants.dart';
-import 'package:chatview/src/widgets/chat_view_inherited_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../chatview.dart';
 import 'message_time_widget.dart';
 import 'message_view.dart';
-import 'profile_circle.dart';
 import 'reply_message_widget.dart';
 import 'swipe_to_reply.dart';
 

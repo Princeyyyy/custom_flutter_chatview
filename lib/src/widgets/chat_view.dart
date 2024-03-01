@@ -8,7 +8,7 @@ import 'send_message_widget.dart';
 
 class ChatView extends StatefulWidget {
   const ChatView({
-    Key? key,
+    super.key,
     required this.chatController,
     required this.currentUser,
     this.onSendTap,
@@ -22,7 +22,6 @@ class ChatView extends StatefulWidget {
     this.messageConfig,
     this.isLastPage,
     ChatBackgroundConfiguration? chatBackgroundConfig,
-    this.typeIndicatorConfig,
     this.sendMessageBuilder,
     this.showTypingIndicator = false,
     this.sendMessageConfig,
@@ -32,8 +31,7 @@ class ChatView extends StatefulWidget {
   })  : chatBackgroundConfig =
             chatBackgroundConfig ?? const ChatBackgroundConfiguration(),
         chatViewStateConfig =
-            chatViewStateConfig ?? const ChatViewStateConfiguration(),
-        super(key: key);
+            chatViewStateConfig ?? const ChatViewStateConfiguration();
 
   /// Provides configurations related to chat bubble such as padding, margin, max
   /// width etc.
@@ -82,9 +80,6 @@ class ChatView extends StatefulWidget {
   /// Allow user to show typing indicator.
   final bool showTypingIndicator;
 
-  /// Allow user to giving customisation typing indicator.
-  final TypeIndicatorConfiguration? typeIndicatorConfig;
-
   /// Provides controller for accessing few function for running chat.
   final ChatController chatController;
 
@@ -119,8 +114,6 @@ class _ChatViewState extends State<ChatView>
 
   ChatBackgroundConfiguration get chatBackgroundConfig =>
       widget.chatBackgroundConfig;
-
-
 
   ChatViewStateConfiguration? get chatViewStateConfig =>
       widget.chatViewStateConfig;
@@ -177,7 +170,6 @@ class _ChatViewState extends State<ChatView>
                         chatController: widget.chatController,
                         chatBackgroundConfig: widget.chatBackgroundConfig,
                         reactionPopupConfig: widget.reactionPopupConfig,
-                        typeIndicatorConfig: widget.typeIndicatorConfig,
                         chatBubbleConfig: widget.chatBubbleConfig,
                         loadMoreData: widget.loadMoreData,
                         isLastPage: widget.isLastPage,
@@ -203,7 +195,7 @@ class _ChatViewState extends State<ChatView>
                       onSendTap: _onSendTap,
                       onReplyCallback: (reply) => replyMessage.value = reply,
                       onReplyCloseCallback: () =>
-                      replyMessage.value = const ReplyMessage(),
+                          replyMessage.value = const ReplyMessage(),
                     ),
                 ],
               ),

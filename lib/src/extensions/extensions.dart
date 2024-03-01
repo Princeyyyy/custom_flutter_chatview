@@ -48,21 +48,6 @@ extension ValidateString on String {
   }
 
   bool get isUrl => Uri.tryParse(this)?.isAbsolute ?? false;
-
-  Widget getUserProfilePicture({
-    required ChatUser? Function(String) getChatUser,
-    double? profileCircleRadius,
-    EdgeInsets? profileCirclePadding,
-  }) {
-    return Padding(
-      padding: profileCirclePadding ?? const EdgeInsets.only(left: 4),
-      child: CircleAvatar(
-        radius: profileCircleRadius ?? 8,
-        backgroundImage:
-            NetworkImage(getChatUser(this)?.profilePhoto ?? profileImage),
-      ),
-    );
-  }
 }
 
 /// Extension on MessageType for checking specific message type

@@ -6,18 +6,17 @@ import 'package:chatview/src/models/models.dart';
 import 'package:flutter/material.dart';
 
 import 'reaction_widget.dart';
-import 'share_icon.dart';
 
 class ImageMessageView extends StatelessWidget {
   const ImageMessageView({
-    Key? key,
+    super.key,
     required this.message,
     required this.isMessageBySender,
     this.imageMessageConfig,
     this.messageReactionConfig,
     this.highlightImage = false,
     this.highlightScale = 1.2,
-  }) : super(key: key);
+  });
 
   /// Provides message instance of chat.
   final Message message;
