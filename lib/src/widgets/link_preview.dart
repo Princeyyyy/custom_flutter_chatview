@@ -1,6 +1,5 @@
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:chatview/src/extensions/extensions.dart';
-import 'package:chatview/src/models/link_preview_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,15 +9,10 @@ class LinkPreview extends StatelessWidget {
   const LinkPreview({
     super.key,
     required this.url,
-    this.linkPreviewConfig,
   });
 
   /// Provides url which is passed in message.
   final String url;
-
-  /// Provides configuration of chat bubble appearance when link/URL is passed
-  /// in message.
-  final LinkPreviewConfiguration? linkPreviewConfig;
 
   @override
   Widget build(BuildContext context) {
@@ -43,22 +37,20 @@ class LinkPreview extends StatelessWidget {
                 : AnyLinkPreview(
                     link: url,
                     removeElevation: true,
-                    proxyUrl: linkPreviewConfig?.proxyUrl,
                     onTap: _onLinkTap,
                     placeholderWidget: SizedBox(
                       height: MediaQuery.of(context).size.height * 0.25,
                       width: double.infinity,
-                      child: Center(
+                      child: const Center(
                         child: CircularProgressIndicator(
                           strokeWidth: 1,
-                          color: linkPreviewConfig?.loadingColor,
+                          color: Colors.blue,
                         ),
                       ),
                     ),
                     backgroundColor: Colors.grey.shade200,
-                    borderRadius: linkPreviewConfig?.borderRadius,
                     bodyStyle: const TextStyle(color: Colors.black),
-                    titleStyle: linkPreviewConfig?.titleStyle,
+                    titleStyle: const TextStyle(color: Colors.black),
                   ),
           ),
           const SizedBox(height: verticalPadding),
@@ -78,11 +70,7 @@ class LinkPreview extends StatelessWidget {
   }
 
   void _onLinkTap() {
-    if (linkPreviewConfig?.onUrlDetect != null) {
-      linkPreviewConfig?.onUrlDetect!(url);
-    } else {
-      _launchURL();
-    }
+    _launchURL();
   }
 
   void _launchURL() async {

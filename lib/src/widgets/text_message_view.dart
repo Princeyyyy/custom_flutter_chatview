@@ -71,7 +71,6 @@ class TextMessageView extends StatelessWidget {
             ),
             child: textMessage.isUrl
                 ? LinkPreview(
-                    linkPreviewConfig: _linkPreviewConfig,
                     url: textMessage,
                   )
                 : Padding(
@@ -97,10 +96,6 @@ class TextMessageView extends StatelessWidget {
       ],
     );
   }
-
-  LinkPreviewConfiguration? get _linkPreviewConfig => isMessageBySender
-      ? outgoingChatBubbleConfig?.linkPreviewConfig
-      : inComingChatBubbleConfig?.linkPreviewConfig;
 
   BorderRadiusGeometry _borderRadius(String message) => isMessageBySender
       ? outgoingChatBubbleConfig?.borderRadius ??

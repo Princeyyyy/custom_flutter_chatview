@@ -21,7 +21,6 @@ class ChatListWidget extends StatefulWidget {
     this.messageConfig,
     this.chatBubbleConfig,
     this.repliedMessageConfig,
-    this.replyPopupConfig,
     this.onChatListTap,
   });
 
@@ -46,9 +45,6 @@ class ChatListWidget extends StatefulWidget {
   final ReplyMessage replyMessage;
 
   final String currentUserId;
-
-  /// Provides configuration for reply snack bar's appearance and options.
-  final ReplyPopupConfiguration? replyPopupConfig;
 
   /// Provides callback for assigning reply message when user swipe to chat
   /// bubble.
@@ -135,7 +131,8 @@ class _ChatListWidgetState extends State<ChatListWidget>
                       if (featureActiveConfig?.enableReplySnackBar ?? false) {
                         _showReplyPopup(
                           message: message,
-                          sendByCurrentUser: message.messageSenderId == widget.currentUserId,
+                          sendByCurrentUser:
+                              message.messageSenderId == widget.currentUserId,
                         );
                       }
                     },
@@ -162,47 +159,31 @@ class _ChatListWidgetState extends State<ChatListWidget>
     required Message message,
     required bool sendByCurrentUser,
   }) {
-    final replyPopup = widget.replyPopupConfig;
     ScaffoldMessenger.of(context)
         .showSnackBar(
           SnackBar(
             duration: const Duration(hours: 1),
-            backgroundColor: replyPopup?.backgroundColor ?? Colors.white,
-            content: replyPopup?.replyPopupBuilder != null
-                ? replyPopup!.replyPopupBuilder!(message, sendByCurrentUser)
-                : ReplyPopupWidget(
-                    buttonTextStyle: replyPopup?.buttonTextStyle,
-                    topBorderColor: replyPopup?.topBorderColor,
-                    onMoreTap: () {
-                      _onChatListTap();
-                      if (replyPopup?.onMoreTap != null) {
-                        replyPopup?.onMoreTap!();
-                      }
-                    },
-                    onReportTap: () {
-                      _onChatListTap();
-                      if (replyPopup?.onReportTap != null) {
-                        replyPopup?.onReportTap!();
-                      }
-                    },
-                    onUnsendTap: () {
-                      _onChatListTap();
-                      if (replyPopup?.onUnsendTap != null) {
-                        replyPopup?.onUnsendTap!(message);
-                      }
-                    },
-                    onReplyTap: () {
-                      widget.assignReplyMessage(message);
-                      if (featureActiveConfig?.enableReactionPopup ?? false) {
-                        showPopUp.value = false;
-                      }
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      if (replyPopup?.onReplyTap != null) {
-                        replyPopup?.onReplyTap!(message);
-                      }
-                    },
-                    sendByCurrentUser: sendByCurrentUser,
-                  ),
+            backgroundColor: Colors.white,
+            content: ReplyPopupWidget(
+              onMoreTap: () {
+                _onChatListTap();
+              },
+              onReportTap: () {
+                _onChatListTap();
+              },
+              onUnsendTap: () {
+                _onChatListTap();
+              },
+              onReplyTap: () {
+                widget.assignReplyMessage(message);
+                if (featureActiveConfig?.enableReactionPopup ?? false) {
+                  showPopUp.value = false;
+                }
+
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              },
+              sendByCurrentUser: sendByCurrentUser,
+            ),
             padding: EdgeInsets.zero,
           ),
         )

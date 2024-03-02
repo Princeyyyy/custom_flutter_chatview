@@ -14,9 +14,6 @@ class ChatBubble {
   /// Used for giving margin of chat bubble.
   final EdgeInsetsGeometry? margin;
 
-  /// Used to provide configuration of messages with link.
-  final LinkPreviewConfiguration? linkPreviewConfig;
-
   /// Used to provide builders for last seen message reciept,
   /// at latest outgoing messsage.
   final ReceiptsWidgetConfig? receiptsWidgetConfig;
@@ -30,7 +27,6 @@ class ChatBubble {
     this.textStyle,
     this.padding,
     this.margin,
-    this.linkPreviewConfig,
     this.receiptsWidgetConfig,
     this.onMessageRead,
   });

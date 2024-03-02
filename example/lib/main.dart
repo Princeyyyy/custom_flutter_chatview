@@ -75,28 +75,10 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         chatBubbleConfig: ChatBubbleConfiguration(
           outgoingChatBubbleConfig: const ChatBubble(
-            linkPreviewConfig: LinkPreviewConfiguration(
-              linkStyle: TextStyle(
-                color: Colors.white,
-                decoration: TextDecoration.underline,
-              ),
-              backgroundColor: Color(0xffFCD8DC),
-              bodyStyle: TextStyle(color: Colors.black),
-              titleStyle: TextStyle(color: Colors.black),
-            ),
             receiptsWidgetConfig:
                 ReceiptsWidgetConfig(showReceiptsIn: ShowReceiptsIn.all),
           ),
           inComingChatBubbleConfig: ChatBubble(
-            linkPreviewConfig: const LinkPreviewConfiguration(
-              linkStyle: TextStyle(
-                color: Colors.white,
-                decoration: TextDecoration.underline,
-              ),
-              backgroundColor: Color(0xffFCD8DC),
-              bodyStyle: TextStyle(color: Colors.black),
-              titleStyle: TextStyle(color: Colors.black),
-            ),
             textStyle: const TextStyle(
               color: Colors.white,
               fontSize: 17,
@@ -106,13 +88,6 @@ class _ChatScreenState extends State<ChatScreen> {
               debugPrint('Message Read');
             },
           ),
-        ),
-        replyPopupConfig: const ReplyPopupConfiguration(
-          backgroundColor: Colors.white,
-          buttonTextStyle: TextStyle(
-            color: Colors.black,
-          ),
-          topBorderColor: Color(0xFFBDBDBD),
         ),
         messageConfig: MessageConfiguration(
           messageReactionConfig: MessageReactionConfiguration(

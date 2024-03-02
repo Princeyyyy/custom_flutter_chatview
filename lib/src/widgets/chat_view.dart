@@ -14,7 +14,6 @@ class ChatView extends StatefulWidget {
     this.onSendTap,
     this.chatBubbleConfig,
     this.repliedMessageConfig,
-    this.replyPopupConfig,
     this.messageConfig,
     ChatBackgroundConfiguration? chatBackgroundConfig,
     this.sendMessageBuilder,
@@ -35,9 +34,6 @@ class ChatView extends StatefulWidget {
   /// Provides configuration for replied message view which is located upon chat
   /// bubble.
   final RepliedMessageConfiguration? repliedMessageConfig;
-
-  /// Provides configuration for reply snack bar's appearance and options.
-  final ReplyPopupConfiguration? replyPopupConfig;
 
   /// Allow user to give customisation to background of chat
   final ChatBackgroundConfiguration chatBackgroundConfig;
@@ -123,7 +119,6 @@ class _ChatViewState extends State<ChatView>
                         chatController: widget.chatController,
                         chatBackgroundConfig: widget.chatBackgroundConfig,
                         chatBubbleConfig: widget.chatBubbleConfig,
-                        replyPopupConfig: widget.replyPopupConfig,
                         messageConfig: widget.messageConfig,
                         repliedMessageConfig: widget.repliedMessageConfig,
                         onChatListTap: widget.onChatListTap,
