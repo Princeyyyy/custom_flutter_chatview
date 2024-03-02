@@ -19,7 +19,6 @@ class ChatGroupedListWidget extends StatefulWidget {
     required this.isEnableSwipeToSeeTime,
     required this.currentUserId,
     this.messageConfig,
-    this.chatBubbleConfig,
     this.repliedMessageConfig,
   });
 
@@ -33,9 +32,6 @@ class ChatGroupedListWidget extends StatefulWidget {
   /// Allow user to giving customisation different types
   /// messages
   final MessageConfiguration? messageConfig;
-
-  /// Allow user to giving customisation to chat bubble
-  final ChatBubbleConfiguration? chatBubbleConfig;
   final RepliedMessageConfiguration? repliedMessageConfig;
 
   /// Provides reply message if actual message is sent by replying any message.
@@ -69,8 +65,6 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
 
   bool highlightMessage = false;
   final ValueNotifier<String?> _replyId = ValueNotifier(null);
-
-  ChatBubbleConfiguration? get chatBubbleConfig => widget.chatBubbleConfig;
   AnimationController? _animationController;
   Animation<Offset>? _slideAnimation;
 
@@ -240,7 +234,6 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
                             chatBackgroundConfig.messageTimeIconColor,
                         message: message,
                         messageConfig: widget.messageConfig,
-                        chatBubbleConfig: chatBubbleConfig,
                         repliedMessageConfig: widget.repliedMessageConfig,
                         slideAnimation: _slideAnimation,
                         onLongPress: (yCoordinate, xCoordinate) =>

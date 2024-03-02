@@ -14,8 +14,6 @@ class VoiceMessageView extends StatefulWidget {
     required this.screenWidth,
     required this.message,
     required this.isMessageBySender,
-    this.inComingChatBubbleConfig,
-    this.outgoingChatBubbleConfig,
     this.onMaxDuration,
     this.messageReactionConfig,
     this.config,
@@ -36,12 +34,6 @@ class VoiceMessageView extends StatefulWidget {
 
   /// Provides configuration of reaction appearance in chat bubble.
   final MessageReactionConfiguration? messageReactionConfig;
-
-  /// Provides configuration of chat bubble appearance from other user of chat.
-  final ChatBubble? inComingChatBubbleConfig;
-
-  /// Provides configuration of chat bubble appearance from current user of chat.
-  final ChatBubble? outgoingChatBubbleConfig;
 
   @override
   State<VoiceMessageView> createState() => _VoiceMessageViewState();

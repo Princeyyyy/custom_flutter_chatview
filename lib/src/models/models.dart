@@ -10,6 +10,5 @@ export 'message_list_configuration.dart';
 export 'emoji_message_configuration.dart';
 export 'message_configuration.dart';
 export 'send_message_configuration.dart';
-export 'link_preview_configuration.dart';
 export 'reaction.dart';
 export 'feature_active_config.dart';

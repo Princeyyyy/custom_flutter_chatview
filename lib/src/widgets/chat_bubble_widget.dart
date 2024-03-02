@@ -16,7 +16,6 @@ class ChatBubbleWidget extends StatefulWidget {
     required this.slideAnimation,
     required this.onSwipe,
     required this.currentUserId,
-    this.chatBubbleConfig,
     this.repliedMessageConfig,
     this.messageTimeTextStyle,
     this.messageTimeIconColor,
@@ -30,10 +29,6 @@ class ChatBubbleWidget extends StatefulWidget {
 
   /// Give callback once user long press on chat bubble.
   final DoubleCallBack onLongPress;
-
-  /// Provides configurations related to chat bubble such as padding, margin, max
-  /// width etc.
-  final ChatBubbleConfiguration? chatBubbleConfig;
 
   /// Provides configurations related to replied message such as textstyle
   /// padding, margin etc. Also, this widget is located upon chat bubble.
@@ -117,10 +112,8 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
 
   Widget _chatBubbleWidget() {
     return Container(
-      padding:
-          widget.chatBubbleConfig?.padding ?? const EdgeInsets.only(left: 5.0),
-      margin:
-          widget.chatBubbleConfig?.margin ?? const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(left: 5.0),
+      margin: const EdgeInsets.only(bottom: 10),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment:
@@ -181,20 +174,13 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                   currentUserId: widget.currentUserId,
                 ),
         MessageView(
-          outgoingChatBubbleConfig:
-              widget.chatBubbleConfig?.outgoingChatBubbleConfig,
           isLongPressEnable:
               (featureActiveConfig?.enableReactionPopup ?? true) ||
                   (featureActiveConfig?.enableReplySnackBar ?? true),
-          inComingChatBubbleConfig:
-              widget.chatBubbleConfig?.inComingChatBubbleConfig,
           message: widget.message,
           isMessageBySender: isMessageBySender,
           messageConfig: widget.messageConfig,
           onLongPress: widget.onLongPress,
-          chatBubbleMaxWidth: widget.chatBubbleConfig?.maxWidth,
-          longPressAnimationDuration:
-              widget.chatBubbleConfig?.longPressAnimationDuration,
           onDoubleTap: (message) => chatController?.setReaction(
             emoji: heart,
             messageId: message.id,

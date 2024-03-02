@@ -1,9 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:timeago/timeago.dart' as timeago;
-
-import '../../../chatview.dart';
-
 const String enUS = "en_US";
 const String emojiRegExpression =
     r'(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])';
@@ -34,23 +28,3 @@ const double replyBorderRadius1 = 30;
 const double replyBorderRadius2 = 18;
 const double leftPadding3 = 12;
 const double textFieldBorderRadius = 27;
-
-applicationDateFormatter(DateTime inputTime) {
-  if (DateTime.now().difference(inputTime).inDays <= 3) {
-    return timeago.format(inputTime);
-  } else {
-    return DateFormat('dd MMM yyyy').format(inputTime);
-  }
-}
-
-/// Default builder when the message has got seen as of now
-/// is visible at the bottom of the chat bubble
-Widget lastSeenAgoBuilder(Message message, String formattedDate) {
-  return Padding(
-    padding: const EdgeInsets.all(2),
-    child: Text(
-      'Seen ${applicationDateFormatter(message.createdAt)}    ',
-      style: const TextStyle(color: Colors.grey, fontSize: 12),
-    ),
-  );
-}

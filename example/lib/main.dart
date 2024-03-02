@@ -73,22 +73,6 @@ class _ChatScreenState extends State<ChatScreen> {
             textStyle: TextStyle(color: Colors.black),
           ),
         ),
-        chatBubbleConfig: ChatBubbleConfiguration(
-          outgoingChatBubbleConfig: const ChatBubble(
-            receiptsWidgetConfig:
-                ReceiptsWidgetConfig(showReceiptsIn: ShowReceiptsIn.all),
-          ),
-          inComingChatBubbleConfig: ChatBubble(
-            textStyle: const TextStyle(
-              color: Colors.white,
-              fontSize: 17,
-            ),
-            onMessageRead: (message) {
-              /// send your message receipts to the other client
-              debugPrint('Message Read');
-            },
-          ),
-        ),
         messageConfig: MessageConfiguration(
           messageReactionConfig: MessageReactionConfiguration(
             backgroundColor: const Color(0xFFEEEEEE),

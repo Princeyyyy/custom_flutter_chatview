@@ -1,5 +1,4 @@
 import 'package:chatview/chatview.dart';
-import 'package:chatview/src/widgets/chat_view_inherited_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:chatview/src/extensions/extensions.dart';
@@ -16,10 +15,6 @@ class MessageView extends StatefulWidget {
     required this.isMessageBySender,
     required this.onLongPress,
     required this.isLongPressEnable,
-    this.chatBubbleMaxWidth,
-    this.inComingChatBubbleConfig,
-    this.outgoingChatBubbleConfig,
-    this.longPressAnimationDuration,
     this.onDoubleTap,
     this.highlightColor = Colors.grey,
     this.shouldHighlight = false,
@@ -37,18 +32,6 @@ class MessageView extends StatefulWidget {
 
   /// Give callback once user long press on chat bubble.
   final DoubleCallBack onLongPress;
-
-  /// Allow users to give max width of chat bubble.
-  final double? chatBubbleMaxWidth;
-
-  /// Provides configuration of chat bubble appearance from other user of chat.
-  final ChatBubble? inComingChatBubbleConfig;
-
-  /// Provides configuration of chat bubble appearance from current user of chat.
-  final ChatBubble? outgoingChatBubbleConfig;
-
-  /// Allow users to give duration of animation when user long press on chat bubble.
-  final Duration? longPressAnimationDuration;
 
   /// Allow user to set some action when user double tap on chat bubble.
   final MessageCallBack? onDoubleTap;
@@ -91,16 +74,10 @@ class _MessageViewState extends State<MessageView>
     if (isLongPressEnable) {
       _animationController = AnimationController(
         vsync: this,
-        duration: widget.longPressAnimationDuration ??
-            const Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 250),
         upperBound: 0.1,
         lowerBound: 0.0,
       );
-
-      if (widget.message.status != MessageStatus.read &&
-          !widget.isMessageBySender) {
-        widget.inComingChatBubbleConfig?.onMessageRead?.call(widget.message);
-      }
 
       _animationController?.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
@@ -175,7 +152,8 @@ class _MessageViewState extends State<MessageView>
                       if (widget.message.reaction.reactions.isNotEmpty)
                         ReactionWidget(
                           reaction: widget.message.reaction,
-                          messageReactionConfig: messageConfig?.messageReactionConfig,
+                          messageReactionConfig:
+                              messageConfig?.messageReactionConfig,
                           isMessageBySender: widget.isMessageBySender,
                           isMessageImage: false,
                         ),
@@ -192,11 +170,8 @@ class _MessageViewState extends State<MessageView>
                   );
                 } else if (widget.message.messageType.isText) {
                   return TextMessageView(
-                    inComingChatBubbleConfig: widget.inComingChatBubbleConfig,
-                    outgoingChatBubbleConfig: widget.outgoingChatBubbleConfig,
                     isMessageBySender: widget.isMessageBySender,
                     message: widget.message,
-                    chatBubbleMaxWidth: widget.chatBubbleMaxWidth,
                     messageReactionConfig: messageConfig?.messageReactionConfig,
                     highlightColor: widget.highlightColor,
                     highlightMessage: widget.shouldHighlight,
@@ -209,37 +184,10 @@ class _MessageViewState extends State<MessageView>
                     onMaxDuration: widget.onMaxDuration,
                     isMessageBySender: widget.isMessageBySender,
                     messageReactionConfig: messageConfig?.messageReactionConfig,
-                    inComingChatBubbleConfig: widget.inComingChatBubbleConfig,
-                    outgoingChatBubbleConfig: widget.outgoingChatBubbleConfig,
                   );
                 }
               }()) ??
               const SizedBox(),
-          ValueListenableBuilder(
-            valueListenable: widget.message.statusNotifier,
-            builder: (context, value, child) {
-              if (widget.isMessageBySender &&
-                  widget.controller?.initialMessageList.last.id ==
-                      widget.message.id &&
-                  widget.message.status == MessageStatus.read) {
-                if (ChatViewInheritedWidget.of(context)
-                        ?.featureActiveConfig
-                        .lastSeenAgoBuilderVisibility ??
-                    true) {
-                  return widget.outgoingChatBubbleConfig?.receiptsWidgetConfig
-                          ?.lastSeenAgoBuilder
-                          ?.call(
-                              widget.message,
-                              applicationDateFormatter(
-                                  widget.message.createdAt)) ??
-                      lastSeenAgoBuilder(widget.message,
-                          applicationDateFormatter(widget.message.createdAt));
-                }
-                return const SizedBox();
-              }
-              return const SizedBox();
-            },
-          )
         ],
       ),
     );

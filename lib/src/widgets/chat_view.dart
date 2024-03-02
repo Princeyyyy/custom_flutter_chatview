@@ -12,7 +12,6 @@ class ChatView extends StatefulWidget {
     required this.chatController,
     required this.currentUserId,
     this.onSendTap,
-    this.chatBubbleConfig,
     this.repliedMessageConfig,
     this.messageConfig,
     ChatBackgroundConfiguration? chatBackgroundConfig,
@@ -22,10 +21,6 @@ class ChatView extends StatefulWidget {
     this.featureActiveConfig = const FeatureActiveConfig(),
   })  : chatBackgroundConfig =
             chatBackgroundConfig ?? const ChatBackgroundConfiguration();
-
-  /// Provides configurations related to chat bubble such as padding, margin, max
-  /// width etc.
-  final ChatBubbleConfiguration? chatBubbleConfig;
 
   /// Allow user to giving customisation different types
   /// messages.
@@ -118,7 +113,6 @@ class _ChatViewState extends State<ChatView>
                         replyMessage: state,
                         chatController: widget.chatController,
                         chatBackgroundConfig: widget.chatBackgroundConfig,
-                        chatBubbleConfig: widget.chatBubbleConfig,
                         messageConfig: widget.messageConfig,
                         repliedMessageConfig: widget.repliedMessageConfig,
                         onChatListTap: widget.onChatListTap,

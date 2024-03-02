@@ -12,9 +12,6 @@ class TextMessageView extends StatelessWidget {
     super.key,
     required this.isMessageBySender,
     required this.message,
-    this.chatBubbleMaxWidth,
-    this.inComingChatBubbleConfig,
-    this.outgoingChatBubbleConfig,
     this.messageReactionConfig,
     this.highlightMessage = false,
     this.highlightColor,
@@ -25,15 +22,6 @@ class TextMessageView extends StatelessWidget {
 
   /// Provides message instance of chat.
   final Message message;
-
-  /// Allow users to give max width of chat bubble.
-  final double? chatBubbleMaxWidth;
-
-  /// Provides configuration of chat bubble appearance from other user of chat.
-  final ChatBubble? inComingChatBubbleConfig;
-
-  /// Provides configuration of chat bubble appearance from current user of chat.
-  final ChatBubble? outgoingChatBubbleConfig;
 
   /// Provides configuration of reaction appearance in chat bubble.
   final MessageReactionConfiguration? messageReactionConfig;
@@ -59,7 +47,7 @@ class TextMessageView extends StatelessWidget {
           ),
           child: Container(
             constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.75,
+              maxWidth: MediaQuery.of(context).size.width * 0.75,
             ),
             padding: const EdgeInsets.symmetric(
               horizontal: 12,
@@ -74,15 +62,15 @@ class TextMessageView extends StatelessWidget {
                     url: textMessage,
                   )
                 : Padding(
-                  padding: const EdgeInsets.all(6),
-                  child: Text(
+                    padding: const EdgeInsets.all(6),
+                    child: Text(
                       textMessage,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
                     ),
-                ),
+                  ),
           ),
         ),
         if (message.reaction.reactions.isNotEmpty)
@@ -98,14 +86,12 @@ class TextMessageView extends StatelessWidget {
   }
 
   BorderRadiusGeometry _borderRadius(String message) => isMessageBySender
-      ? outgoingChatBubbleConfig?.borderRadius ??
-          (message.length < 37
-              ? BorderRadius.circular(replyBorderRadius1)
-              : BorderRadius.circular(replyBorderRadius2))
-      : inComingChatBubbleConfig?.borderRadius ??
-          (message.length < 29
-              ? BorderRadius.circular(replyBorderRadius1)
-              : BorderRadius.circular(replyBorderRadius2));
+      ? (message.length < 37
+          ? BorderRadius.circular(replyBorderRadius1)
+          : BorderRadius.circular(replyBorderRadius2))
+      : (message.length < 29
+          ? BorderRadius.circular(replyBorderRadius1)
+          : BorderRadius.circular(replyBorderRadius2));
 }
 
 /// Custom painter used to create the shape of the chat bubble
