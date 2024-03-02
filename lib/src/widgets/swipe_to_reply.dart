@@ -9,7 +9,6 @@ class SwipeToReply extends StatefulWidget {
     required this.child,
     this.replyIconColor,
     this.onRightSwipe,
-    this.swipeToReplyAnimationDuration,
   });
 
   /// Provides callback when user swipes chat bubble from right side.
@@ -23,9 +22,6 @@ class SwipeToReply extends StatefulWidget {
 
   /// Allow user to change colour of reply icon which is showed while user swipes.
   final Color? replyIconColor;
-
-  /// Allow user to set duration of animation of icon.
-  final Duration? swipeToReplyAnimationDuration;
 
   @override
   State<SwipeToReply> createState() => _SwipeToReplyState();
@@ -47,8 +43,7 @@ class _SwipeToReplyState extends State<SwipeToReply>
   void _initializeAnimationControllers() {
     _controller = AnimationController(
       vsync: this,
-      duration: widget.swipeToReplyAnimationDuration ??
-          const Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 250),
     );
     _slideAnimation = Tween<Offset>(
       begin: const Offset(0.0, 0.0),

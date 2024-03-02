@@ -14,7 +14,6 @@ class ChatView extends StatefulWidget {
     this.onSendTap,
     this.chatBubbleConfig,
     this.repliedMessageConfig,
-    this.swipeToReplyConfig,
     this.replyPopupConfig,
     this.reactionPopupConfig,
     this.messageConfig,
@@ -37,10 +36,6 @@ class ChatView extends StatefulWidget {
   /// Provides configuration for replied message view which is located upon chat
   /// bubble.
   final RepliedMessageConfiguration? repliedMessageConfig;
-
-  /// Provides configurations related to swipe chat bubble which triggers
-  /// when user swipe chat bubble.
-  final SwipeToReplyConfiguration? swipeToReplyConfig;
 
   /// Provides configuration for reply snack bar's appearance and options.
   final ReplyPopupConfiguration? replyPopupConfig;
@@ -136,7 +131,6 @@ class _ChatViewState extends State<ChatView>
                         replyPopupConfig: widget.replyPopupConfig,
                         messageConfig: widget.messageConfig,
                         repliedMessageConfig: widget.repliedMessageConfig,
-                        swipeToReplyConfig: widget.swipeToReplyConfig,
                         onChatListTap: widget.onChatListTap,
                         assignReplyMessage: (message) => _sendMessageKey
                             .currentState

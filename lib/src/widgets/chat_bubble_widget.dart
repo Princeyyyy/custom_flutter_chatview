@@ -18,7 +18,6 @@ class ChatBubbleWidget extends StatefulWidget {
     required this.currentUserId,
     this.chatBubbleConfig,
     this.repliedMessageConfig,
-    this.swipeToReplyConfig,
     this.messageTimeTextStyle,
     this.messageTimeIconColor,
     this.messageConfig,
@@ -39,10 +38,6 @@ class ChatBubbleWidget extends StatefulWidget {
   /// Provides configurations related to replied message such as textstyle
   /// padding, margin etc. Also, this widget is located upon chat bubble.
   final RepliedMessageConfiguration? repliedMessageConfig;
-
-  /// Provides configurations related to swipe chat bubble which triggers
-  /// when user swipe chat bubble.
-  final SwipeToReplyConfiguration? swipeToReplyConfig;
 
   /// Provides textStyle of message created time when user swipe whole chat.
   final TextStyle? messageTimeTextStyle;
@@ -75,7 +70,8 @@ class ChatBubbleWidget extends StatefulWidget {
 class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
   String get replyMessage => widget.message.replyMessage.message;
 
-  bool get isMessageBySender => widget.message.messageSenderId == widget.currentUserId;
+  bool get isMessageBySender =>
+      widget.message.messageSenderId == widget.currentUserId;
 
   FeatureActiveConfig? featureActiveConfig;
   ChatController? chatController;
@@ -140,18 +136,11 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                               widget.message.voiceMessageDuration =
                                   Duration(milliseconds: maxDuration!);
                             }
-                            if (widget.swipeToReplyConfig?.onLeftSwipe !=
-                                null) {
-                              widget.swipeToReplyConfig?.onLeftSwipe!(
-                                  widget.message.message,
-                                  widget.message.messageSenderId);
-                            }
+
                             widget.onSwipe(widget.message);
                           }
                         : null,
-                    replyIconColor: widget.swipeToReplyConfig?.replyIconColor,
-                    swipeToReplyAnimationDuration:
-                        widget.swipeToReplyConfig?.animationDuration,
+                    replyIconColor: Colors.black,
                     child: _messagesWidgetColumn(),
                   )
                 : SwipeToReply(
@@ -162,18 +151,11 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                                   widget.message.voiceMessageDuration =
                                       Duration(milliseconds: maxDuration!);
                                 }
-                                if (widget.swipeToReplyConfig?.onRightSwipe !=
-                                    null) {
-                                  widget.swipeToReplyConfig?.onRightSwipe!(
-                                      widget.message.message,
-                                      widget.message.messageSenderId);
-                                }
+
                                 widget.onSwipe(widget.message);
                               }
                             : null,
-                    replyIconColor: widget.swipeToReplyConfig?.replyIconColor,
-                    swipeToReplyAnimationDuration:
-                        widget.swipeToReplyConfig?.animationDuration,
+                    replyIconColor: Colors.black,
                     child: _messagesWidgetColumn(),
                   ),
           ),
@@ -220,12 +202,8 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
           ),
           shouldHighlight: widget.shouldHighlight,
           controller: chatController,
-          highlightColor: widget.repliedMessageConfig
-                  ?.repliedMsgAutoScrollConfig.highlightColor ??
-              Colors.grey,
-          highlightScale: widget.repliedMessageConfig
-                  ?.repliedMsgAutoScrollConfig.highlightScale ??
-              1.1,
+          highlightColor: Colors.grey,
+          highlightScale: 1.1,
           onMaxDuration: _onMaxDuration,
         ),
       ],

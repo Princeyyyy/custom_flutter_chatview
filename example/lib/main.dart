@@ -147,25 +147,17 @@ class _ChatScreenState extends State<ChatScreen> {
             margin: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
           ),
         ),
-        repliedMessageConfig: RepliedMessageConfiguration(
-          backgroundColor: const Color(0xffff8aad),
-          verticalBarColor: const Color(0xffEE5366),
-          repliedMsgAutoScrollConfig: RepliedMsgAutoScrollConfig(
-            enableHighlightRepliedMsg: true,
-            highlightColor: Colors.pinkAccent.shade100,
-            highlightScale: 1.1,
-          ),
-          textStyle: const TextStyle(
+        repliedMessageConfig: const RepliedMessageConfiguration(
+          backgroundColor: Color(0xffff8aad),
+          verticalBarColor: Color(0xffEE5366),
+          textStyle: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
             letterSpacing: 0.25,
           ),
-          replyTitleTextStyle: const TextStyle(
+          replyTitleTextStyle: TextStyle(
             color: Colors.black,
           ),
-        ),
-        swipeToReplyConfig: const SwipeToReplyConfiguration(
-          replyIconColor: Colors.black,
         ),
         currentUserId: "currentUser.id",
       ),

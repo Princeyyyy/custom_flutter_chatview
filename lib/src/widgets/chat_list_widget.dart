@@ -21,7 +21,6 @@ class ChatListWidget extends StatefulWidget {
     this.reactionPopupConfig,
     this.messageConfig,
     this.chatBubbleConfig,
-    this.swipeToReplyConfig,
     this.repliedMessageConfig,
     this.replyPopupConfig,
     this.onChatListTap,
@@ -42,9 +41,6 @@ class ChatListWidget extends StatefulWidget {
 
   /// Provides configuration of chat bubble's appearance.
   final ChatBubbleConfiguration? chatBubbleConfig;
-
-  /// Provides configuration for when user swipe to chat bubble.
-  final SwipeToReplyConfiguration? swipeToReplyConfig;
 
   /// Provides configuration for replied message view which is located upon chat
   /// bubble.
@@ -126,7 +122,6 @@ class _ChatListWidgetState extends State<ChatListWidget>
                     chatBackgroundConfig: widget.chatBackgroundConfig,
                     assignReplyMessage: widget.assignReplyMessage,
                     replyMessage: widget.replyMessage,
-                    swipeToReplyConfig: widget.swipeToReplyConfig,
                     repliedMessageConfig: widget.repliedMessageConfig,
                     messageConfig: widget.messageConfig,
                     chatBubbleConfig: widget.chatBubbleConfig,

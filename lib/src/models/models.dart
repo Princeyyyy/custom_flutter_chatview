@@ -14,5 +14,4 @@ export 'message_configuration.dart';
 export 'send_message_configuration.dart';
 export 'link_preview_configuration.dart';
 export 'reaction.dart';
-export 'replied_msg_auto_scroll_config.dart';
 export 'feature_active_config.dart';

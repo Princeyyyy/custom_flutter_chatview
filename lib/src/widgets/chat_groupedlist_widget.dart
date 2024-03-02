@@ -20,7 +20,6 @@ class ChatGroupedListWidget extends StatefulWidget {
     required this.currentUserId,
     this.messageConfig,
     this.chatBubbleConfig,
-    this.swipeToReplyConfig,
     this.repliedMessageConfig,
   });
 
@@ -37,9 +36,6 @@ class ChatGroupedListWidget extends StatefulWidget {
 
   /// Allow user to giving customisation to chat bubble
   final ChatBubbleConfiguration? chatBubbleConfig;
-
-  /// Allow user to giving customisation to swipe to reply
-  final SwipeToReplyConfiguration? swipeToReplyConfig;
   final RepliedMessageConfiguration? repliedMessageConfig;
 
   /// Provides reply message if actual message is sent by replying any message.
@@ -169,27 +165,18 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
         repliedMessages.key.currentState!.context,
         // This value will make widget to be in center when auto scrolled.
         alignment: 0.5,
-        curve: widget.repliedMessageConfig?.repliedMsgAutoScrollConfig
-                .highlightScrollCurve ??
-            Curves.easeIn,
-        duration: widget.repliedMessageConfig?.repliedMsgAutoScrollConfig
-                .highlightDuration ??
-            const Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+        duration: const Duration(milliseconds: 300),
       );
-      if (widget.repliedMessageConfig?.repliedMsgAutoScrollConfig
-              .enableHighlightRepliedMsg ??
-          false) {
-        _replyId.value = id;
 
-        Future.delayed(
-          widget.repliedMessageConfig?.repliedMsgAutoScrollConfig
-                  .highlightDuration ??
-              const Duration(milliseconds: 300),
-          () {
-            _replyId.value = null;
-          },
-        );
-      }
+      _replyId.value = id;
+
+      Future.delayed(
+        const Duration(milliseconds: 300),
+            () {
+          _replyId.value = null;
+        },
+      );
     }
   }
 
@@ -254,7 +241,6 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
                         message: message,
                         messageConfig: widget.messageConfig,
                         chatBubbleConfig: chatBubbleConfig,
-                        swipeToReplyConfig: widget.swipeToReplyConfig,
                         repliedMessageConfig: widget.repliedMessageConfig,
                         slideAnimation: _slideAnimation,
                         onLongPress: (yCoordinate, xCoordinate) =>
@@ -265,13 +251,7 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
                         ),
                         onSwipe: widget.assignReplyMessage,
                         shouldHighlight: state == message.id,
-                        onReplyTap: widget
-                                    .repliedMessageConfig
-                                    ?.repliedMsgAutoScrollConfig
-                                    .enableScrollToRepliedMsg ??
-                                false
-                            ? (replyId) => _onReplyTap(replyId, snapshot.data)
-                            : null,
+                        onReplyTap: (replyId) => _onReplyTap(replyId, snapshot.data),
                         currentUserId: widget.currentUserId,
                       );
                     },

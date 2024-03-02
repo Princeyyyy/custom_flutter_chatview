@@ -1,4 +1,3 @@
-import 'package:chatview/src/models/replied_msg_auto_scroll_config.dart';
 import 'package:flutter/material.dart';
 
 import '../values/typedefs.dart';
@@ -47,10 +46,6 @@ class RepliedMessageConfiguration {
   /// Provides builder for custom view of replied message.
   final ReplyMessageWithReturnWidget? repliedMessageWidgetBuilder;
 
-  /// Configuration for auto scrolling and highlighting a message when
-  /// tapping on the original message above the replied message.
-  final RepliedMsgAutoScrollConfig repliedMsgAutoScrollConfig;
-
   /// Color for microphone icon.
   final Color? micIconColor;
 
@@ -69,7 +64,6 @@ class RepliedMessageConfiguration {
     this.repliedImageMessageBorderRadius,
     this.repliedMessageWidgetBuilder,
     this.opacity,
-    this.repliedMsgAutoScrollConfig = const RepliedMsgAutoScrollConfig(),
     this.micIconColor,
   });
 }
