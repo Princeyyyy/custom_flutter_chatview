@@ -114,13 +114,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           topBorderColor: Color(0xFFBDBDBD),
         ),
-        reactionPopupConfig: ReactionPopupConfiguration(
-          shadow: BoxShadow(
-            color: isDarkTheme ? Colors.black54 : Colors.grey.shade400,
-            blurRadius: 20,
-          ),
-          backgroundColor: Colors.white,
-        ),
         messageConfig: MessageConfiguration(
           messageReactionConfig: MessageReactionConfiguration(
             backgroundColor: const Color(0xFFEEEEEE),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:chatview/src/models/reaction_popup_configuration.dart';
 import 'package:chatview/src/utils/constants/constants.dart';
 
 import '../values/typedefs.dart';
@@ -9,14 +8,10 @@ class EmojiRow extends StatelessWidget {
   EmojiRow({
     super.key,
     required this.onEmojiTap,
-    this.emojiConfiguration,
   });
 
   /// Provides callback when user taps on emoji in reaction pop-up.
   final StringCallback onEmojiTap;
-
-  /// Provides configuration of emoji's appearance in reaction pop-up.
-  final EmojiConfiguration? emojiConfiguration;
 
   /// These are default emojis.
   final List<String> _emojiUnicodes = [
@@ -30,8 +25,8 @@ class EmojiRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final emojiList = emojiConfiguration?.emojiList ?? _emojiUnicodes;
-    final size = emojiConfiguration?.size;
+    final emojiList = _emojiUnicodes;
+
     return Row(
       children: [
         Expanded(
@@ -44,7 +39,7 @@ class EmojiRow extends StatelessWidget {
                 onTap: () => onEmojiTap(emojiList[index]),
                 child: Text(
                   emojiList[index],
-                  style: TextStyle(fontSize: size ?? 28),
+                  style: const TextStyle(fontSize: 28),
                 ),
               ),
             ),
@@ -55,7 +50,7 @@ class EmojiRow extends StatelessWidget {
           icon: Icon(
             Icons.add,
             color: Colors.grey.shade600,
-            size: size ?? 28,
+            size: 28,
           ),
           onPressed: () => _showBottomSheet(context),
         ),

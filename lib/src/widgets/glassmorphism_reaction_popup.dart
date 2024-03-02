@@ -2,35 +2,25 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../models/models.dart';
 import '../utils/constants/constants.dart';
 
 class GlassMorphismReactionPopup extends StatelessWidget {
   const GlassMorphismReactionPopup({
     super.key,
     required this.child,
-    this.reactionPopupConfig,
   });
 
   /// Allow user to assign custom widget which is appeared in glass-morphism
   /// effect.
   final Widget child;
 
-  /// Provides configuration for reaction pop-up appearance.
-  final ReactionPopupConfiguration? reactionPopupConfig;
+  Color get backgroundColor => Colors.white;
 
-  Color get backgroundColor =>
-      reactionPopupConfig?.glassMorphismConfig?.backgroundColor ?? Colors.white;
+  double get strokeWidth => 2;
 
-  double get strokeWidth =>
-      reactionPopupConfig?.glassMorphismConfig?.strokeWidth ?? 2;
+  Color get borderColor => Colors.grey.shade400;
 
-  Color get borderColor =>
-      reactionPopupConfig?.glassMorphismConfig?.borderColor ??
-      Colors.grey.shade400;
-
-  double get borderRadius =>
-      reactionPopupConfig?.glassMorphismConfig?.borderRadius ?? 30;
+  double get borderRadius => 30;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +28,7 @@ class GlassMorphismReactionPopup extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Container(
-          constraints:
-              BoxConstraints(maxWidth: reactionPopupConfig?.maxWidth ?? 350),
+          constraints: const BoxConstraints(maxWidth: 350),
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -64,7 +53,7 @@ class GlassMorphismReactionPopup extends StatelessWidget {
                 sigmaY: 16,
               ),
               child: Padding(
-                padding: reactionPopupConfig?.padding ??
+                padding:
                     const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
                 child: child,
               ),
@@ -74,8 +63,7 @@ class GlassMorphismReactionPopup extends StatelessWidget {
         IgnorePointer(
           ignoring: true,
           child: Padding(
-            padding: reactionPopupConfig?.margin ??
-                const EdgeInsets.symmetric(horizontal: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             child: CustomPaint(
               painter: _GradientPainter(
                 strokeWidth: strokeWidth,
@@ -83,10 +71,9 @@ class GlassMorphismReactionPopup extends StatelessWidget {
                 borderColor: borderColor,
               ),
               child: Container(
-                constraints: BoxConstraints(
-                    maxWidth: reactionPopupConfig?.maxWidth ?? maxWidth),
-                padding: EdgeInsets.symmetric(
-                  vertical: reactionPopupConfig?.emojiConfig?.size ?? 28,
+                constraints: const BoxConstraints(maxWidth: maxWidth),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 28,
                 ),
                 decoration: BoxDecoration(
                   color: Colors.transparent,

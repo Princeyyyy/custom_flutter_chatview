@@ -8,14 +8,10 @@ import 'emoji_row.dart';
 class ReactionPopup extends StatefulWidget {
   const ReactionPopup({
     super.key,
-    this.reactionPopupConfig,
     required this.currentUserId,
     required this.onTap,
     required this.showPopUp,
   });
-
-  /// Provides configuration of reaction pop-up appearance.
-  final ReactionPopupConfiguration? reactionPopupConfig;
 
   /// Provides call back when user taps on reaction pop-up.
   final VoidCallBack onTap;
@@ -34,9 +30,6 @@ class ReactionPopupState extends State<ReactionPopup>
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
 
-  ReactionPopupConfiguration? get reactionPopupConfig =>
-      widget.reactionPopupConfig;
-
   bool get showPopUp => widget.showPopUp;
   double _yCoordinate = 0.0;
   double _xCoordinate = 0.0;
@@ -53,8 +46,7 @@ class ReactionPopupState extends State<ReactionPopup>
   void _initializeAnimationControllers() {
     _animationController = AnimationController(
       vsync: this,
-      duration: widget.reactionPopupConfig?.animationDuration ??
-          const Duration(milliseconds: 180),
+      duration: const Duration(milliseconds: 180),
     );
     _scaleAnimation = CurvedAnimation(
       parent: _animationController,
@@ -94,37 +86,9 @@ class ReactionPopupState extends State<ReactionPopup>
                 animation: _scaleAnimation,
                 builder: (context, child) => Transform.scale(
                   scale: _scaleAnimation.value,
-                  child: reactionPopupConfig?.showGlassMorphismEffect ?? false
-                      ? GlassMorphismReactionPopup(
-                          reactionPopupConfig: reactionPopupConfig,
-                          child: _reactionPopupRow,
-                        )
-                      : Container(
-                          constraints: BoxConstraints(
-                              maxWidth: reactionPopupConfig?.maxWidth ?? 350),
-                          margin: reactionPopupConfig?.margin ??
-                              const EdgeInsets.symmetric(horizontal: 25),
-                          padding: reactionPopupConfig?.padding ??
-                              const EdgeInsets.symmetric(
-                                vertical: 6,
-                                horizontal: 14,
-                              ),
-                          decoration: BoxDecoration(
-                            color: reactionPopupConfig?.backgroundColor ??
-                                Colors.white,
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              reactionPopupConfig?.shadow ??
-                                  BoxShadow(
-                                    color: Colors.grey.shade400,
-                                    blurRadius: 8,
-                                    spreadRadius: -2,
-                                    offset: const Offset(0, 8),
-                                  )
-                            ],
-                          ),
-                          child: _reactionPopupRow,
-                        ),
+                  child: GlassMorphismReactionPopup(
+                    child: _reactionPopupRow,
+                  ),
                 ),
               ),
             ),
@@ -136,18 +100,12 @@ class ReactionPopupState extends State<ReactionPopup>
         onEmojiTap: (emoji) {
           widget.onTap();
 
-          reactionPopupConfig?.userReactionCallback?.call(
-            _message!,
-            emoji,
-          );
-
           chatController?.setReaction(
             emoji: emoji,
             messageId: _message!.id,
             userId: widget.currentUserId,
           );
         },
-        emojiConfiguration: reactionPopupConfig?.emojiConfig,
       );
 
   void refreshWidget({

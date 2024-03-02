@@ -18,7 +18,6 @@ class ChatListWidget extends StatefulWidget {
     required this.assignReplyMessage,
     required this.replyMessage,
     required this.currentUserId,
-    this.reactionPopupConfig,
     this.messageConfig,
     this.chatBubbleConfig,
     this.repliedMessageConfig,
@@ -31,9 +30,6 @@ class ChatListWidget extends StatefulWidget {
 
   /// Provides configuration for background of chat.
   final ChatBackgroundConfiguration chatBackgroundConfig;
-
-  /// Provides configuration for reaction pop up appearance.
-  final ReactionPopupConfiguration? reactionPopupConfig;
 
   /// Provides configuration for customisation of different types
   /// messages.
@@ -149,7 +145,6 @@ class _ChatListWidgetState extends State<ChatListWidget>
                   if (featureActiveConfig?.enableReactionPopup ?? false)
                     ReactionPopup(
                       key: _reactionPopupKey,
-                      reactionPopupConfig: widget.reactionPopupConfig,
                       onTap: _onChatListTap,
                       showPopUp: showPopupValue,
                       currentUserId: widget.currentUserId,
