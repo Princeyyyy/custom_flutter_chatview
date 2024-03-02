@@ -150,6 +150,7 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
             isMessageBySender: widget.isMessageBySender,
             reaction: widget.message.reaction,
             messageReactionConfig: widget.messageReactionConfig,
+            isMessageImage: false,
           ),
       ],
     );

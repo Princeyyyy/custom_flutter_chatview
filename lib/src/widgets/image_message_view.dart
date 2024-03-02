@@ -57,19 +57,17 @@ class ImageMessageView extends StatelessWidget {
                     ? Alignment.centerRight
                     : Alignment.centerLeft,
                 child: Container(
-                  padding: imageMessageConfig?.padding ?? EdgeInsets.zero,
-                  margin: imageMessageConfig?.margin ??
-                      EdgeInsets.only(
+                  padding: EdgeInsets.zero,
+                  margin: EdgeInsets.only(
                         top: 6,
                         right: isMessageBySender ? 6 : 0,
                         left: isMessageBySender ? 0 : 6,
                         bottom: message.reaction.reactions.isNotEmpty ? 15 : 0,
                       ),
-                  height: imageMessageConfig?.height ?? 200,
-                  width: imageMessageConfig?.width ?? 150,
+                  height: 200,
+                  width: 150,
                   child: ClipRRect(
-                    borderRadius: imageMessageConfig?.borderRadius ??
-                        BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(14),
                     child: (() {
                       if (imageUrl.isUrl) {
                         return Image.network(
@@ -110,6 +108,7 @@ class ImageMessageView extends StatelessWidget {
                 isMessageBySender: isMessageBySender,
                 reaction: message.reaction,
                 messageReactionConfig: messageReactionConfig,
+                isMessageImage: true,
               ),
           ],
         ),

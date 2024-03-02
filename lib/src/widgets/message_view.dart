@@ -96,10 +96,12 @@ class _MessageViewState extends State<MessageView>
         upperBound: 0.1,
         lowerBound: 0.0,
       );
+
       if (widget.message.status != MessageStatus.read &&
           !widget.isMessageBySender) {
         widget.inComingChatBubbleConfig?.onMessageRead?.call(widget.message);
       }
+
       _animationController?.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           _animationController?.reverse();
@@ -136,6 +138,7 @@ class _MessageViewState extends State<MessageView>
   Widget get _messageView {
     final message = widget.message.message;
     final emojiMessageConfiguration = messageConfig?.emojiMessageConfig;
+
     return Padding(
       padding: EdgeInsets.only(
         bottom: widget.message.reaction.reactions.isNotEmpty ? 6 : 0,
@@ -172,9 +175,9 @@ class _MessageViewState extends State<MessageView>
                       if (widget.message.reaction.reactions.isNotEmpty)
                         ReactionWidget(
                           reaction: widget.message.reaction,
-                          messageReactionConfig:
-                              messageConfig?.messageReactionConfig,
+                          messageReactionConfig: messageConfig?.messageReactionConfig,
                           isMessageBySender: widget.isMessageBySender,
+                          isMessageImage: false,
                         ),
                     ],
                   );

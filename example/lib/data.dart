@@ -19,6 +19,7 @@ class Data {
       MessageType messageType;
       String messageSenderId;
       DateTime createdAt;
+      ReplyMessage replyMessage = ReplyMessage();
 
       if (i.isEven) {
         if (i > 20) {
@@ -40,6 +41,13 @@ class Data {
         message = faker.lorem.sentence();
         messageType = MessageType.text;
         messageSenderId = "otherUser.id";
+        replyMessage = ReplyMessage(
+          repliedMessageId: (i - 1).toString(),
+          message: message,
+          replyUserId: "otherUser.id",
+          replyBy: messageSenderId,
+          messageType: MessageType.text
+        );
       }
 
       if (i % 5 == 0) {
@@ -53,8 +61,6 @@ class Data {
       } else {
         createdAt = today.subtract(Duration(days: count - (i - 4)));
       }
-
-      const ReplyMessage replyMessage = ReplyMessage();
 
       final Reaction reaction = Reaction(reactions: [], reactedUserNames: []);
 

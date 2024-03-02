@@ -22,32 +22,27 @@ class ReactionsBottomSheet {
           height: MediaQuery.of(context).size.height * 0.5,
           color: reactionsBottomSheetConfig?.backgroundColor,
           child: ListView.builder(
-            padding: reactionsBottomSheetConfig?.bottomSheetPadding ??
-                const EdgeInsets.only(
-                  right: 12,
-                  left: 12,
-                  top: 18,
-                ),
+            padding: const EdgeInsets.only(
+              right: 12,
+              left: 12,
+              top: 18,
+            ),
             itemCount: reaction.reactedUserNames.length,
             itemBuilder: (_, index) {
               return Container(
-                margin: reactionsBottomSheetConfig?.reactionWidgetMargin ??
-                    const EdgeInsets.only(bottom: 8),
-                padding: reactionsBottomSheetConfig?.reactionWidgetPadding ??
-                    const EdgeInsets.all(8),
-                decoration:
-                    reactionsBottomSheetConfig?.reactionWidgetDecoration ??
-                        BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.shade200,
-                              offset: const Offset(0, 20),
-                              blurRadius: 40,
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                margin: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade200,
+                      offset: const Offset(0, 20),
+                      blurRadius: 40,
+                    )
+                  ],
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 child: Row(
                   children: [
                     Expanded(
@@ -64,9 +59,8 @@ class ReactionsBottomSheet {
                     ),
                     Text(
                       reaction.reactions[index],
-                      style: TextStyle(
-                        fontSize:
-                            reactionsBottomSheetConfig?.reactionSize ?? 14,
+                      style: const TextStyle(
+                        fontSize: 14,
                       ),
                     )
                   ],

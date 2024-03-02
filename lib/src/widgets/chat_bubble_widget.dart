@@ -77,8 +77,6 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
 
   bool get isMessageBySender => widget.message.messageSenderId == widget.currentUserId;
 
-  bool get isLastMessage =>
-      chatController?.initialMessageList.last.id == widget.message.id;
   FeatureActiveConfig? featureActiveConfig;
   ChatController? chatController;
   int? maxDuration;

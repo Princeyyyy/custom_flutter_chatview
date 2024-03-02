@@ -59,10 +59,10 @@ class TextMessageView extends StatelessWidget {
           ),
           child: Container(
             constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.75),
+                maxWidth: MediaQuery.of(context).size.width * 0.75,
+            ),
             padding: const EdgeInsets.symmetric(
               horizontal: 12,
-              vertical: 10,
             ),
             margin: EdgeInsets.fromLTRB(
                 5, 0, 6, message.reaction.reactions.isNotEmpty ? 15 : 2),
@@ -74,13 +74,16 @@ class TextMessageView extends StatelessWidget {
                     linkPreviewConfig: _linkPreviewConfig,
                     url: textMessage,
                   )
-                : Text(
-                    textMessage,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
+                : Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: Text(
+                      textMessage,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
+                ),
           ),
         ),
         if (message.reaction.reactions.isNotEmpty)
@@ -89,6 +92,7 @@ class TextMessageView extends StatelessWidget {
             isMessageBySender: isMessageBySender,
             reaction: message.reaction,
             messageReactionConfig: messageReactionConfig,
+            isMessageImage: false,
           ),
       ],
     );

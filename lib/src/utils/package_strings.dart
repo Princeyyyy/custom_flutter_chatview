@@ -8,8 +8,7 @@ class PackageStrings {
   static const String reply = "Reply";
   static const String replyTo = "Replying to";
   static const String message = "Message";
-  static const String reactionPopupTitle =
-      "Tap and hold to multiply your reaction";
+  static const String reactionPopupTitle = "Tap and hold to multiply your reaction";
   static const String photo = "Photo";
   static const String send = "Send";
   static const String you = "You";

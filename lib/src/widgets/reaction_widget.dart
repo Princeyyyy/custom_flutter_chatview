@@ -11,6 +11,7 @@ class ReactionWidget extends StatefulWidget {
     required this.reaction,
     this.messageReactionConfig,
     required this.isMessageBySender,
+    required this.isMessageImage,
   });
 
   /// Provides reaction instance of message.
@@ -22,13 +23,14 @@ class ReactionWidget extends StatefulWidget {
   /// Represents current message is sent by current user.
   final bool isMessageBySender;
 
+  final bool isMessageImage;
+
   @override
   State<ReactionWidget> createState() => _ReactionWidgetState();
 }
 
 class _ReactionWidgetState extends State<ReactionWidget> {
   bool needToExtend = false;
-
   MessageReactionConfiguration? get messageReactionConfig =>
       widget.messageReactionConfig;
   ChatController? chatController;
@@ -43,10 +45,11 @@ class _ReactionWidgetState extends State<ReactionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    //// Convert into set to remove redundant values
+    /// Convert into set to remove redundant values
     final reactionsSet = widget.reaction.reactions.toSet();
+
     return Positioned(
-      bottom: -10,
+      bottom: widget.isMessageImage ? 0 : -10,
       right: widget.isMessageBySender && needToExtend ? 0 : null,
       child: InkWell(
         onTap: () => chatController != null

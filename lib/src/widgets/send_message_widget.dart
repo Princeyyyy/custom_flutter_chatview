@@ -61,8 +61,7 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (provide != null) {
-    }
+    if (provide != null) {}
   }
 
   @override
@@ -104,11 +103,9 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                           builder: (_, state, child) {
                             if (state.message.isNotEmpty) {
                               return Container(
-                                decoration: BoxDecoration(
-                                  color: widget.sendMessageConfig
-                                          ?.textFieldBackgroundColor ??
-                                      Colors.white,
-                                  borderRadius: const BorderRadius.vertical(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(14),
                                   ),
                                 ),
@@ -125,15 +122,13 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                                 ),
                                 child: Container(
                                   margin: const EdgeInsets.only(bottom: 2),
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 4,
-                                    horizontal: 6,
-                                  ),
                                   decoration: BoxDecoration(
-                                    color: widget.sendMessageConfig
-                                            ?.replyDialogColor ??
-                                        Colors.grey.shade200,
+                                    color: Colors.grey.shade200,
                                     borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  padding: const EdgeInsets.only(
+                                    left: 8,
+                                    bottom: 8,
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
@@ -142,27 +137,15 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                                     children: [
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.end,
                                         children: [
-                                          Text(
-                                            "",
-                                            style: TextStyle(
-                                              color: widget.sendMessageConfig
-                                                      ?.replyTitleColor ??
-                                                  Colors.deepPurple,
-                                              fontWeight: FontWeight.bold,
-                                              letterSpacing: 0.25,
-                                            ),
-                                          ),
                                           IconButton(
                                             constraints: const BoxConstraints(),
                                             padding: EdgeInsets.zero,
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Icons.close,
-                                              color: widget.sendMessageConfig
-                                                      ?.closeIconColor ??
-                                                  Colors.black,
-                                              size: 16,
+                                              color: Colors.black,
+                                              size: 22,
                                             ),
                                             onPressed: _onCloseTap,
                                           ),
@@ -177,11 +160,9 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                                           state.message,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: widget.sendMessageConfig
-                                                    ?.replyMessageColor ??
-                                                Colors.black,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
                                           ),
                                         ),
                                     ],
@@ -215,15 +196,15 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
         const Icon(
           Icons.mic,
           color: Colors.white,
+          size: 25,
         ),
         const SizedBox(width: 4),
         if (replyMessage.voiceMessageDuration != null)
           Text(
             replyMessage.voiceMessageDuration!.toHHMMSS(),
-            style: TextStyle(
-              fontSize: 12,
-              color:
-                  widget.sendMessageConfig?.replyMessageColor ?? Colors.black,
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.black,
             ),
           ),
       ],
@@ -231,19 +212,19 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
   }
 
   Widget get _imageReplyMessageView {
-    return Row(
+    return const Row(
       children: [
         Icon(
           Icons.photo,
-          size: 20,
-          color: widget.sendMessageConfig?.replyMessageColor ??
-              Colors.grey.shade700,
+          size: 25,
+          color: Colors.black,
+        ),
+        SizedBox(
+          width: 5,
         ),
         Text(
           PackageStrings.photo,
-          style: TextStyle(
-            color: widget.sendMessageConfig?.replyMessageColor ?? Colors.black,
-          ),
+          style: TextStyle(color: Colors.black, fontSize: 16),
         ),
       ],
     );

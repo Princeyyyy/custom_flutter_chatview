@@ -48,9 +48,7 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
 
   @override
   void initState() {
-    debouncer = Debouncer(
-        sendMessageConfig?.textFieldConfig?.compositionThresholdTime ??
-            const Duration(seconds: 1));
+    debouncer = Debouncer(const Duration(seconds: 1));
     super.initState();
   }
 
@@ -64,13 +62,12 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-          textFieldConfig?.padding ?? const EdgeInsets.symmetric(horizontal: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 6),
       margin: textFieldConfig?.margin,
       decoration: BoxDecoration(
         borderRadius: textFieldConfig?.borderRadius ??
             BorderRadius.circular(textFieldBorderRadius),
-        color: sendMessageConfig?.textFieldBackgroundColor ?? Colors.white,
+        color: Colors.white,
       ),
       child: Row(
         children: [
@@ -117,8 +114,7 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
             builder: (_, inputTextValue, child) {
               if (inputTextValue.isNotEmpty) {
                 return IconButton(
-                  color: sendMessageConfig?.defaultSendButtonColor ??
-                      Colors.green,
+                  color: Colors.green,
                   onPressed: () {
                     widget.onPressed();
                     _inputText.value = '';
@@ -128,12 +124,10 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
                 );
               } else {
                 return IconButton(
-                  color: sendMessageConfig?.defaultSendButtonColor ??
-                      Colors.green,
+                  color: Colors.green,
                   onPressed: () {
                   },
-                  icon: sendMessageConfig?.sendButtonIcon ??
-                      const Icon(Icons.attach_file),
+                  icon: const Icon(Icons.attach_file),
                 );
               }
             },

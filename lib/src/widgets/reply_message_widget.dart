@@ -51,13 +51,6 @@ class ReplyMessageWidget extends StatelessWidget {
           crossAxisAlignment:
               replyBySender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
-            Text(
-              "",
-              style: repliedMessageConfig?.replyTitleTextStyle ??
-                  textTheme.bodyMedium!
-                      .copyWith(fontSize: 14, letterSpacing: 0.3),
-            ),
-            const SizedBox(height: 6),
             IntrinsicHeight(
               child: Row(
                 mainAxisAlignment: replyBySender

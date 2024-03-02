@@ -12,7 +12,7 @@ class GlassMorphismReactionPopup extends StatelessWidget {
     this.reactionPopupConfig,
   });
 
-  /// Allow user to assign custom widget which is appeared in glassmorphism
+  /// Allow user to assign custom widget which is appeared in glass-morphism
   /// effect.
   final Widget child;
 
