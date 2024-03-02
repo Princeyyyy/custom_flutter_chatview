@@ -46,7 +46,7 @@ class _ReactionWidgetState extends State<ReactionWidget> {
     //// Convert into set to remove redundant values
     final reactionsSet = widget.reaction.reactions.toSet();
     return Positioned(
-      bottom: 0,
+      bottom: -10,
       right: widget.isMessageBySender && needToExtend ? 0 : null,
       child: InkWell(
         onTap: () => chatController != null
@@ -61,27 +61,23 @@ class _ReactionWidgetState extends State<ReactionWidget> {
         child: MeasureSize(
           onSizeChange: (extend) => setState(() => needToExtend = extend),
           child: Container(
-            padding: messageReactionConfig?.padding ??
-                const EdgeInsets.symmetric(vertical: 1.7, horizontal: 6),
-            margin: messageReactionConfig?.margin ??
-                EdgeInsets.only(
+            padding: const EdgeInsets.symmetric(vertical: 1.7, horizontal: 6),
+            margin: EdgeInsets.only(
                   left: widget.isMessageBySender ? 10 : 16,
                   right: 10,
                 ),
             decoration: BoxDecoration(
-              color: messageReactionConfig?.backgroundColor ??
-                  Colors.grey.shade200,
-              borderRadius: messageReactionConfig?.borderRadius ??
-                  BorderRadius.circular(16),
+              color: Colors.grey.shade200,
+              borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: messageReactionConfig?.borderColor ?? Colors.white,
-                width: messageReactionConfig?.borderWidth ?? 1,
+                color: Colors.white,
+                width: 1,
               ),
             ),
             child: Text(
               reactionsSet.join(' '),
-              style: TextStyle(
-                fontSize: messageReactionConfig?.reactionSize ?? 13,
+              style: const TextStyle(
+                fontSize: 14,
               ),
             ),
           ),

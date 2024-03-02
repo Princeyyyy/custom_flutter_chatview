@@ -4,6 +4,8 @@ import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:chatview/chatview.dart';
 import 'package:chatview/src/models/voice_message_configuration.dart';
 import 'package:chatview/src/widgets/reaction_widget.dart';
+import 'package:chatview/src/widgets/text_message_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -84,59 +86,63 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Container(
-          decoration: widget.config?.decoration ??
-              BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: widget.isMessageBySender
-                    ? widget.outgoingChatBubbleConfig?.color
-                    : widget.inComingChatBubbleConfig?.color,
-              ),
-          padding: widget.config?.padding ??
-              const EdgeInsets.symmetric(horizontal: 8),
-          margin: widget.config?.margin ??
-              EdgeInsets.symmetric(
-                horizontal: 8,
-                vertical: widget.message.reaction.reactions.isNotEmpty ? 15 : 0,
-              ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ValueListenableBuilder<PlayerState>(
-                builder: (context, state, child) {
-                  return IconButton(
-                    onPressed: _playOrPause,
-                    icon:
-                        state.isStopped || state.isPaused || state.isInitialised
-                            ? widget.config?.playIcon ??
-                                const Icon(
-                                  Icons.play_arrow,
-                                  color: Colors.white,
-                                )
-                            : widget.config?.pauseIcon ??
-                                const Icon(
-                                  Icons.stop,
-                                  color: Colors.white,
-                                ),
-                  );
-                },
-                valueListenable: _playerState,
-              ),
-              AudioFileWaveforms(
-                size: Size(widget.screenWidth * 0.50, 60),
-                playerController: controller,
-                waveformType: WaveformType.fitWidth,
-                playerWaveStyle:
-                    widget.config?.playerWaveStyle ?? playerWaveStyle,
-                padding: widget.config?.waveformPadding ??
-                    const EdgeInsets.only(right: 10),
-                margin: widget.config?.waveformMargin,
-                animationCurve: widget.config?.animationCurve ?? Curves.easeIn,
-                animationDuration: widget.config?.animationDuration ??
-                    const Duration(milliseconds: 500),
-                enableSeekGesture: widget.config?.enableSeekGesture ?? true,
-              ),
-            ],
+        CustomPaint(
+          painter: SpecialChatBubbleOne(
+            color: widget.isMessageBySender ? Colors.blue : Colors.pink,
+            alignment: widget.isMessageBySender ? Alignment.topRight : Alignment.topLeft,
+            tail: true,
+          ),
+          child: Container(
+            decoration: widget.config?.decoration ??
+                BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+            padding: widget.config?.padding ??
+                const EdgeInsets.symmetric(horizontal: 8),
+            margin: widget.config?.margin ??
+                EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: widget.message.reaction.reactions.isNotEmpty ? 15 : 0,
+                ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ValueListenableBuilder<PlayerState>(
+                  builder: (context, state, child) {
+                    return IconButton(
+                      onPressed: _playOrPause,
+                      icon:
+                          state.isStopped || state.isPaused || state.isInitialised
+                              ? widget.config?.playIcon ??
+                                  const Icon(
+                                    Icons.play_arrow,
+                                    color: Colors.white,
+                                  )
+                              : widget.config?.pauseIcon ??
+                                  const Icon(
+                                    Icons.stop,
+                                    color: Colors.white,
+                                  ),
+                    );
+                  },
+                  valueListenable: _playerState,
+                ),
+                AudioFileWaveforms(
+                  size: Size(widget.screenWidth * 0.50, 60),
+                  playerController: controller,
+                  waveformType: WaveformType.fitWidth,
+                  playerWaveStyle:
+                      widget.config?.playerWaveStyle ?? playerWaveStyle,
+                  padding: widget.config?.waveformPadding ??
+                      const EdgeInsets.only(right: 10),
+                  margin: widget.config?.waveformMargin,
+                  animationCurve: widget.config?.animationCurve ?? Curves.easeIn,
+                  animationDuration: widget.config?.animationDuration ??
+                      const Duration(milliseconds: 500),
+                  enableSeekGesture: widget.config?.enableSeekGesture ?? true,
+                ),
+              ],
+            ),
           ),
         ),
         if (widget.message.reaction.reactions.isNotEmpty)

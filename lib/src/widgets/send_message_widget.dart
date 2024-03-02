@@ -15,6 +15,7 @@ class SendMessageWidget extends StatefulWidget {
     super.key,
     required this.onSendTap,
     required this.chatController,
+    required this.currentUserId,
     this.sendMessageConfig,
     this.backgroundColor,
     this.sendMessageBuilder,
@@ -30,6 +31,8 @@ class SendMessageWidget extends StatefulWidget {
 
   /// Allow user to set background colour.
   final Color? backgroundColor;
+
+  final String currentUserId;
 
   /// Allow user to set custom text field.
   final ReplyMessageWithReturnWidget? sendMessageBuilder;
@@ -55,27 +58,15 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
   ReplyMessage get replyMessage => _replyMessage.value;
   final _focusNode = FocusNode();
 
-  ChatUser? get repliedUser => replyMessage.replyUserId.isNotEmpty
-      ? widget.chatController.getUserFromId(replyMessage.replyUserId)
-      : null;
-
-  String get _replyTo => replyMessage.replyUserId == currentUser?.id
-      ? PackageStrings.you
-      : repliedUser?.name ?? '';
-
-  ChatUser? currentUser;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (provide != null) {
-      currentUser = provide!.currentUser;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final replyTitle = "${PackageStrings.replyTo} $_replyTo";
     return widget.sendMessageBuilder != null
         ? Positioned(
             right: 0,
@@ -154,7 +145,7 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            replyTitle,
+                                            "",
                                             style: TextStyle(
                                               color: widget.sendMessageConfig
                                                       ?.replyTitleColor ??
@@ -278,16 +269,15 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
   }
 
   void assignReplyMessage(Message message) {
-    if (currentUser != null) {
-      _replyMessage.value = ReplyMessage(
-        message: message.message,
-        replyBy: currentUser!.id,
-        replyUserId: message.messageSenderId,
-        messageType: message.messageType,
-        repliedMessageId: message.id,
-        voiceMessageDuration: message.voiceMessageDuration,
-      );
-    }
+    _replyMessage.value = ReplyMessage(
+      message: message.message,
+      replyBy: widget.currentUserId,
+      replyUserId: message.messageSenderId,
+      messageType: message.messageType,
+      repliedMessageId: message.id,
+      voiceMessageDuration: message.voiceMessageDuration,
+    );
+
     FocusScope.of(context).requestFocus(_focusNode);
     if (widget.onReplyCallback != null) widget.onReplyCallback!(replyMessage);
   }

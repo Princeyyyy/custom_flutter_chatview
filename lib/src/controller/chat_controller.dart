@@ -10,35 +10,9 @@ class ChatController {
 
   ScrollController scrollController;
 
-  /// Allow user to show typing indicator defaults to false.
-  final ValueNotifier<bool> _showTypingIndicator = ValueNotifier(false);
-
-  /// TypingIndicator as [ValueNotifier] for [GroupedChatList] widget's typingIndicator [ValueListenableBuilder].
-  ///  Use this for listening typing indicators
-  ///   ```dart
-  ///    chatcontroller.typingIndicatorNotifier.addListener((){});
-  ///  ```
-  /// For more functionalities see [ValueNotifier].
-  ValueNotifier<bool> get typingIndicatorNotifier => _showTypingIndicator;
-
-  /// Getter for typingIndicator value instead of accessing [_showTypingIndicator.value]
-  /// for better accessibility.
-  bool get showTypingIndicator => _showTypingIndicator.value;
-
-  /// Setter for changing values of typingIndicator
-  /// ```dart
-  ///  chatContoller.setTypingIndicator = true; // for showing indicator
-  ///  chatContoller.setTypingIndicator = false; // for hiding indicator
-  ///  ````
-  set setTypingIndicator(bool value) => _showTypingIndicator.value = value;
-
-  /// Represents list of chat users
-  List<ChatUser> chatUsers;
-
   ChatController({
     required this.initialMessageList,
     required this.scrollController,
-    required this.chatUsers,
   });
 
   /// Represents message stream of chat
@@ -104,8 +78,4 @@ class ChatController {
     initialMessageList.insertAll(0, messageList);
     messageStreamController.sink.add(initialMessageList);
   }
-
-  /// Function for getting ChatUser object from user id
-  ChatUser getUserFromId(String userId) =>
-      chatUsers.firstWhere((element) => element.id == userId);
 }

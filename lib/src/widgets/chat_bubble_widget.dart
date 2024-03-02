@@ -15,6 +15,7 @@ class ChatBubbleWidget extends StatefulWidget {
     required this.onLongPress,
     required this.slideAnimation,
     required this.onSwipe,
+    required this.currentUserId,
     this.chatBubbleConfig,
     this.repliedMessageConfig,
     this.swipeToReplyConfig,
@@ -59,6 +60,8 @@ class ChatBubbleWidget extends StatefulWidget {
   /// Provides callback of when user swipe chat bubble for reply.
   final MessageCallBack onSwipe;
 
+  final String currentUserId;
+
   /// Provides callback when user tap on replied message upon chat bubble.
   final Function(String)? onReplyTap;
 
@@ -72,13 +75,12 @@ class ChatBubbleWidget extends StatefulWidget {
 class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
   String get replyMessage => widget.message.replyMessage.message;
 
-  bool get isMessageBySender => widget.message.messageSenderId == currentUser?.id;
+  bool get isMessageBySender => widget.message.messageSenderId == widget.currentUserId;
 
   bool get isLastMessage =>
       chatController?.initialMessageList.last.id == widget.message.id;
   FeatureActiveConfig? featureActiveConfig;
   ChatController? chatController;
-  ChatUser? currentUser;
   int? maxDuration;
 
   @override
@@ -87,14 +89,11 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
     if (provide != null) {
       featureActiveConfig = provide!.featureActiveConfig;
       chatController = provide!.chatController;
-      currentUser = provide!.currentUser;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // Get user from id.
-    final messagedUser = chatController?.getUserFromId(widget.message.messageSenderId);
     return Stack(
       children: [
         if (featureActiveConfig?.enableSwipeToSeeTime ?? true) ...[
@@ -114,15 +113,15 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
           ),
           SlideTransition(
             position: widget.slideAnimation!,
-            child: _chatBubbleWidget(messagedUser),
+            child: _chatBubbleWidget(),
           ),
         ] else
-          _chatBubbleWidget(messagedUser),
+          _chatBubbleWidget(),
       ],
     );
   }
 
-  Widget _chatBubbleWidget(ChatUser? messagedUser) {
+  Widget _chatBubbleWidget() {
     return Container(
       padding:
           widget.chatBubbleConfig?.padding ?? const EdgeInsets.only(left: 5.0),
@@ -155,7 +154,7 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                     replyIconColor: widget.swipeToReplyConfig?.replyIconColor,
                     swipeToReplyAnimationDuration:
                         widget.swipeToReplyConfig?.animationDuration,
-                    child: _messagesWidgetColumn(messagedUser),
+                    child: _messagesWidgetColumn(),
                   )
                 : SwipeToReply(
                     onRightSwipe:
@@ -177,7 +176,7 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                     replyIconColor: widget.swipeToReplyConfig?.replyIconColor,
                     swipeToReplyAnimationDuration:
                         widget.swipeToReplyConfig?.animationDuration,
-                    child: _messagesWidgetColumn(messagedUser),
+                    child: _messagesWidgetColumn(),
                   ),
           ),
         ],
@@ -185,7 +184,7 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
     );
   }
 
-  Widget _messagesWidgetColumn(ChatUser? messagedUser) {
+  Widget _messagesWidgetColumn() {
     return Column(
       crossAxisAlignment:
           isMessageBySender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -199,6 +198,7 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                   repliedMessageConfig: widget.repliedMessageConfig,
                   onTap: () => widget.onReplyTap
                       ?.call(widget.message.replyMessage.repliedMessageId),
+                  currentUserId: widget.currentUserId,
                 ),
         MessageView(
           outgoingChatBubbleConfig:
@@ -215,16 +215,11 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
           chatBubbleMaxWidth: widget.chatBubbleConfig?.maxWidth,
           longPressAnimationDuration:
               widget.chatBubbleConfig?.longPressAnimationDuration,
-          onDoubleTap: featureActiveConfig?.enableDoubleTapToLike ?? false
-              ? widget.chatBubbleConfig?.onDoubleTap ??
-                  (message) => currentUser != null
-                      ? chatController?.setReaction(
-                          emoji: heart,
-                          messageId: message.id,
-                          userId: currentUser!.id,
-                        )
-                      : null
-              : null,
+          onDoubleTap: (message) => chatController?.setReaction(
+            emoji: heart,
+            messageId: message.id,
+            userId: widget.currentUserId,
+          ),
           shouldHighlight: widget.shouldHighlight,
           controller: chatController,
           highlightColor: widget.repliedMessageConfig

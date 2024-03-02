@@ -9,12 +9,10 @@ class ChatViewInheritedWidget extends InheritedWidget {
     required super.child,
     required this.featureActiveConfig,
     required this.chatController,
-    required this.currentUser,
   });
 
   final FeatureActiveConfig featureActiveConfig;
   final ChatController chatController;
-  final ChatUser currentUser;
 
   static ChatViewInheritedWidget? of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<ChatViewInheritedWidget>();

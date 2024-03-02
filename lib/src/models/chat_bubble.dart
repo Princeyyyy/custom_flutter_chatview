@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import '../../chatview.dart';
 
 class ChatBubble {
-  /// Used for giving color of chat bubble.
-  final Color? color;
-
   /// Used for giving border radius of chat bubble.
   final BorderRadiusGeometry? borderRadius;
 
@@ -20,9 +17,6 @@ class ChatBubble {
   /// Used to provide configuration of messages with link.
   final LinkPreviewConfiguration? linkPreviewConfig;
 
-  /// Used to give text style of message sender name.
-  final TextStyle? senderNameTextStyle;
-
   /// Used to provide builders for last seen message reciept,
   /// at latest outgoing messsage.
   final ReceiptsWidgetConfig? receiptsWidgetConfig;
@@ -32,13 +26,11 @@ class ChatBubble {
   final Function(Message message)? onMessageRead;
 
   const ChatBubble({
-    this.color,
     this.borderRadius,
     this.textStyle,
     this.padding,
     this.margin,
     this.linkPreviewConfig,
-    this.senderNameTextStyle,
     this.receiptsWidgetConfig,
     this.onMessageRead,
   });

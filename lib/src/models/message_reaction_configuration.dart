@@ -21,13 +21,6 @@ class MessageReactionConfiguration {
 
   /// Used for giving border width of reaction on message.
   final double? borderWidth;
-
-  /// Used for giving text style reacted user's name of reaction on message.
-  final TextStyle? reactedUserCountTextStyle;
-
-  /// Used for giving text style to total count of reaction text.
-  final TextStyle? reactionCountTextStyle;
-
   /// Provides configurations for reaction bottom sheet which shows reacted users
   /// and their reaction on any message.
   final ReactionsBottomSheetConfiguration? reactionsBottomSheetConfig;
@@ -40,8 +33,6 @@ class MessageReactionConfiguration {
 
   const MessageReactionConfiguration({
     this.reactionsBottomSheetConfig,
-    this.reactionCountTextStyle,
-    this.reactedUserCountTextStyle,
     this.reactionSize,
     this.margin,
     this.padding,

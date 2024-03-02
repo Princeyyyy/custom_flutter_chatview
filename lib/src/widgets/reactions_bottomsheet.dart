@@ -30,8 +30,6 @@ class ReactionsBottomSheet {
                 ),
             itemCount: reaction.reactedUserNames.length,
             itemBuilder: (_, index) {
-              final reactedUser =
-                  chatController.getUserFromId(reaction.reactedUserNames[index]);
               return Container(
                 margin: reactionsBottomSheetConfig?.reactionWidgetMargin ??
                     const EdgeInsets.only(bottom: 8),
@@ -57,7 +55,7 @@ class ReactionsBottomSheet {
                         children: [
                           const SizedBox(width: 12),
                           Text(
-                            reactedUser.name,
+                            reaction.reactedUserNames[index],
                             style: reactionsBottomSheetConfig
                                 ?.reactedUserTextStyle,
                           ),

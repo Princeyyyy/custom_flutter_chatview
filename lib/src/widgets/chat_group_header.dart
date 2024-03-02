@@ -23,7 +23,7 @@ class ChatGroupHeader extends StatelessWidget {
       child: Text(
         day.getDay,
         textAlign: TextAlign.center,
-        style: groupSeparatorConfig?.textStyle ?? const TextStyle(fontSize: 17),
+        style: const TextStyle(fontSize: 16),
       ),
     );
   }

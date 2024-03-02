@@ -13,12 +13,15 @@ class ReplyMessageWidget extends StatelessWidget {
   const ReplyMessageWidget({
     super.key,
     required this.message,
+    required this.currentUserId,
     this.repliedMessageConfig,
     this.onTap,
   });
 
   /// Provides message instance of chat.
   final Message message;
+
+  final String currentUserId;
 
   /// Provides configurations related to replied message such as textstyle
   /// padding, margin etc. Also, this widget is located upon chat bubble.
@@ -29,14 +32,10 @@ class ReplyMessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = ChatViewInheritedWidget.of(context)?.currentUser;
-    final replyBySender = message.replyMessage.replyBy == currentUser?.id;
+    final replyBySender = message.replyMessage.replyBy == currentUserId;
     final textTheme = Theme.of(context).textTheme;
     final replyMessage = message.replyMessage.message;
-    final chatController = ChatViewInheritedWidget.of(context)?.chatController;
-    final messagedUser =
-        chatController?.getUserFromId(message.replyMessage.replyBy);
-    final replyBy = replyBySender ? PackageStrings.you : messagedUser?.name;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -53,7 +52,7 @@ class ReplyMessageWidget extends StatelessWidget {
               replyBySender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             Text(
-              "${PackageStrings.repliedBy} $replyBy",
+              "",
               style: repliedMessageConfig?.replyTitleTextStyle ??
                   textTheme.bodyMedium!
                       .copyWith(fontSize: 14, letterSpacing: 0.3),

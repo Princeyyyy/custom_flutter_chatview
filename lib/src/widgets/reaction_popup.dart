@@ -9,6 +9,7 @@ class ReactionPopup extends StatefulWidget {
   const ReactionPopup({
     super.key,
     this.reactionPopupConfig,
+    required this.currentUserId,
     required this.onTap,
     required this.showPopUp,
   });
@@ -21,6 +22,8 @@ class ReactionPopup extends StatefulWidget {
 
   /// Represents should pop-up show or not.
   final bool showPopUp;
+
+  final String currentUserId;
 
   @override
   ReactionPopupState createState() => ReactionPopupState();
@@ -40,7 +43,6 @@ class ReactionPopupState extends State<ReactionPopup>
   Message? _message;
 
   ChatController? chatController;
-  ChatUser? currentUser;
 
   @override
   void initState() {
@@ -66,7 +68,6 @@ class ReactionPopupState extends State<ReactionPopup>
     super.didChangeDependencies();
     if (provide != null) {
       chatController = provide!.chatController;
-      currentUser = provide!.currentUser;
     }
   }
 
@@ -134,17 +135,17 @@ class ReactionPopupState extends State<ReactionPopup>
   Widget get _reactionPopupRow => EmojiRow(
         onEmojiTap: (emoji) {
           widget.onTap();
-          if (currentUser != null && _message != null) {
-            reactionPopupConfig?.userReactionCallback?.call(
-              _message!,
-              emoji,
-            );
-            chatController?.setReaction(
-              emoji: emoji,
-              messageId: _message!.id,
-              userId: currentUser!.id,
-            );
-          }
+
+          reactionPopupConfig?.userReactionCallback?.call(
+            _message!,
+            emoji,
+          );
+
+          chatController?.setReaction(
+            emoji: emoji,
+            messageId: _message!.id,
+            userId: widget.currentUserId,
+          );
         },
         emojiConfiguration: reactionPopupConfig?.emojiConfig,
       );

@@ -10,7 +10,7 @@ class ChatView extends StatefulWidget {
   const ChatView({
     super.key,
     required this.chatController,
-    required this.currentUser,
+    required this.currentUserId,
     this.onSendTap,
     this.chatBubbleConfig,
     this.repliedMessageConfig,
@@ -66,7 +66,7 @@ class ChatView extends StatefulWidget {
   final SendMessageConfiguration? sendMessageConfig;
 
   /// Provides current user which is sending messages.
-  final ChatUser currentUser;
+  final String currentUserId;
 
   /// Provides configuration for turn on/off specific features.
   final FeatureActiveConfig featureActiveConfig;
@@ -86,8 +86,6 @@ class _ChatViewState extends State<ChatView>
 
   ChatController get chatController => widget.chatController;
 
-  // bool get showTypingIndicator => widget.showTypingIndicator;
-
   ChatBackgroundConfiguration get chatBackgroundConfig =>
       widget.chatBackgroundConfig;
 
@@ -97,21 +95,15 @@ class _ChatViewState extends State<ChatView>
   void initState() {
     super.initState();
     setLocaleMessages('en', ReceiptsCustomMessages());
-    // Adds current user in users list.
-    chatController.chatUsers.add(widget.currentUser);
   }
 
   @override
   Widget build(BuildContext context) {
-    // Scroll to last message on in hasMessages state.
-    // TODO: Remove this in new versions.
-    // ignore: deprecated_member_use_from_same_package
     chatController.scrollToLastMessage();
 
     return ChatViewInheritedWidget(
       chatController: chatController,
       featureActiveConfig: featureActiveConfig,
-      currentUser: widget.currentUser,
       child: Container(
         height:
             chatBackgroundConfig.height ?? MediaQuery.of(context).size.height,
@@ -149,6 +141,7 @@ class _ChatViewState extends State<ChatView>
                         assignReplyMessage: (message) => _sendMessageKey
                             .currentState
                             ?.assignReplyMessage(message),
+                        currentUserId: widget.currentUserId,
                       );
                     },
                   ),
@@ -163,6 +156,7 @@ class _ChatViewState extends State<ChatView>
                       onReplyCallback: (reply) => replyMessage.value = reply,
                       onReplyCloseCallback: () =>
                           replyMessage.value = const ReplyMessage(),
+                      currentUserId: widget.currentUserId,
                     ),
                 ],
               ),

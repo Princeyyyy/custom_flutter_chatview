@@ -12,7 +12,6 @@ export 'message_list_configuration.dart';
 export 'emoji_message_configuration.dart';
 export 'message_configuration.dart';
 export 'send_message_configuration.dart';
-export 'chat_user.dart';
 export 'link_preview_configuration.dart';
 export 'reaction.dart';
 export 'replied_msg_auto_scroll_config.dart';

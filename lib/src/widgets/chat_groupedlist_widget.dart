@@ -17,6 +17,7 @@ class ChatGroupedListWidget extends StatefulWidget {
     required this.onChatListTap,
     required this.onChatBubbleLongPress,
     required this.isEnableSwipeToSeeTime,
+    required this.currentUserId,
     this.messageConfig,
     this.chatBubbleConfig,
     this.swipeToReplyConfig,
@@ -49,6 +50,8 @@ class ChatGroupedListWidget extends StatefulWidget {
 
   /// Provides callback when user tap anywhere on whole chat.
   final VoidCallBack onChatListTap;
+
+  final String currentUserId;
 
   /// Provides callback when user press chat bubble for certain time then usual.
   final void Function(double, double, Message) onChatBubbleLongPress;
@@ -269,6 +272,7 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
                                 false
                             ? (replyId) => _onReplyTap(replyId, snapshot.data)
                             : null,
+                        currentUserId: widget.currentUserId,
                       );
                     },
                   );

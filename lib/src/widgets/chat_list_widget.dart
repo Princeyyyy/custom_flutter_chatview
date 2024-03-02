@@ -17,6 +17,7 @@ class ChatListWidget extends StatefulWidget {
     required this.chatBackgroundConfig,
     required this.assignReplyMessage,
     required this.replyMessage,
+    required this.currentUserId,
     this.reactionPopupConfig,
     this.messageConfig,
     this.chatBubbleConfig,
@@ -52,6 +53,8 @@ class ChatListWidget extends StatefulWidget {
   /// Provides reply message when user swipe to chat bubble.
   final ReplyMessage replyMessage;
 
+  final String currentUserId;
+
   /// Provides configuration for reply snack bar's appearance and options.
   final ReplyPopupConfiguration? replyPopupConfig;
 
@@ -82,7 +85,6 @@ class _ChatListWidgetState extends State<ChatListWidget>
       widget.chatBackgroundConfig;
 
   FeatureActiveConfig? featureActiveConfig;
-  ChatUser? currentUser;
 
   @override
   void initState() {
@@ -95,7 +97,6 @@ class _ChatListWidgetState extends State<ChatListWidget>
     super.didChangeDependencies();
     if (provide != null) {
       featureActiveConfig = provide!.featureActiveConfig;
-      currentUser = provide!.currentUser;
     }
   }
 
@@ -143,11 +144,12 @@ class _ChatListWidgetState extends State<ChatListWidget>
                       if (featureActiveConfig?.enableReplySnackBar ?? false) {
                         _showReplyPopup(
                           message: message,
-                          sendByCurrentUser: message.messageSenderId == currentUser?.id,
+                          sendByCurrentUser: message.messageSenderId == widget.currentUserId,
                         );
                       }
                     },
                     onChatListTap: _onChatListTap,
+                    currentUserId: widget.currentUserId,
                   ),
                   if (featureActiveConfig?.enableReactionPopup ?? false)
                     ReactionPopup(
@@ -155,6 +157,7 @@ class _ChatListWidgetState extends State<ChatListWidget>
                       reactionPopupConfig: widget.reactionPopupConfig,
                       onTap: _onChatListTap,
                       showPopUp: showPopupValue,
+                      currentUserId: widget.currentUserId,
                     ),
                 ],
               );

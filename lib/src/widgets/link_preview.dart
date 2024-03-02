@@ -23,7 +23,7 @@ class LinkPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: linkPreviewConfig?.padding ??
+      padding:
           const EdgeInsets.symmetric(horizontal: 6, vertical: verticalPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,11 +55,9 @@ class LinkPreview extends StatelessWidget {
                         ),
                       ),
                     ),
-                    backgroundColor: linkPreviewConfig?.backgroundColor ??
-                        Colors.grey.shade200,
+                    backgroundColor: Colors.grey.shade200,
                     borderRadius: linkPreviewConfig?.borderRadius,
-                    bodyStyle: linkPreviewConfig?.bodyStyle ??
-                        const TextStyle(color: Colors.black),
+                    bodyStyle: const TextStyle(color: Colors.black),
                     titleStyle: linkPreviewConfig?.titleStyle,
                   ),
           ),
@@ -68,11 +66,10 @@ class LinkPreview extends StatelessWidget {
             onTap: _onLinkTap,
             child: Text(
               url,
-              style: linkPreviewConfig?.linkStyle ??
-                  const TextStyle(
-                    color: Colors.white,
-                    decoration: TextDecoration.underline,
-                  ),
+              style: const TextStyle(
+                color: Colors.white,
+                decoration: TextDecoration.underline,
+              ),
             ),
           ),
         ],
