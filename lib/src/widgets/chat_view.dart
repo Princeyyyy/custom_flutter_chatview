@@ -2,6 +2,7 @@ import 'package:chatview/chatview.dart';
 import 'package:chatview/src/widgets/chat_list_widget.dart';
 import 'package:chatview/src/widgets/chat_view_inherited_widget.dart';
 import 'package:flutter/material.dart';
+import '../models/feature_active_config.dart';
 import 'send_message_widget.dart';
 
 class ChatView extends StatefulWidget {
@@ -12,6 +13,7 @@ class ChatView extends StatefulWidget {
     this.onSendTap,
     this.sendMessageBuilder,
     this.onChatListTap,
+    this.featureActiveConfig = const FeatureActiveConfig(),
   });
 
   /// Provides call back when user tap on send button in text field. It returns
@@ -30,6 +32,8 @@ class ChatView extends StatefulWidget {
   /// Provides callback when user tap on chat list.
   final VoidCallBack? onChatListTap;
 
+  final FeatureActiveConfig featureActiveConfig;
+
   @override
   State<ChatView> createState() => _ChatViewState();
 }
@@ -42,17 +46,20 @@ class _ChatViewState extends State<ChatView>
 
   ChatController get chatController => widget.chatController;
 
+  FeatureActiveConfig get featureActiveConfig => widget.featureActiveConfig;
+
   @override
   Widget build(BuildContext context) {
     chatController.scrollToLastMessage();
 
     return ChatViewInheritedWidget(
       chatController: chatController,
+      featureActiveConfig: featureActiveConfig,
       child: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
-          color: Colors.grey,
+          color: Colors.black,
         ),
         child: Column(
           children: [
@@ -79,8 +86,7 @@ class _ChatViewState extends State<ChatView>
                     sendMessageBuilder: widget.sendMessageBuilder,
                     onSendTap: _onSendTap,
                     onReplyCallback: (reply) => replyMessage.value = reply,
-                    onReplyCloseCallback: () =>
-                    replyMessage.value = const ReplyMessage(),
+                    onReplyCloseCallback: () => replyMessage.value = const ReplyMessage(),
                     currentUserId: widget.currentUserId,
                   ),
                 ],

@@ -10,8 +10,7 @@ class ReplyPopupWidget extends StatelessWidget {
     required this.sendByCurrentUser,
     required this.onUnsendTap,
     required this.onReplyTap,
-    required this.onReportTap,
-    required this.onMoreTap,
+    required this.onCopyTap,
   });
 
   /// Represents message is sent by current user or not.
@@ -23,18 +22,15 @@ class ReplyPopupWidget extends StatelessWidget {
   /// Provides call back when user tap on reply button.
   final VoidCallBack onReplyTap;
 
-  /// Provides call back when user tap on report button.
-  final VoidCallBack onReportTap;
-
   /// Provides call back when user tap on more button.
-  final VoidCallBack onMoreTap;
+  final VoidCallBack onCopyTap;
 
   @override
   Widget build(BuildContext context) {
     const textStyle = TextStyle(fontSize: 14, color: Colors.black);
     final deviceWidth = MediaQuery.of(context).size.width;
     return Container(
-      height: deviceWidth > 500 ? deviceWidth * 0.05 : deviceWidth * 0.13,
+      height: deviceWidth * 0.18,
       decoration: BoxDecoration(
         border: Border(top: BorderSide(color: Colors.grey.shade400, width: 1)),
       ),
@@ -43,24 +39,45 @@ class ReplyPopupWidget extends StatelessWidget {
         children: [
           InkWell(
             onTap: onReplyTap,
-            child: const Text(
-              PackageStrings.reply,
-              style: textStyle,
+            child: Container(
+              height: 40,
+              width: 90,
+              color: Colors.transparent,
+              child: const Center(
+                child: Text(
+                  PackageStrings.reply,
+                  style: textStyle,
+                ),
+              ),
             ),
           ),
           if (sendByCurrentUser)
             InkWell(
               onTap: onUnsendTap,
-              child: const Text(
-                PackageStrings.unsend,
-                style: textStyle,
+              child: Container(
+                height: 40,
+                width: 90,
+                color: Colors.transparent,
+                child: const Center(
+                  child: Text(
+                    PackageStrings.unsend,
+                    style: textStyle,
+                  ),
+                ),
               ),
             ),
           InkWell(
-            onTap: onMoreTap,
-            child: const Text(
-              PackageStrings.more,
-              style: textStyle,
+            onTap: onCopyTap,
+            child: Container(
+              height: 40,
+              width: 90,
+              color: Colors.transparent,
+              child: const Center(
+                child: Text(
+                  PackageStrings.copy,
+                  style: textStyle,
+                ),
+              ),
             ),
           ),
         ],

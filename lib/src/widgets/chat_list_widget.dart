@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io' if (kIsWeb) 'dart:html';
 
 import 'package:chatview/src/widgets/chat_groupedlist_widget.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
@@ -123,11 +124,12 @@ class _ChatListWidgetState extends State<ChatListWidget>
             duration: const Duration(hours: 1),
             backgroundColor: Colors.white,
             content: ReplyPopupWidget(
-              onMoreTap: () {
-                _onChatListTap();
-              },
-              onReportTap: () {
-                _onChatListTap();
+              onCopyTap: () {
+                FlutterClipboard.copy(message.message).then(( value ) => debugPrint('copied'));
+
+                showPopUp.value = false;
+
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
               },
               onUnsendTap: () {
                 _onChatListTap();
@@ -148,9 +150,11 @@ class _ChatListWidgetState extends State<ChatListWidget>
 
   void _onChatListTap() {
     widget.onChatListTap?.call();
+
     if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
       FocusScope.of(context).unfocus();
     }
+
     showPopUp.value = false;
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
   }

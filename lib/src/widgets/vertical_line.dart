@@ -5,6 +5,7 @@ class VerticalLine extends StatelessWidget {
     super.key,
     this.leftPadding = 0,
     this.rightPadding = 0,
+    required this.color,
   });
 
   /// Allow user to set left padding.
@@ -13,14 +14,19 @@ class VerticalLine extends StatelessWidget {
   /// Allow user to set left padding.
   final double rightPadding;
 
+  final Color color;
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 2.5,
-      color: const Color(0xffEE5366),
+      width: 2.7,
       margin: EdgeInsets.only(
         left: leftPadding,
         right: rightPadding,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(1.35),
+        color: color,
       ),
     );
   }

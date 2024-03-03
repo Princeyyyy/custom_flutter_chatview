@@ -26,7 +26,6 @@ class ReplyMessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final replyBySender = message.replyMessage.replyBy == currentUserId;
-    final textTheme = Theme.of(context).textTheme;
     final replyMessage = message.replyMessage.message;
 
     return GestureDetector(
@@ -51,72 +50,75 @@ class ReplyMessageWidget extends StatelessWidget {
                   if (!replyBySender)
                     const VerticalLine(
                       rightPadding: 4,
+                      color: Color(0xffEE5366),
                     ),
                   Flexible(
-                    child: Opacity(
-                      opacity: 0.8,
-                      child: message.replyMessage.messageType.isImage
-                          ? Container(
-                              height: 100,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(replyMessage),
-                                  fit: BoxFit.fill,
-                                ),
-                                borderRadius: BorderRadius.circular(14),
+                    child: message.replyMessage.messageType.isImage
+                        ? Container(
+                            height: 100,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(replyMessage),
+                                fit: BoxFit.fill,
                               ),
-                            )
-                          : Container(
-                              constraints: const BoxConstraints(
-                                maxWidth: 280,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 8,
-                                horizontal: 12,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: _borderRadius(
-                                  replyMessage: replyMessage,
-                                  replyBySender: replyBySender,
-                                ),
-                                color: const Color(0xffff8aad),
-                              ),
-                              child: message.replyMessage.messageType.isVoice
-                                  ? Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Icon(
-                                          Icons.mic,
-                                          color: Colors.white,
-                                        ),
-                                        const SizedBox(width: 2),
-                                        if (message.replyMessage
-                                                .voiceMessageDuration !=
-                                            null)
-                                          Text(
-                                            message.replyMessage
-                                                .voiceMessageDuration!
-                                                .toHHMMSS(),
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              letterSpacing: 0.25,
-                                            ),
-                                          ),
-                                      ],
-                                    )
-                                  : Text(
-                                      replyMessage,
-                                      style: textTheme.bodyMedium!
-                                          .copyWith(color: Colors.black),
-                                    ),
+                              borderRadius: BorderRadius.circular(14),
                             ),
-                    ),
+                          )
+                        : Container(
+                            constraints: const BoxConstraints(
+                              maxWidth: 280,
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 12,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: _borderRadius(
+                                replyMessage: replyMessage,
+                                replyBySender: replyBySender,
+                              ),
+                              color: replyBySender
+                                  ? const Color(0xff5eb6ff)
+                                  : const Color(0xffff8aad),
+                            ),
+                            child: message.replyMessage.messageType.isVoice
+                                ? Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Icon(
+                                        Icons.mic,
+                                        color: Colors.white,
+                                      ),
+                                      const SizedBox(width: 2),
+                                      if (message.replyMessage
+                                              .voiceMessageDuration !=
+                                          null)
+                                        Text(
+                                          message.replyMessage
+                                              .voiceMessageDuration!
+                                              .toHHMMSS(),
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            letterSpacing: 0.25,
+                                          ),
+                                        ),
+                                    ],
+                                  )
+                                : Text(
+                                    replyMessage,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.25,
+                                    ),
+                                  ),
+                          ),
                   ),
                   if (replyBySender)
                     const VerticalLine(
                       leftPadding: 4,
+                      color: Colors.blue,
                     ),
                 ],
               ),

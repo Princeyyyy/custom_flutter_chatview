@@ -68,6 +68,13 @@ class Data {
         messageType = MessageType.voice;
         messageSenderId = "currentUser.id";
         voiceMessageDuration = Duration(milliseconds: 21327);
+        replyMessage = ReplyMessage(
+            repliedMessageId: (i - 2).toString(),
+            message: "replied message",
+            replyUserId: "currentUser.id",
+            replyBy: messageSenderId,
+            messageType: MessageType.text
+        );
       }
 
       final Reaction reaction = Reaction(reactions: [], reactedUserNames: []);
