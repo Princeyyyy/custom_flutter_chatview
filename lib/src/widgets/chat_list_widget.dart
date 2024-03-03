@@ -14,7 +14,6 @@ class ChatListWidget extends StatefulWidget {
   const ChatListWidget({
     super.key,
     required this.chatController,
-    required this.chatBackgroundConfig,
     required this.assignReplyMessage,
     required this.replyMessage,
     required this.currentUserId,
@@ -25,9 +24,6 @@ class ChatListWidget extends StatefulWidget {
 
   /// Provides controller for accessing few function for running chat.
   final ChatController chatController;
-
-  /// Provides configuration for background of chat.
-  final ChatBackgroundConfiguration chatBackgroundConfig;
 
   /// Provides configuration for customisation of different types
   /// messages.
@@ -64,9 +60,6 @@ class _ChatListWidgetState extends State<ChatListWidget>
   List<Message> get messageList => chatController.initialMessageList;
 
   ScrollController get scrollController => chatController.scrollController;
-
-  ChatBackgroundConfiguration get chatBackgroundConfig =>
-      widget.chatBackgroundConfig;
 
   FeatureActiveConfig? featureActiveConfig;
 
@@ -105,9 +98,7 @@ class _ChatListWidgetState extends State<ChatListWidget>
                   ChatGroupedListWidget(
                     showPopUp: showPopupValue,
                     scrollController: scrollController,
-                    isEnableSwipeToSeeTime:
-                        featureActiveConfig?.enableSwipeToSeeTime ?? true,
-                    chatBackgroundConfig: widget.chatBackgroundConfig,
+                    isEnableSwipeToSeeTime: true,
                     assignReplyMessage: widget.assignReplyMessage,
                     replyMessage: widget.replyMessage,
                     repliedMessageConfig: widget.repliedMessageConfig,

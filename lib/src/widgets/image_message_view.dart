@@ -12,7 +12,6 @@ class ImageMessageView extends StatelessWidget {
     super.key,
     required this.message,
     required this.isMessageBySender,
-    this.imageMessageConfig,
     this.messageReactionConfig,
     this.highlightImage = false,
     this.highlightScale = 1.2,
@@ -23,9 +22,6 @@ class ImageMessageView extends StatelessWidget {
 
   /// Represents current message is sent by current user.
   final bool isMessageBySender;
-
-  /// Provides configuration for image message appearance.
-  final ImageMessageConfiguration? imageMessageConfig;
 
   /// Provides configuration of reaction appearance in chat bubble.
   final MessageReactionConfiguration? messageReactionConfig;
@@ -48,9 +44,6 @@ class ImageMessageView extends StatelessWidget {
         Stack(
           children: [
             GestureDetector(
-              onTap: () => imageMessageConfig?.onTap != null
-                  ? imageMessageConfig?.onTap!(imageUrl)
-                  : null,
               child: Transform.scale(
                 scale: highlightImage ? highlightScale : 1.0,
                 alignment: isMessageBySender

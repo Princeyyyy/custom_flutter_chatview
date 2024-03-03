@@ -17,8 +17,6 @@ class ChatBubbleWidget extends StatefulWidget {
     required this.onSwipe,
     required this.currentUserId,
     this.repliedMessageConfig,
-    this.messageTimeTextStyle,
-    this.messageTimeIconColor,
     this.messageConfig,
     this.onReplyTap,
     this.shouldHighlight = false,
@@ -33,13 +31,6 @@ class ChatBubbleWidget extends StatefulWidget {
   /// Provides configurations related to replied message such as textstyle
   /// padding, margin etc. Also, this widget is located upon chat bubble.
   final RepliedMessageConfiguration? repliedMessageConfig;
-
-  /// Provides textStyle of message created time when user swipe whole chat.
-  final TextStyle? messageTimeTextStyle;
-
-  /// Provides default icon color of message created time view when user swipe
-  /// whole chat.
-  final Color? messageTimeIconColor;
 
   /// Provides slide animation when user swipe whole chat.
   final Animation<Offset>? slideAnimation;
@@ -94,8 +85,6 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                 child: MessageTimeWidget(
                   messageTime: widget.message.createdAt,
                   isCurrentUser: isMessageBySender,
-                  messageTimeIconColor: widget.messageTimeIconColor,
-                  messageTimeTextStyle: widget.messageTimeTextStyle,
                 ),
               ),
             ),

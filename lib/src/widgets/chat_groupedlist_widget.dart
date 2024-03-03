@@ -11,7 +11,6 @@ class ChatGroupedListWidget extends StatefulWidget {
     super.key,
     required this.showPopUp,
     required this.scrollController,
-    required this.chatBackgroundConfig,
     required this.replyMessage,
     required this.assignReplyMessage,
     required this.onChatListTap,
@@ -25,9 +24,6 @@ class ChatGroupedListWidget extends StatefulWidget {
   /// Allow user to swipe to see time while reaction pop is not open.
   final bool showPopUp;
   final ScrollController scrollController;
-
-  /// Allow user to give customisation to background of chat
-  final ChatBackgroundConfiguration chatBackgroundConfig;
 
   /// Allow user to giving customisation different types
   /// messages
@@ -58,9 +54,6 @@ class ChatGroupedListWidget extends StatefulWidget {
 
 class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
     with TickerProviderStateMixin {
-  ChatBackgroundConfiguration get chatBackgroundConfig =>
-      widget.chatBackgroundConfig;
-
   bool get showPopUp => widget.showPopUp;
 
   bool highlightMessage = false;
@@ -167,7 +160,7 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
 
       Future.delayed(
         const Duration(milliseconds: 300),
-            () {
+        () {
           _replyId.value = null;
         },
       );
@@ -181,7 +174,7 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
       end: const Offset(-0.2, 0.0),
     ).animate(
       CurvedAnimation(
-        curve: chatBackgroundConfig.messageTimeAnimationCurve,
+        curve: Curves.decelerate,
         parent: _animationController!,
       ),
     );
@@ -210,28 +203,17 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
                 itemComparator: (message1, message2) =>
                     message1.message.compareTo(message2.message),
                 physics: const NeverScrollableScrollPhysics(),
-                order: chatBackgroundConfig.groupedListOrder,
-                sort: chatBackgroundConfig.sortEnable,
-                groupSeparatorBuilder: (separator) =>
-                    featureActiveConfig?.enableChatSeparator ?? false
-                        ? _GroupSeparatorBuilder(
-                            separator: separator,
-                            defaultGroupSeparatorConfig: chatBackgroundConfig
-                                .defaultGroupSeparatorConfig,
-                            groupSeparatorBuilder:
-                                chatBackgroundConfig.groupSeparatorBuilder,
-                          )
-                        : const SizedBox.shrink(),
+                order: GroupedListOrder.ASC,
+                sort: true,
+                groupSeparatorBuilder: (separator) => _GroupSeparatorBuilder(
+                  separator: separator,
+                ),
                 indexedItemBuilder: (context, message, index) {
                   return ValueListenableBuilder<String?>(
                     valueListenable: _replyId,
                     builder: (context, state, child) {
                       return ChatBubbleWidget(
                         key: message.key,
-                        messageTimeTextStyle:
-                            chatBackgroundConfig.messageTimeTextStyle,
-                        messageTimeIconColor:
-                            chatBackgroundConfig.messageTimeIconColor,
                         message: message,
                         messageConfig: widget.messageConfig,
                         repliedMessageConfig: widget.repliedMessageConfig,
@@ -244,16 +226,16 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
                         ),
                         onSwipe: widget.assignReplyMessage,
                         shouldHighlight: state == message.id,
-                        onReplyTap: (replyId) => _onReplyTap(replyId, snapshot.data),
+                        onReplyTap: (replyId) =>
+                            _onReplyTap(replyId, snapshot.data),
                         currentUserId: widget.currentUserId,
                       );
                     },
                   );
                 },
               )
-            : Center(
-                child: chatBackgroundConfig.loadingWidget ??
-                    const CircularProgressIndicator(),
+            : const Center(
+                child: CircularProgressIndicator(),
               );
       },
     );
@@ -263,20 +245,14 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
 class _GroupSeparatorBuilder extends StatelessWidget {
   const _GroupSeparatorBuilder({
     required this.separator,
-    this.groupSeparatorBuilder,
-    this.defaultGroupSeparatorConfig,
   });
+
   final String separator;
-  final StringWithReturnWidget? groupSeparatorBuilder;
-  final DefaultGroupSeparatorConfiguration? defaultGroupSeparatorConfig;
 
   @override
   Widget build(BuildContext context) {
-    return groupSeparatorBuilder != null
-        ? groupSeparatorBuilder!(separator)
-        : ChatGroupHeader(
-            day: DateTime.parse(separator),
-            groupSeparatorConfig: defaultGroupSeparatorConfig,
-          );
+    return ChatGroupHeader(
+      day: DateTime.parse(separator),
+    );
   }
 }

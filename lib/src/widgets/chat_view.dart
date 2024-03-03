@@ -14,13 +14,10 @@ class ChatView extends StatefulWidget {
     this.onSendTap,
     this.repliedMessageConfig,
     this.messageConfig,
-    ChatBackgroundConfiguration? chatBackgroundConfig,
     this.sendMessageBuilder,
-    this.sendMessageConfig,
     this.onChatListTap,
     this.featureActiveConfig = const FeatureActiveConfig(),
-  })  : chatBackgroundConfig =
-            chatBackgroundConfig ?? const ChatBackgroundConfiguration();
+  });
 
   /// Allow user to giving customisation different types
   /// messages.
@@ -30,9 +27,6 @@ class ChatView extends StatefulWidget {
   /// bubble.
   final RepliedMessageConfiguration? repliedMessageConfig;
 
-  /// Allow user to give customisation to background of chat
-  final ChatBackgroundConfiguration chatBackgroundConfig;
-
   /// Provides call back when user tap on send button in text field. It returns
   /// message, reply message and message type.
   final StringMessageCallBack? onSendTap;
@@ -40,12 +34,8 @@ class ChatView extends StatefulWidget {
   /// Provides builder which helps you to make custom text field and functionality.
   final ReplyMessageWithReturnWidget? sendMessageBuilder;
 
-
   /// Provides controller for accessing few function for running chat.
   final ChatController chatController;
-
-  /// Provides configuration of default text field in chat.
-  final SendMessageConfiguration? sendMessageConfig;
 
   /// Provides current user which is sending messages.
   final String currentUserId;
@@ -68,9 +58,6 @@ class _ChatViewState extends State<ChatView>
 
   ChatController get chatController => widget.chatController;
 
-  ChatBackgroundConfiguration get chatBackgroundConfig =>
-      widget.chatBackgroundConfig;
-
   FeatureActiveConfig get featureActiveConfig => widget.featureActiveConfig;
 
   @override
@@ -87,20 +74,11 @@ class _ChatViewState extends State<ChatView>
       chatController: chatController,
       featureActiveConfig: featureActiveConfig,
       child: Container(
-        height:
-            chatBackgroundConfig.height ?? MediaQuery.of(context).size.height,
-        width: chatBackgroundConfig.width ?? MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          color: chatBackgroundConfig.backgroundColor ?? Colors.white,
-          image: chatBackgroundConfig.backgroundImage != null
-              ? DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage(chatBackgroundConfig.backgroundImage!),
-                )
-              : null,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: const BoxDecoration(
+          color: Colors.grey,
         ),
-        padding: chatBackgroundConfig.padding,
-        margin: chatBackgroundConfig.margin,
         child: Column(
           children: [
             Expanded(
@@ -112,7 +90,6 @@ class _ChatViewState extends State<ChatView>
                       return ChatListWidget(
                         replyMessage: state,
                         chatController: widget.chatController,
-                        chatBackgroundConfig: widget.chatBackgroundConfig,
                         messageConfig: widget.messageConfig,
                         repliedMessageConfig: widget.repliedMessageConfig,
                         onChatListTap: widget.onChatListTap,
@@ -128,8 +105,6 @@ class _ChatViewState extends State<ChatView>
                       key: _sendMessageKey,
                       chatController: chatController,
                       sendMessageBuilder: widget.sendMessageBuilder,
-                      sendMessageConfig: widget.sendMessageConfig,
-                      backgroundColor: chatBackgroundConfig.backgroundColor,
                       onSendTap: _onSendTap,
                       onReplyCallback: (reply) => replyMessage.value = reply,
                       onReplyCloseCallback: () =>

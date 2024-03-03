@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 
 class MessageConfiguration {
   /// Provides configuration of image message appearance.
-  final ImageMessageConfiguration? imageMessageConfig;
-
-  /// Provides configuration of image message appearance.
   final MessageReactionConfiguration? messageReactionConfig;
 
   /// Provides configuration of emoji messages appearance.
@@ -19,7 +16,6 @@ class MessageConfiguration {
   final VoiceMessageConfiguration? voiceMessageConfig;
 
   const MessageConfiguration({
-    this.imageMessageConfig,
     this.messageReactionConfig,
     this.emojiMessageConfig,
     this.customMessageBuilder,

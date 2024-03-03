@@ -50,29 +50,6 @@ class _ChatScreenState extends State<ChatScreen> {
           receiptsBuilderVisibility: true,
           enableSwipeToSeeTime: true,
         ),
-        chatBackgroundConfig: const ChatBackgroundConfiguration(
-          messageTimeIconColor: Colors.black,
-          messageTimeTextStyle: TextStyle(color: Colors.black),
-          defaultGroupSeparatorConfig: DefaultGroupSeparatorConfiguration(
-            textStyle: TextStyle(
-              color: Colors.black,
-              fontSize: 17,
-            ),
-          ),
-          backgroundColor: Colors.grey,
-        ),
-        sendMessageConfig: SendMessageConfiguration(
-          replyMessageColor: Colors.black,
-          defaultSendButtonColor: Colors.pink,
-          replyDialogColor: Colors.blueGrey[400],
-          replyTitleColor: Colors.black,
-          textFieldBackgroundColor: Colors.white,
-          closeIconColor: Colors.white,
-          textFieldConfig: const TextFieldConfiguration(
-            compositionThresholdTime: Duration(seconds: 1),
-            textStyle: TextStyle(color: Colors.black),
-          ),
-        ),
         messageConfig: MessageConfiguration(
           messageReactionConfig: MessageReactionConfiguration(
             backgroundColor: const Color(0xFFEEEEEE),
@@ -94,9 +71,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-          ),
-          imageMessageConfig: const ImageMessageConfiguration(
-            margin: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
           ),
         ),
         repliedMessageConfig: const RepliedMessageConfiguration(

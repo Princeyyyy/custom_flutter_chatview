@@ -8,14 +8,10 @@ import '../utils/package_strings.dart';
 class ChatUITextField extends StatefulWidget {
   const ChatUITextField({
     super.key,
-    this.sendMessageConfig,
     required this.focusNode,
     required this.textEditingController,
     required this.onPressed,
   });
-
-  /// Provides configuration of default text field in chat.
-  final SendMessageConfiguration? sendMessageConfig;
 
   /// Provides focusNode for focusing text field.
   final FocusNode focusNode;
@@ -33,15 +29,9 @@ class ChatUITextField extends StatefulWidget {
 class _ChatUITextFieldState extends State<ChatUITextField> {
   final ValueNotifier<String> _inputText = ValueNotifier('');
 
-  SendMessageConfiguration? get sendMessageConfig => widget.sendMessageConfig;
-
-  TextFieldConfiguration? get textFieldConfig =>
-      sendMessageConfig?.textFieldConfig;
-
   OutlineInputBorder get _outLineBorder => OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.transparent),
-        borderRadius: textFieldConfig?.borderRadius ??
-            BorderRadius.circular(textFieldBorderRadius),
+        borderRadius: BorderRadius.circular(textFieldBorderRadius),
       );
 
   late Debouncer debouncer;
@@ -63,10 +53,8 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6),
-      margin: textFieldConfig?.margin,
       decoration: BoxDecoration(
-        borderRadius: textFieldConfig?.borderRadius ??
-            BorderRadius.circular(textFieldBorderRadius),
+        borderRadius: BorderRadius.circular(textFieldBorderRadius),
         color: Colors.white,
       ),
       child: Row(
@@ -75,36 +63,27 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
             child: TextField(
               focusNode: widget.focusNode,
               controller: widget.textEditingController,
-              style: textFieldConfig?.textStyle ??
-                  const TextStyle(color: Colors.white),
-              maxLines: textFieldConfig?.maxLines ?? 5,
-              minLines: textFieldConfig?.minLines ?? 1,
-              keyboardType: textFieldConfig?.textInputType,
-              inputFormatters: textFieldConfig?.inputFormatters,
+              style: const TextStyle(color: Colors.black),
+              maxLines: 5,
+              minLines: 1,
               onChanged: _onChanged,
-              textCapitalization: textFieldConfig?.textCapitalization ??
-                  TextCapitalization.sentences,
+              textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
-                hintText:
-                textFieldConfig?.hintText ?? PackageStrings.message,
-                fillColor: sendMessageConfig?.textFieldBackgroundColor ??
-                    Colors.white,
+                hintText: PackageStrings.message,
+                fillColor: Colors.white,
                 filled: true,
-                hintStyle: textFieldConfig?.hintStyle ??
-                    TextStyle(
+                hintStyle: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey.shade600,
                       letterSpacing: 0.25,
                     ),
-                contentPadding: textFieldConfig?.contentPadding ??
-                    const EdgeInsets.symmetric(horizontal: 6),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 6),
                 border: _outLineBorder,
                 focusedBorder: _outLineBorder,
                 enabledBorder: OutlineInputBorder(
                   borderSide: const BorderSide(color: Colors.transparent),
-                  borderRadius: textFieldConfig?.borderRadius ??
-                      BorderRadius.circular(textFieldBorderRadius),
+                  borderRadius: BorderRadius.circular(textFieldBorderRadius),
                 ),
               ),
             ),
@@ -119,8 +98,7 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
                     widget.onPressed();
                     _inputText.value = '';
                   },
-                  icon: sendMessageConfig?.sendButtonIcon ??
-                      const Icon(Icons.send),
+                  icon: const Icon(Icons.send),
                 );
               } else {
                 return IconButton(

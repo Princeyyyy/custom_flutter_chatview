@@ -16,8 +16,6 @@ class SendMessageWidget extends StatefulWidget {
     required this.onSendTap,
     required this.chatController,
     required this.currentUserId,
-    this.sendMessageConfig,
-    this.backgroundColor,
     this.sendMessageBuilder,
     this.onReplyCallback,
     this.onReplyCloseCallback,
@@ -25,13 +23,6 @@ class SendMessageWidget extends StatefulWidget {
 
   /// Provides call back when user tap on send button on text field.
   final StringMessageCallBack onSendTap;
-
-  /// Provides configuration for text field appearance.
-  final SendMessageConfiguration? sendMessageConfig;
-
-  /// Allow user to set background colour.
-  final Color? backgroundColor;
-
   final String currentUserId;
 
   /// Allow user to set custom text field.
@@ -86,7 +77,7 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                     child: Container(
                       height: MediaQuery.of(context).size.height /
                           ((!kIsWeb && Platform.isIOS) ? 24 : 28),
-                      color: widget.backgroundColor ?? Colors.white,
+                      color: Colors.white,
                     ),
                   ),
                   Padding(
@@ -179,7 +170,6 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                           focusNode: _focusNode,
                           textEditingController: _textEditingController,
                           onPressed: _onPressed,
-                          sendMessageConfig: widget.sendMessageConfig,
                         )
                       ],
                     ),

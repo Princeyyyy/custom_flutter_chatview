@@ -163,7 +163,6 @@ class _MessageViewState extends State<MessageView>
                   return ImageMessageView(
                     message: widget.message,
                     isMessageBySender: widget.isMessageBySender,
-                    imageMessageConfig: messageConfig?.imageMessageConfig,
                     messageReactionConfig: messageConfig?.messageReactionConfig,
                     highlightImage: widget.shouldHighlight,
                     highlightScale: widget.highlightScale,
