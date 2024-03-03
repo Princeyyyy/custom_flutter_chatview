@@ -11,16 +11,13 @@ class ReactionsBottomSheet {
 
     /// Provides controller for accessing few function for running chat.
     required ChatController chatController,
-
-    /// Provides configuration of reaction bottom sheet appearance.
-    required ReactionsBottomSheetConfiguration? reactionsBottomSheetConfig,
   }) {
     return showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.5,
-          color: reactionsBottomSheetConfig?.backgroundColor,
+          height: MediaQuery.of(context).size.height * 0.3,
+          color: Colors.white,
           child: ListView.builder(
             padding: const EdgeInsets.only(
               right: 12,
@@ -51,8 +48,9 @@ class ReactionsBottomSheet {
                           const SizedBox(width: 12),
                           Text(
                             reaction.reactedUserNames[index],
-                            style: reactionsBottomSheetConfig
-                                ?.reactedUserTextStyle,
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
                           ),
                         ],
                       ),

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io' if (kIsWeb) 'dart:html';
 
-import 'package:chatview/src/extensions/extensions.dart';
 import 'package:chatview/src/widgets/chat_groupedlist_widget.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -17,16 +16,11 @@ class ChatListWidget extends StatefulWidget {
     required this.assignReplyMessage,
     required this.replyMessage,
     required this.currentUserId,
-    this.messageConfig,
     this.onChatListTap,
   });
 
   /// Provides controller for accessing few function for running chat.
   final ChatController chatController;
-
-  /// Provides configuration for customisation of different types
-  /// messages.
-  final MessageConfiguration? messageConfig;
 
   /// Provides reply message when user swipe to chat bubble.
   final ReplyMessage replyMessage;
@@ -86,27 +80,24 @@ class _ChatListWidgetState extends State<ChatListWidget>
                     isEnableSwipeToSeeTime: true,
                     assignReplyMessage: widget.assignReplyMessage,
                     replyMessage: widget.replyMessage,
-                    messageConfig: widget.messageConfig,
                     onChatBubbleLongPress: (yCoordinate, xCoordinate, message) {
                       _reactionPopupKey.currentState?.refreshWidget(
                         message: message,
                         xCoordinate: xCoordinate,
-                        yCoordinate: yCoordinate < 0
-                            ? -(yCoordinate) - 5
-                            : yCoordinate,
+                        yCoordinate:
+                            yCoordinate < 0 ? -(yCoordinate) - 5 : yCoordinate,
                       );
                       showPopUp.value = true;
 
                       _showReplyPopup(
                         message: message,
                         sendByCurrentUser:
-                        message.messageSenderId == widget.currentUserId,
+                            message.messageSenderId == widget.currentUserId,
                       );
                     },
                     onChatListTap: _onChatListTap,
                     currentUserId: widget.currentUserId,
                   ),
-
                   ReactionPopup(
                     key: _reactionPopupKey,
                     onTap: _onChatListTap,

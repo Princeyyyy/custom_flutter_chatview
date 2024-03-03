@@ -16,7 +16,6 @@ class ChatBubbleWidget extends StatefulWidget {
     required this.slideAnimation,
     required this.onSwipe,
     required this.currentUserId,
-    this.messageConfig,
     this.onReplyTap,
     this.shouldHighlight = false,
   }) : super(key: key);
@@ -29,9 +28,6 @@ class ChatBubbleWidget extends StatefulWidget {
 
   /// Provides slide animation when user swipe whole chat.
   final Animation<Offset>? slideAnimation;
-
-  /// Provides configuration of all types of messages.
-  final MessageConfiguration? messageConfig;
 
   /// Provides callback of when user swipe chat bubble for reply.
   final MessageCallBack onSwipe;
@@ -146,7 +142,6 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
           isLongPressEnable: true,
           message: widget.message,
           isMessageBySender: isMessageBySender,
-          messageConfig: widget.messageConfig,
           onLongPress: widget.onLongPress,
           onDoubleTap: (message) => chatController?.setReaction(
             emoji: heart,

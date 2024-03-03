@@ -2,8 +2,6 @@ import 'package:chatview/chatview.dart';
 import 'package:chatview/src/widgets/chat_list_widget.dart';
 import 'package:chatview/src/widgets/chat_view_inherited_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:timeago/timeago.dart';
-import '../values/custom_time_messages.dart';
 import 'send_message_widget.dart';
 
 class ChatView extends StatefulWidget {
@@ -12,14 +10,9 @@ class ChatView extends StatefulWidget {
     required this.chatController,
     required this.currentUserId,
     this.onSendTap,
-    this.messageConfig,
     this.sendMessageBuilder,
     this.onChatListTap,
   });
-
-  /// Allow user to giving customisation different types
-  /// messages.
-  final MessageConfiguration? messageConfig;
 
   /// Provides call back when user tap on send button in text field. It returns
   /// message, reply message and message type.
@@ -50,12 +43,6 @@ class _ChatViewState extends State<ChatView>
   ChatController get chatController => widget.chatController;
 
   @override
-  void initState() {
-    super.initState();
-    setLocaleMessages('en', ReceiptsCustomMessages());
-  }
-
-  @override
   Widget build(BuildContext context) {
     chatController.scrollToLastMessage();
 
@@ -78,7 +65,6 @@ class _ChatViewState extends State<ChatView>
                       return ChatListWidget(
                         replyMessage: state,
                         chatController: widget.chatController,
-                        messageConfig: widget.messageConfig,
                         onChatListTap: widget.onChatListTap,
                         assignReplyMessage: (message) => _sendMessageKey
                             .currentState
@@ -87,7 +73,6 @@ class _ChatViewState extends State<ChatView>
                       );
                     },
                   ),
-
                   SendMessageWidget(
                     key: _sendMessageKey,
                     chatController: chatController,

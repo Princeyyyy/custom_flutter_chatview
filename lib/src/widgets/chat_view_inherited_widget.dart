@@ -9,6 +9,7 @@ class ChatViewInheritedWidget extends InheritedWidget {
     required super.child,
     required this.chatController,
   });
+
   final ChatController chatController;
 
   static ChatViewInheritedWidget? of(BuildContext context) =>

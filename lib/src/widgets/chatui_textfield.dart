@@ -73,11 +73,11 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
                 fillColor: Colors.white,
                 filled: true,
                 hintStyle: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey.shade600,
-                      letterSpacing: 0.25,
-                    ),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey.shade600,
+                  letterSpacing: 0.25,
+                ),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 6),
                 border: _outLineBorder,
                 focusedBorder: _outLineBorder,
@@ -103,8 +103,7 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
               } else {
                 return IconButton(
                   color: Colors.green,
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                   icon: const Icon(Icons.attach_file),
                 );
               }

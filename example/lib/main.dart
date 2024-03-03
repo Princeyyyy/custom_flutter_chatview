@@ -45,29 +45,6 @@ class _ChatScreenState extends State<ChatScreen> {
       body: ChatView(
         chatController: _chatController,
         onSendTap: _onSendTap,
-        messageConfig: MessageConfiguration(
-          messageReactionConfig: MessageReactionConfiguration(
-            backgroundColor: const Color(0xFFEEEEEE),
-            borderColor: const Color(0xFFEEEEEE),
-            reactionsBottomSheetConfig: ReactionsBottomSheetConfiguration(
-              backgroundColor: Colors.white,
-              reactedUserTextStyle: const TextStyle(
-                color: Colors.black,
-              ),
-              reactionWidgetDecoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: isDarkTheme ? Colors.black12 : Colors.grey.shade200,
-                    offset: const Offset(0, 20),
-                    blurRadius: 40,
-                  )
-                ],
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-        ),
         currentUserId: "currentUser.id",
       ),
     );

@@ -12,7 +12,6 @@ class ImageMessageView extends StatelessWidget {
     super.key,
     required this.message,
     required this.isMessageBySender,
-    this.messageReactionConfig,
     this.highlightImage = false,
     this.highlightScale = 1.2,
   });
@@ -22,9 +21,6 @@ class ImageMessageView extends StatelessWidget {
 
   /// Represents current message is sent by current user.
   final bool isMessageBySender;
-
-  /// Provides configuration of reaction appearance in chat bubble.
-  final MessageReactionConfiguration? messageReactionConfig;
 
   /// Represents flag of highlighting image when user taps on replied image.
   final bool highlightImage;
@@ -52,11 +48,11 @@ class ImageMessageView extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.zero,
                   margin: EdgeInsets.only(
-                        top: 6,
-                        right: isMessageBySender ? 6 : 0,
-                        left: isMessageBySender ? 0 : 6,
-                        bottom: message.reaction.reactions.isNotEmpty ? 15 : 0,
-                      ),
+                    top: 6,
+                    right: isMessageBySender ? 6 : 0,
+                    left: isMessageBySender ? 0 : 6,
+                    bottom: message.reaction.reactions.isNotEmpty ? 15 : 0,
+                  ),
                   height: 200,
                   width: 150,
                   child: ClipRRect(
@@ -100,7 +96,6 @@ class ImageMessageView extends StatelessWidget {
               ReactionWidget(
                 isMessageBySender: isMessageBySender,
                 reaction: message.reaction,
-                messageReactionConfig: messageReactionConfig,
                 isMessageImage: true,
               ),
           ],

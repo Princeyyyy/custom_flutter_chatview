@@ -20,6 +20,7 @@ class Data {
       String messageSenderId;
       DateTime createdAt;
       ReplyMessage replyMessage = ReplyMessage();
+      Duration? voiceMessageDuration;
 
       if (i.isEven) {
         if (i > 20) {
@@ -60,6 +61,13 @@ class Data {
         createdAt = today.subtract(Duration(days: count - (i - 3)));
       } else {
         createdAt = today.subtract(Duration(days: count - (i - 4)));
+      }
+
+      if (i == count - 1) {
+        message = "https://firebasestorage.googleapis.com/v0/b/qpid-dba91.appspot.com/o/725639__lovescotch__minimal-might.wav?alt=media&token=d2377602-87ba-481b-a133-8a25e59296dd";
+        messageType = MessageType.voice;
+        messageSenderId = "currentUser.id";
+        voiceMessageDuration = Duration(milliseconds: 21327);
       }
 
       final Reaction reaction = Reaction(reactions: [], reactedUserNames: []);

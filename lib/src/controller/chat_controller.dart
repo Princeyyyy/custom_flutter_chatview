@@ -71,11 +71,4 @@ class ChatController {
           duration: const Duration(milliseconds: 300),
         ),
       );
-
-  /// Function for loading data while pagination.
-  void loadMoreData(List<Message> messageList) {
-    /// Here, we have passed 0 index as we need to add data before first data
-    initialMessageList.insertAll(0, messageList);
-    messageStreamController.sink.add(initialMessageList);
-  }
 }

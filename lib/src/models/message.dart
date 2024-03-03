@@ -57,12 +57,6 @@ class Message {
   /// current messageStatus
   MessageStatus get status => _status.value;
 
-  /// For [MessageStatus] ValueNotifier which is used to for rebuilds
-  /// when state changes.
-  /// Using ValueNotifier to avoid usage of setState((){}) in order
-  /// re-render messages with new receipts.
-  ValueNotifier<MessageStatus> get statusNotifier => _status;
-
   /// This setter can be used to update message receipts, after which the configured
   /// builders will be updated.
   set setStatus(MessageStatus messageStatus) {
@@ -70,15 +64,16 @@ class Message {
   }
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
-      id: json["id"],
-      message: json["message"],
-      createdAt: json["createdAt"],
-      messageSenderId: json["sendBy"],
-      replyMessage: ReplyMessage.fromJson(json["reply_message"]),
-      reaction: Reaction.fromJson(json["reaction"]),
-      messageType: json["message_type"],
-      voiceMessageDuration: json["voice_message_duration"],
-      status: json['status']);
+        id: json["id"],
+        message: json["message"],
+        createdAt: json["createdAt"],
+        messageSenderId: json["sendBy"],
+        replyMessage: ReplyMessage.fromJson(json["reply_message"]),
+        reaction: Reaction.fromJson(json["reaction"]),
+        messageType: json["message_type"],
+        voiceMessageDuration: json["voice_message_duration"],
+        status: json['status'],
+      );
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -89,6 +84,6 @@ class Message {
         'reaction': reaction.toJson(),
         'message_type': messageType,
         'voice_message_duration': voiceMessageDuration,
-        'status': status.name
+        'status': status.name,
       };
 }

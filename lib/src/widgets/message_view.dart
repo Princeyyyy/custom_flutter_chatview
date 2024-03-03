@@ -19,7 +19,6 @@ class MessageView extends StatefulWidget {
     this.highlightColor = Colors.grey,
     this.shouldHighlight = false,
     this.highlightScale = 1.2,
-    this.messageConfig,
     this.onMaxDuration,
     this.controller,
   });
@@ -45,10 +44,6 @@ class MessageView extends StatefulWidget {
   /// Provides scale of highlighted image when user taps on replied image.
   final double highlightScale;
 
-  /// Allow user to giving customisation different types
-  /// messages.
-  final MessageConfiguration? messageConfig;
-
   /// Allow user to turn on/off long press tap on chat bubble.
   final bool isLongPressEnable;
 
@@ -63,8 +58,6 @@ class MessageView extends StatefulWidget {
 class _MessageViewState extends State<MessageView>
     with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
-
-  MessageConfiguration? get messageConfig => widget.messageConfig;
 
   bool get isLongPressEnable => widget.isLongPressEnable;
 
@@ -114,7 +107,6 @@ class _MessageViewState extends State<MessageView>
 
   Widget get _messageView {
     final message = widget.message.message;
-    final emojiMessageConfiguration = messageConfig?.emojiMessageConfig;
 
     return Padding(
       padding: EdgeInsets.only(
@@ -129,31 +121,25 @@ class _MessageViewState extends State<MessageView>
                     clipBehavior: Clip.none,
                     children: [
                       Padding(
-                        padding: emojiMessageConfiguration?.padding ??
-                            EdgeInsets.fromLTRB(
-                              leftPadding2,
-                              4,
-                              leftPadding2,
-                              widget.message.reaction.reactions.isNotEmpty
-                                  ? 14
-                                  : 0,
-                            ),
+                        padding: EdgeInsets.fromLTRB(
+                          leftPadding2,
+                          4,
+                          leftPadding2,
+                          widget.message.reaction.reactions.isNotEmpty ? 14 : 0,
+                        ),
                         child: Transform.scale(
                           scale: widget.shouldHighlight
                               ? widget.highlightScale
                               : 1.0,
                           child: Text(
                             message,
-                            style: emojiMessageConfiguration?.textStyle ??
-                                const TextStyle(fontSize: 30),
+                            style: const TextStyle(fontSize: 30),
                           ),
                         ),
                       ),
                       if (widget.message.reaction.reactions.isNotEmpty)
                         ReactionWidget(
                           reaction: widget.message.reaction,
-                          messageReactionConfig:
-                              messageConfig?.messageReactionConfig,
                           isMessageBySender: widget.isMessageBySender,
                           isMessageImage: false,
                         ),
@@ -163,7 +149,6 @@ class _MessageViewState extends State<MessageView>
                   return ImageMessageView(
                     message: widget.message,
                     isMessageBySender: widget.isMessageBySender,
-                    messageReactionConfig: messageConfig?.messageReactionConfig,
                     highlightImage: widget.shouldHighlight,
                     highlightScale: widget.highlightScale,
                   );
@@ -171,7 +156,6 @@ class _MessageViewState extends State<MessageView>
                   return TextMessageView(
                     isMessageBySender: widget.isMessageBySender,
                     message: widget.message,
-                    messageReactionConfig: messageConfig?.messageReactionConfig,
                     highlightColor: widget.highlightColor,
                     highlightMessage: widget.shouldHighlight,
                   );
@@ -179,10 +163,8 @@ class _MessageViewState extends State<MessageView>
                   return VoiceMessageView(
                     screenWidth: MediaQuery.of(context).size.width,
                     message: widget.message,
-                    config: messageConfig?.voiceMessageConfig,
                     onMaxDuration: widget.onMaxDuration,
                     isMessageBySender: widget.isMessageBySender,
-                    messageReactionConfig: messageConfig?.messageReactionConfig,
                   );
                 }
               }()) ??

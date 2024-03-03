@@ -61,8 +61,6 @@ extension MessageTypes on MessageType {
 
 /// Extension on ConnectionState for checking specific connection.
 extension ConnectionStates on ConnectionState {
-  bool get isWaiting => this == ConnectionState.waiting;
-
   bool get isActive => this == ConnectionState.active;
 }
 

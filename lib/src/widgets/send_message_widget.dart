@@ -57,127 +57,104 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.sendMessageBuilder != null
-        ? Positioned(
-            right: 0,
-            left: 0,
-            bottom: 0,
-            child: widget.sendMessageBuilder!(replyMessage),
-          )
-        : Align(
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(
+            bottomPadding4,
+            bottomPadding4,
+            bottomPadding4,
+            _bottomPadding,
+          ),
+          child: Stack(
             alignment: Alignment.bottomCenter,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Stack(
-                children: [
-                  Positioned(
-                    right: 0,
-                    left: 0,
-                    bottom: 0,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height /
-                          ((!kIsWeb && Platform.isIOS) ? 24 : 28),
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(
-                      bottomPadding4,
-                      bottomPadding4,
-                      bottomPadding4,
-                      _bottomPadding,
-                    ),
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        ValueListenableBuilder<ReplyMessage>(
-                          builder: (_, state, child) {
-                            if (state.message.isNotEmpty) {
-                              return Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(14),
-                                  ),
-                                ),
-                                margin: const EdgeInsets.only(
-                                  bottom: 17,
-                                  right: 0.4,
-                                  left: 0.4,
-                                ),
-                                padding: const EdgeInsets.fromLTRB(
-                                  leftPadding,
-                                  leftPadding,
-                                  leftPadding,
-                                  30,
-                                ),
-                                child: Container(
-                                  margin: const EdgeInsets.only(bottom: 2),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  padding: const EdgeInsets.only(
-                                    left: 8,
-                                    bottom: 8,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          IconButton(
-                                            constraints: const BoxConstraints(),
-                                            padding: EdgeInsets.zero,
-                                            icon: const Icon(
-                                              Icons.close,
-                                              color: Colors.black,
-                                              size: 22,
-                                            ),
-                                            onPressed: _onCloseTap,
-                                          ),
-                                        ],
-                                      ),
-                                      if (state.messageType.isVoice)
-                                        _voiceReplyMessageView
-                                      else if (state.messageType.isImage)
-                                        _imageReplyMessageView
-                                      else
-                                        Text(
-                                          state.message,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return const SizedBox.shrink();
-                            }
-                          },
-                          valueListenable: _replyMessage,
+            children: [
+              ValueListenableBuilder<ReplyMessage>(
+                builder: (_, state, child) {
+                  if (state.message.isNotEmpty) {
+                    return Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(14),
                         ),
-                        ChatUITextField(
-                          focusNode: _focusNode,
-                          textEditingController: _textEditingController,
-                          onPressed: _onPressed,
-                        )
-                      ],
-                    ),
-                  ),
-                ],
+                      ),
+                      margin: const EdgeInsets.only(
+                        bottom: 17,
+                        right: 0.4,
+                        left: 0.4,
+                      ),
+                      padding: const EdgeInsets.fromLTRB(
+                        leftPadding,
+                        leftPadding,
+                        leftPadding,
+                        30,
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 2),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.only(
+                          left: 8,
+                          bottom: 8,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  constraints: const BoxConstraints(),
+                                  padding: EdgeInsets.zero,
+                                  icon: const Icon(
+                                    Icons.close,
+                                    color: Colors.black,
+                                    size: 22,
+                                  ),
+                                  onPressed: _onCloseTap,
+                                ),
+                              ],
+                            ),
+                            if (state.messageType.isVoice)
+                              _voiceReplyMessageView
+                            else if (state.messageType.isImage)
+                              _imageReplyMessageView
+                            else
+                              Text(
+                                state.message,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+                valueListenable: _replyMessage,
               ),
-            ),
-          );
+              ChatUITextField(
+                focusNode: _focusNode,
+                textEditingController: _textEditingController,
+                onPressed: _onPressed,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget get _voiceReplyMessageView {

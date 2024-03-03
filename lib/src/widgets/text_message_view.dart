@@ -12,7 +12,6 @@ class TextMessageView extends StatelessWidget {
     super.key,
     required this.isMessageBySender,
     required this.message,
-    this.messageReactionConfig,
     this.highlightMessage = false,
     this.highlightColor,
   });
@@ -22,9 +21,6 @@ class TextMessageView extends StatelessWidget {
 
   /// Provides message instance of chat.
   final Message message;
-
-  /// Provides configuration of reaction appearance in chat bubble.
-  final MessageReactionConfiguration? messageReactionConfig;
 
   /// Represents message should highlight.
   final bool highlightMessage;
@@ -78,7 +74,6 @@ class TextMessageView extends StatelessWidget {
             key: key,
             isMessageBySender: isMessageBySender,
             reaction: message.reaction,
-            messageReactionConfig: messageReactionConfig,
             isMessageImage: false,
           ),
       ],

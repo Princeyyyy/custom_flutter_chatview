@@ -69,7 +69,7 @@ class EmojiUtil {
 
 ///
 /// The representation of an emoji.
-/// There are three properties availables:
+/// There are three properties available:
 ///   - 'name' : the emoji name (no colon)
 ///   - 'full' : the full emoji name. It is name with colons on both sides.
 ///   - 'code' : the actual graphic presentation of emoji.
@@ -170,7 +170,7 @@ class EmojiParser {
   }
 
   ///
-  /// This method will unemojify the text containing the Unicode emoji symbols
+  /// This method will un-emojify the text containing the Unicode emoji symbols
   /// into emoji name.
   ///
   /// For example: 'I ❤️ Flutter' => 'I :heart: Flutter'

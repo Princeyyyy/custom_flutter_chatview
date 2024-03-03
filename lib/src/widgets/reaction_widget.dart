@@ -9,16 +9,12 @@ class ReactionWidget extends StatefulWidget {
   const ReactionWidget({
     super.key,
     required this.reaction,
-    this.messageReactionConfig,
     required this.isMessageBySender,
     required this.isMessageImage,
   });
 
   /// Provides reaction instance of message.
   final Reaction reaction;
-
-  /// Provides configuration of reaction appearance in chat bubble.
-  final MessageReactionConfiguration? messageReactionConfig;
 
   /// Represents current message is sent by current user.
   final bool isMessageBySender;
@@ -31,8 +27,6 @@ class ReactionWidget extends StatefulWidget {
 
 class _ReactionWidgetState extends State<ReactionWidget> {
   bool needToExtend = false;
-  MessageReactionConfiguration? get messageReactionConfig =>
-      widget.messageReactionConfig;
   ChatController? chatController;
 
   @override
@@ -57,8 +51,6 @@ class _ReactionWidgetState extends State<ReactionWidget> {
                 context: context,
                 reaction: widget.reaction,
                 chatController: chatController!,
-                reactionsBottomSheetConfig:
-                    messageReactionConfig?.reactionsBottomSheetConfig,
               )
             : null,
         child: MeasureSize(
@@ -66,9 +58,9 @@ class _ReactionWidgetState extends State<ReactionWidget> {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 1.7, horizontal: 6),
             margin: EdgeInsets.only(
-                  left: widget.isMessageBySender ? 10 : 16,
-                  right: 10,
-                ),
+              left: widget.isMessageBySender ? 10 : 16,
+              right: 10,
+            ),
             decoration: BoxDecoration(
               color: Colors.grey.shade200,
               borderRadius: BorderRadius.circular(16),
