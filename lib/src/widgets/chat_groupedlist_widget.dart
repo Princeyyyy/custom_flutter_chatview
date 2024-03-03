@@ -18,7 +18,6 @@ class ChatGroupedListWidget extends StatefulWidget {
     required this.isEnableSwipeToSeeTime,
     required this.currentUserId,
     this.messageConfig,
-    this.repliedMessageConfig,
   });
 
   /// Allow user to swipe to see time while reaction pop is not open.
@@ -28,7 +27,6 @@ class ChatGroupedListWidget extends StatefulWidget {
   /// Allow user to giving customisation different types
   /// messages
   final MessageConfiguration? messageConfig;
-  final RepliedMessageConfiguration? repliedMessageConfig;
 
   /// Provides reply message if actual message is sent by replying any message.
   final ReplyMessage replyMessage;
@@ -216,7 +214,6 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
                         key: message.key,
                         message: message,
                         messageConfig: widget.messageConfig,
-                        repliedMessageConfig: widget.repliedMessageConfig,
                         slideAnimation: _slideAnimation,
                         onLongPress: (yCoordinate, xCoordinate) =>
                             widget.onChatBubbleLongPress(

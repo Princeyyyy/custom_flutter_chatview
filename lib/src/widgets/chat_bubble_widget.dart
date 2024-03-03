@@ -16,7 +16,6 @@ class ChatBubbleWidget extends StatefulWidget {
     required this.slideAnimation,
     required this.onSwipe,
     required this.currentUserId,
-    this.repliedMessageConfig,
     this.messageConfig,
     this.onReplyTap,
     this.shouldHighlight = false,
@@ -27,10 +26,6 @@ class ChatBubbleWidget extends StatefulWidget {
 
   /// Give callback once user long press on chat bubble.
   final DoubleCallBack onLongPress;
-
-  /// Provides configurations related to replied message such as textstyle
-  /// padding, margin etc. Also, this widget is located upon chat bubble.
-  final RepliedMessageConfiguration? repliedMessageConfig;
 
   /// Provides slide animation when user swipe whole chat.
   final Animation<Offset>? slideAnimation;
@@ -152,16 +147,12 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
           isMessageBySender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         if (replyMessage.isNotEmpty)
-          widget.repliedMessageConfig?.repliedMessageWidgetBuilder != null
-              ? widget.repliedMessageConfig!
-                  .repliedMessageWidgetBuilder!(widget.message.replyMessage)
-              : ReplyMessageWidget(
-                  message: widget.message,
-                  repliedMessageConfig: widget.repliedMessageConfig,
-                  onTap: () => widget.onReplyTap
-                      ?.call(widget.message.replyMessage.repliedMessageId),
-                  currentUserId: widget.currentUserId,
-                ),
+          ReplyMessageWidget(
+            message: widget.message,
+            onTap: () => widget.onReplyTap
+                ?.call(widget.message.replyMessage.repliedMessageId),
+            currentUserId: widget.currentUserId,
+          ),
         MessageView(
           isLongPressEnable:
               (featureActiveConfig?.enableReactionPopup ?? true) ||

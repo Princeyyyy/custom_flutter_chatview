@@ -18,7 +18,6 @@ class ChatListWidget extends StatefulWidget {
     required this.replyMessage,
     required this.currentUserId,
     this.messageConfig,
-    this.repliedMessageConfig,
     this.onChatListTap,
   });
 
@@ -28,10 +27,6 @@ class ChatListWidget extends StatefulWidget {
   /// Provides configuration for customisation of different types
   /// messages.
   final MessageConfiguration? messageConfig;
-
-  /// Provides configuration for replied message view which is located upon chat
-  /// bubble.
-  final RepliedMessageConfiguration? repliedMessageConfig;
 
   /// Provides reply message when user swipe to chat bubble.
   final ReplyMessage replyMessage;
@@ -101,7 +96,6 @@ class _ChatListWidgetState extends State<ChatListWidget>
                     isEnableSwipeToSeeTime: true,
                     assignReplyMessage: widget.assignReplyMessage,
                     replyMessage: widget.replyMessage,
-                    repliedMessageConfig: widget.repliedMessageConfig,
                     messageConfig: widget.messageConfig,
                     onChatBubbleLongPress: (yCoordinate, xCoordinate, message) {
                       if (featureActiveConfig?.enableReactionPopup ?? false) {

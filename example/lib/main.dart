@@ -73,18 +73,6 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
         ),
-        repliedMessageConfig: const RepliedMessageConfiguration(
-          backgroundColor: Color(0xffff8aad),
-          verticalBarColor: Color(0xffEE5366),
-          textStyle: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 0.25,
-          ),
-          replyTitleTextStyle: TextStyle(
-            color: Colors.black,
-          ),
-        ),
         currentUserId: "currentUser.id",
       ),
     );

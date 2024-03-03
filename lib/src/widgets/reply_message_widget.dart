@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:chatview/src/extensions/extensions.dart';
 import 'package:chatview/src/models/models.dart';
-import 'package:chatview/src/utils/package_strings.dart';
 
 import '../utils/constants/constants.dart';
-import 'chat_view_inherited_widget.dart';
 import 'vertical_line.dart';
 
 class ReplyMessageWidget extends StatelessWidget {
@@ -14,7 +12,6 @@ class ReplyMessageWidget extends StatelessWidget {
     super.key,
     required this.message,
     required this.currentUserId,
-    this.repliedMessageConfig,
     this.onTap,
   });
 
@@ -22,10 +19,6 @@ class ReplyMessageWidget extends StatelessWidget {
   final Message message;
 
   final String currentUserId;
-
-  /// Provides configurations related to replied message such as textstyle
-  /// padding, margin etc. Also, this widget is located upon chat bubble.
-  final RepliedMessageConfiguration? repliedMessageConfig;
 
   /// Provides call back when user taps on replied message.
   final VoidCallback? onTap;
@@ -39,14 +32,12 @@ class ReplyMessageWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: repliedMessageConfig?.margin ??
-            const EdgeInsets.only(
-              right: horizontalPadding,
-              left: horizontalPadding,
-              bottom: 4,
-            ),
-        constraints:
-            BoxConstraints(maxWidth: repliedMessageConfig?.maxWidth ?? 280),
+        margin: const EdgeInsets.only(
+          right: horizontalPadding,
+          left: horizontalPadding,
+          bottom: 4,
+        ),
+        constraints: const BoxConstraints(maxWidth: 280),
         child: Column(
           crossAxisAlignment:
               replyBySender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -58,58 +49,46 @@ class ReplyMessageWidget extends StatelessWidget {
                     : MainAxisAlignment.start,
                 children: [
                   if (!replyBySender)
-                    VerticalLine(
-                      verticalBarWidth: repliedMessageConfig?.verticalBarWidth,
-                      verticalBarColor: repliedMessageConfig?.verticalBarColor,
+                    const VerticalLine(
                       rightPadding: 4,
                     ),
                   Flexible(
                     child: Opacity(
-                      opacity: repliedMessageConfig?.opacity ?? 0.8,
+                      opacity: 0.8,
                       child: message.replyMessage.messageType.isImage
                           ? Container(
-                              height: repliedMessageConfig
-                                      ?.repliedImageMessageHeight ??
-                                  100,
-                              width: repliedMessageConfig
-                                      ?.repliedImageMessageWidth ??
-                                  80,
+                              height: 100,
+                              width: 80,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   image: NetworkImage(replyMessage),
                                   fit: BoxFit.fill,
                                 ),
-                                borderRadius:
-                                    repliedMessageConfig?.borderRadius ??
-                                        BorderRadius.circular(14),
+                                borderRadius: BorderRadius.circular(14),
                               ),
                             )
                           : Container(
-                              constraints: BoxConstraints(
-                                maxWidth: repliedMessageConfig?.maxWidth ?? 280,
+                              constraints: const BoxConstraints(
+                                maxWidth: 280,
                               ),
-                              padding: repliedMessageConfig?.padding ??
-                                  const EdgeInsets.symmetric(
-                                    vertical: 8,
-                                    horizontal: 12,
-                                  ),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8,
+                                horizontal: 12,
+                              ),
                               decoration: BoxDecoration(
                                 borderRadius: _borderRadius(
                                   replyMessage: replyMessage,
                                   replyBySender: replyBySender,
                                 ),
-                                color: repliedMessageConfig?.backgroundColor ??
-                                    Colors.grey.shade500,
+                                color: const Color(0xffff8aad),
                               ),
                               child: message.replyMessage.messageType.isVoice
                                   ? Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.mic,
-                                          color: repliedMessageConfig
-                                                  ?.micIconColor ??
-                                              Colors.white,
+                                          color: Colors.white,
                                         ),
                                         const SizedBox(width: 2),
                                         if (message.replyMessage
@@ -119,24 +98,24 @@ class ReplyMessageWidget extends StatelessWidget {
                                             message.replyMessage
                                                 .voiceMessageDuration!
                                                 .toHHMMSS(),
-                                            style:
-                                                repliedMessageConfig?.textStyle,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              letterSpacing: 0.25,
+                                            ),
                                           ),
                                       ],
                                     )
                                   : Text(
                                       replyMessage,
-                                      style: repliedMessageConfig?.textStyle ??
-                                          textTheme.bodyMedium!
-                                              .copyWith(color: Colors.black),
+                                      style: textTheme.bodyMedium!
+                                          .copyWith(color: Colors.black),
                                     ),
                             ),
                     ),
                   ),
                   if (replyBySender)
-                    VerticalLine(
-                      verticalBarWidth: repliedMessageConfig?.verticalBarWidth,
-                      verticalBarColor: repliedMessageConfig?.verticalBarColor,
+                    const VerticalLine(
                       leftPadding: 4,
                     ),
                 ],
@@ -153,12 +132,10 @@ class ReplyMessageWidget extends StatelessWidget {
     required bool replyBySender,
   }) =>
       replyBySender
-          ? repliedMessageConfig?.borderRadius ??
-              (replyMessage.length < 37
-                  ? BorderRadius.circular(replyBorderRadius1)
-                  : BorderRadius.circular(replyBorderRadius2))
-          : repliedMessageConfig?.borderRadius ??
-              (replyMessage.length < 29
-                  ? BorderRadius.circular(replyBorderRadius1)
-                  : BorderRadius.circular(replyBorderRadius2));
+          ? (replyMessage.length < 37
+              ? BorderRadius.circular(replyBorderRadius1)
+              : BorderRadius.circular(replyBorderRadius2))
+          : (replyMessage.length < 29
+              ? BorderRadius.circular(replyBorderRadius1)
+              : BorderRadius.circular(replyBorderRadius2));
 }

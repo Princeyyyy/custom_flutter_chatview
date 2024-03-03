@@ -5,12 +5,7 @@ class VerticalLine extends StatelessWidget {
     super.key,
     this.leftPadding = 0,
     this.rightPadding = 0,
-    this.verticalBarColor,
-    this.verticalBarWidth,
   });
-
-  /// Allow user to set color of bar
-  final Color? verticalBarColor;
 
   /// Allow user to set left padding.
   final double leftPadding;
@@ -18,14 +13,11 @@ class VerticalLine extends StatelessWidget {
   /// Allow user to set left padding.
   final double rightPadding;
 
-  /// Allow user to set width of bar.
-  final double? verticalBarWidth;
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: verticalBarWidth ?? 2.5,
-      color: verticalBarColor ?? Colors.grey.shade300,
+      width: 2.5,
+      color: const Color(0xffEE5366),
       margin: EdgeInsets.only(
         left: leftPadding,
         right: rightPadding,

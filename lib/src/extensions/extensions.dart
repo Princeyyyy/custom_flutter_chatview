@@ -66,22 +66,6 @@ extension ConnectionStates on ConnectionState {
   bool get isActive => this == ConnectionState.active;
 }
 
-/// Extension on nullable sting to return specific state string.
-extension ChatViewStateTitleExtension on String? {
-  String getChatViewStateTitle(ChatViewState state) {
-    switch (state) {
-      case ChatViewState.hasMessages:
-        return this ?? '';
-      case ChatViewState.noData:
-        return this ?? 'No Messages';
-      case ChatViewState.loading:
-        return this ?? '';
-      case ChatViewState.error:
-        return this ?? 'Something went wrong !!';
-    }
-  }
-}
-
 /// Extension on State for accessing inherited widget.
 extension StatefulWidgetExtension on State {
   ChatViewInheritedWidget? get provide => ChatViewInheritedWidget.of(context);

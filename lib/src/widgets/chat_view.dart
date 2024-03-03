@@ -12,7 +12,6 @@ class ChatView extends StatefulWidget {
     required this.chatController,
     required this.currentUserId,
     this.onSendTap,
-    this.repliedMessageConfig,
     this.messageConfig,
     this.sendMessageBuilder,
     this.onChatListTap,
@@ -22,10 +21,6 @@ class ChatView extends StatefulWidget {
   /// Allow user to giving customisation different types
   /// messages.
   final MessageConfiguration? messageConfig;
-
-  /// Provides configuration for replied message view which is located upon chat
-  /// bubble.
-  final RepliedMessageConfiguration? repliedMessageConfig;
 
   /// Provides call back when user tap on send button in text field. It returns
   /// message, reply message and message type.
@@ -91,7 +86,6 @@ class _ChatViewState extends State<ChatView>
                         replyMessage: state,
                         chatController: widget.chatController,
                         messageConfig: widget.messageConfig,
-                        repliedMessageConfig: widget.repliedMessageConfig,
                         onChatListTap: widget.onChatListTap,
                         assignReplyMessage: (message) => _sendMessageKey
                             .currentState
