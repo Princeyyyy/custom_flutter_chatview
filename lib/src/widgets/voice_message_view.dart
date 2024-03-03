@@ -44,6 +44,7 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
   @override
   void initState() {
     super.initState();
+
     controller = PlayerController()
       ..preparePlayer(
         path: widget.message.message,
