@@ -59,8 +59,6 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
   AnimationController? _animationController;
   Animation<Offset>? _slideAnimation;
 
-  FeatureActiveConfig? featureActiveConfig;
-
   ChatController? chatController;
 
   bool get isEnableSwipeToSeeTime => widget.isEnableSwipeToSeeTime;
@@ -95,7 +93,6 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (provide != null) {
-      featureActiveConfig = provide!.featureActiveConfig;
       chatController = provide!.chatController;
     }
     _initializeAnimation();

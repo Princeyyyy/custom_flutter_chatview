@@ -53,8 +53,6 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
 
   bool get isMessageBySender =>
       widget.message.messageSenderId == widget.currentUserId;
-
-  FeatureActiveConfig? featureActiveConfig;
   ChatController? chatController;
   int? maxDuration;
 
@@ -62,7 +60,6 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (provide != null) {
-      featureActiveConfig = provide!.featureActiveConfig;
       chatController = provide!.chatController;
     }
   }
@@ -71,25 +68,22 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        if (featureActiveConfig?.enableSwipeToSeeTime ?? true) ...[
-          Visibility(
-            visible: widget.slideAnimation?.value.dx == 0.0 ? false : true,
-            child: Positioned.fill(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: MessageTimeWidget(
-                  messageTime: widget.message.createdAt,
-                  isCurrentUser: isMessageBySender,
-                ),
+        Visibility(
+          visible: widget.slideAnimation?.value.dx == 0.0 ? false : true,
+          child: Positioned.fill(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: MessageTimeWidget(
+                messageTime: widget.message.createdAt,
+                isCurrentUser: isMessageBySender,
               ),
             ),
           ),
-          SlideTransition(
-            position: widget.slideAnimation!,
-            child: _chatBubbleWidget(),
-          ),
-        ] else
-          _chatBubbleWidget(),
+        ),
+        SlideTransition(
+          position: widget.slideAnimation!,
+          child: _chatBubbleWidget(),
+        ),
       ],
     );
   }
@@ -107,31 +101,26 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
           Expanded(
             child: isMessageBySender
                 ? SwipeToReply(
-                    onLeftSwipe: featureActiveConfig?.enableSwipeToReply ?? true
-                        ? () {
-                            if (maxDuration != null) {
-                              widget.message.voiceMessageDuration =
-                                  Duration(milliseconds: maxDuration!);
-                            }
+                    onLeftSwipe: () {
+                      if (maxDuration != null) {
+                        widget.message.voiceMessageDuration =
+                            Duration(milliseconds: maxDuration!);
+                      }
 
-                            widget.onSwipe(widget.message);
-                          }
-                        : null,
+                      widget.onSwipe(widget.message);
+                    },
                     replyIconColor: Colors.black,
                     child: _messagesWidgetColumn(),
                   )
                 : SwipeToReply(
-                    onRightSwipe:
-                        featureActiveConfig?.enableSwipeToReply ?? true
-                            ? () {
-                                if (maxDuration != null) {
-                                  widget.message.voiceMessageDuration =
-                                      Duration(milliseconds: maxDuration!);
-                                }
+                    onRightSwipe: () {
+                      if (maxDuration != null) {
+                        widget.message.voiceMessageDuration =
+                            Duration(milliseconds: maxDuration!);
+                      }
 
-                                widget.onSwipe(widget.message);
-                              }
-                            : null,
+                      widget.onSwipe(widget.message);
+                    },
                     replyIconColor: Colors.black,
                     child: _messagesWidgetColumn(),
                   ),
@@ -154,9 +143,7 @@ class _ChatBubbleWidgetState extends State<ChatBubbleWidget> {
             currentUserId: widget.currentUserId,
           ),
         MessageView(
-          isLongPressEnable:
-              (featureActiveConfig?.enableReactionPopup ?? true) ||
-                  (featureActiveConfig?.enableReplySnackBar ?? true),
+          isLongPressEnable: true,
           message: widget.message,
           isMessageBySender: isMessageBySender,
           messageConfig: widget.messageConfig,

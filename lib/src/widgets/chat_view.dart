@@ -15,7 +15,6 @@ class ChatView extends StatefulWidget {
     this.messageConfig,
     this.sendMessageBuilder,
     this.onChatListTap,
-    this.featureActiveConfig = const FeatureActiveConfig(),
   });
 
   /// Allow user to giving customisation different types
@@ -35,9 +34,6 @@ class ChatView extends StatefulWidget {
   /// Provides current user which is sending messages.
   final String currentUserId;
 
-  /// Provides configuration for turn on/off specific features.
-  final FeatureActiveConfig featureActiveConfig;
-
   /// Provides callback when user tap on chat list.
   final VoidCallBack? onChatListTap;
 
@@ -53,8 +49,6 @@ class _ChatViewState extends State<ChatView>
 
   ChatController get chatController => widget.chatController;
 
-  FeatureActiveConfig get featureActiveConfig => widget.featureActiveConfig;
-
   @override
   void initState() {
     super.initState();
@@ -67,7 +61,6 @@ class _ChatViewState extends State<ChatView>
 
     return ChatViewInheritedWidget(
       chatController: chatController,
-      featureActiveConfig: featureActiveConfig,
       child: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -94,17 +87,17 @@ class _ChatViewState extends State<ChatView>
                       );
                     },
                   ),
-                  if (featureActiveConfig.enableTextField)
-                    SendMessageWidget(
-                      key: _sendMessageKey,
-                      chatController: chatController,
-                      sendMessageBuilder: widget.sendMessageBuilder,
-                      onSendTap: _onSendTap,
-                      onReplyCallback: (reply) => replyMessage.value = reply,
-                      onReplyCloseCallback: () =>
-                          replyMessage.value = const ReplyMessage(),
-                      currentUserId: widget.currentUserId,
-                    ),
+
+                  SendMessageWidget(
+                    key: _sendMessageKey,
+                    chatController: chatController,
+                    sendMessageBuilder: widget.sendMessageBuilder,
+                    onSendTap: _onSendTap,
+                    onReplyCallback: (reply) => replyMessage.value = reply,
+                    onReplyCloseCallback: () =>
+                    replyMessage.value = const ReplyMessage(),
+                    currentUserId: widget.currentUserId,
+                  ),
                 ],
               ),
             ),

@@ -56,20 +56,10 @@ class _ChatListWidgetState extends State<ChatListWidget>
 
   ScrollController get scrollController => chatController.scrollController;
 
-  FeatureActiveConfig? featureActiveConfig;
-
   @override
   void initState() {
     super.initState();
     _initialize();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (provide != null) {
-      featureActiveConfig = provide!.featureActiveConfig;
-    }
   }
 
   void _initialize() {
@@ -98,34 +88,31 @@ class _ChatListWidgetState extends State<ChatListWidget>
                     replyMessage: widget.replyMessage,
                     messageConfig: widget.messageConfig,
                     onChatBubbleLongPress: (yCoordinate, xCoordinate, message) {
-                      if (featureActiveConfig?.enableReactionPopup ?? false) {
-                        _reactionPopupKey.currentState?.refreshWidget(
-                          message: message,
-                          xCoordinate: xCoordinate,
-                          yCoordinate: yCoordinate < 0
-                              ? -(yCoordinate) - 5
-                              : yCoordinate,
-                        );
-                        showPopUp.value = true;
-                      }
-                      if (featureActiveConfig?.enableReplySnackBar ?? false) {
-                        _showReplyPopup(
-                          message: message,
-                          sendByCurrentUser:
-                              message.messageSenderId == widget.currentUserId,
-                        );
-                      }
+                      _reactionPopupKey.currentState?.refreshWidget(
+                        message: message,
+                        xCoordinate: xCoordinate,
+                        yCoordinate: yCoordinate < 0
+                            ? -(yCoordinate) - 5
+                            : yCoordinate,
+                      );
+                      showPopUp.value = true;
+
+                      _showReplyPopup(
+                        message: message,
+                        sendByCurrentUser:
+                        message.messageSenderId == widget.currentUserId,
+                      );
                     },
                     onChatListTap: _onChatListTap,
                     currentUserId: widget.currentUserId,
                   ),
-                  if (featureActiveConfig?.enableReactionPopup ?? false)
-                    ReactionPopup(
-                      key: _reactionPopupKey,
-                      onTap: _onChatListTap,
-                      showPopUp: showPopupValue,
-                      currentUserId: widget.currentUserId,
-                    ),
+
+                  ReactionPopup(
+                    key: _reactionPopupKey,
+                    onTap: _onChatListTap,
+                    showPopUp: showPopupValue,
+                    currentUserId: widget.currentUserId,
+                  ),
                 ],
               );
             },
@@ -156,9 +143,7 @@ class _ChatListWidgetState extends State<ChatListWidget>
               },
               onReplyTap: () {
                 widget.assignReplyMessage(message);
-                if (featureActiveConfig?.enableReactionPopup ?? false) {
-                  showPopUp.value = false;
-                }
+                showPopUp.value = false;
 
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
               },

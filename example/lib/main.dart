@@ -45,11 +45,6 @@ class _ChatScreenState extends State<ChatScreen> {
       body: ChatView(
         chatController: _chatController,
         onSendTap: _onSendTap,
-        featureActiveConfig: const FeatureActiveConfig(
-          lastSeenAgoBuilderVisibility: true,
-          receiptsBuilderVisibility: true,
-          enableSwipeToSeeTime: true,
-        ),
         messageConfig: MessageConfiguration(
           messageReactionConfig: MessageReactionConfiguration(
             backgroundColor: const Color(0xFFEEEEEE),
